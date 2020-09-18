@@ -1,5 +1,5 @@
 SIOUX Parking System by IBI Student Group
 
 Scrum Master - Kaloyan Aleksiev.
-Technical Leader - Velimir Vucasinovic.
+Technical Leader - Velimir Vukasinovic.
 Documentation - Branimir Sandalski.
