@@ -1,0 +1,136 @@
+<Project>
+  <Name>SiouxProject</Name>
+  <ProjectItem type="NClass.DiagramEditor.ClassDiagram.Diagram" assembly="NClass.DiagramEditor, Version=2.4.1823.0, Culture=neutral, PublicKeyToken=null">
+    <Name>Class Diagramm</Name>
+    <Language>CSharp</Language>
+    <Entities>
+      <Entity type="Class">
+        <Name>Driver</Name>
+        <Access>Public</Access>
+        <Location left="51" top="380" />
+        <Size width="363" height="198" />
+        <Collapsed>False</Collapsed>
+        <Member type="Field">int id</Member>
+        <Member type="Field">string name</Member>
+        <Member type="Field">string licensePlate</Member>
+        <Member type="Field">int phoneNumber</Member>
+        <Member type="Constructor">public Driver(string name, string licensePlate, int phoneNumber)</Member>
+        <Member type="Constructor">public Driver(string name, string licensePlate, int phoneNumber, int id)</Member>
+        <Member type="Method">public String getInfo()</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>Appointment</Name>
+        <Access>Public</Access>
+        <Location left="660" top="494" />
+        <Size width="480" height="196" />
+        <Collapsed>False</Collapsed>
+        <Member type="Field">int id</Member>
+        <Member type="Field">Calendar date</Member>
+        <Member type="Field">LocalTime time</Member>
+        <Member type="Constructor">public Appointment(int day, int month, int year, LocalTime time, List&lt;Driver&gt; driverList)</Member>
+        <Member type="Constructor">public Appointment(int day, int month, int year, LocalTime time, List&lt;Driver&gt; driverList, int id)</Member>
+        <Member type="Method">public void addDriver(Driver driver)</Member>
+        <Member type="Method">public String getInfo()</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>DriverControl</Name>
+        <Access>Public</Access>
+        <Location left="103" top="56" />
+        <Size width="209" height="134" />
+        <Collapsed>False</Collapsed>
+        <Member type="Constructor">public DriverControl()</Member>
+        <Member type="Method">public boolean addDriver(Driver driver)</Member>
+        <Member type="Method">public boolean removeDriver(int id)</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>AppointmentControl</Name>
+        <Access>Public</Access>
+        <Location left="679" top="56" />
+        <Size width="308" height="128" />
+        <Collapsed>False</Collapsed>
+        <Member type="Constructor">public AppointmentControl()</Member>
+        <Member type="Method">public boolean addAppointment(Appointment appointment)</Member>
+        <Member type="Method">public boolean removeAppointment(int id)</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>DriverDataControl</Name>
+        <Access>Public</Access>
+        <Location left="493" top="252" />
+        <Size width="162" height="157" />
+        <Collapsed>False</Collapsed>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>AppointmentDataControl</Name>
+        <Access>Public</Access>
+        <Location left="1021" top="298" />
+        <Size width="225" height="157" />
+        <Collapsed>False</Collapsed>
+        <Modifier>None</Modifier>
+      </Entity>
+    </Entities>
+    <Relationships>
+      <Relationship type="Association" first="2" second="0">
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+        <Direction>Unidirectional</Direction>
+        <AssociationType>Association</AssociationType>
+        <EndRole>-driverList</EndRole>
+        <StartMultiplicity>1</StartMultiplicity>
+        <EndMultiplicity>0..*</EndMultiplicity>
+      </Relationship>
+      <Relationship type="Association" first="3" second="1">
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+        <Direction>Unidirectional</Direction>
+        <AssociationType>Association</AssociationType>
+        <EndRole>-appointmentList</EndRole>
+        <StartMultiplicity>1</StartMultiplicity>
+        <EndMultiplicity>0..*</EndMultiplicity>
+      </Relationship>
+      <Relationship type="Association" first="2" second="4">
+        <StartOrientation>Horizontal</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+        <BendPoint relativeToStartShape="True">
+          <X>343</X>
+          <Y>117</Y>
+        </BendPoint>
+        <BendPoint relativeToStartShape="False">
+          <X>574</X>
+          <Y>220</Y>
+        </BendPoint>
+        <Direction>Unidirectional</Direction>
+        <AssociationType>Association</AssociationType>
+        <EndRole>-driverDataControl</EndRole>
+        <EndMultiplicity>1</EndMultiplicity>
+      </Relationship>
+      <Relationship type="Association" first="3" second="5">
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+        <BendPoint relativeToStartShape="True">
+          <X>928</X>
+          <Y>240</Y>
+        </BendPoint>
+        <BendPoint relativeToStartShape="False">
+          <X>1132</X>
+          <Y>260</Y>
+        </BendPoint>
+        <Direction>Unidirectional</Direction>
+        <AssociationType>Association</AssociationType>
+        <EndMultiplicity>1</EndMultiplicity>
+      </Relationship>
+      <Relationship type="Association" first="1" second="0">
+        <StartOrientation>Horizontal</StartOrientation>
+        <EndOrientation>Horizontal</EndOrientation>
+        <Direction>Unidirectional</Direction>
+        <AssociationType>Association</AssociationType>
+        <EndRole>-driverList</EndRole>
+        <EndMultiplicity>1..*</EndMultiplicity>
+      </Relationship>
+    </Relationships>
+  </ProjectItem>
+</Project>

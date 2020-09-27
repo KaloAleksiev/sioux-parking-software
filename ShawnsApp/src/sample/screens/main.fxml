@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="900.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Button layoutX="507.0" layoutY="541.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="320.0" style="-fx-border-color: #bf0208; -fx-background-color: white; -fx-border-radius: 25; -fx-background-radius: 25;" text="View Appointments">
+         <font>
+            <Font name="Lucida Console" size="23.0" />
+         </font></Button>
+      <ImageView fitHeight="80.0" fitWidth="177.0" layoutX="36.0" layoutY="30.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/st.png" />
+         </image></ImageView>
+      <Label layoutX="242.0" layoutY="24.0" prefHeight="39.0" prefWidth="417.0" text="SIOUX TECHNOLOGIES" textFill="#da0606">
+         <font>
+            <Font name="Lucida Console" size="36.0" />
+         </font>
+      </Label>
+      <Button fx:id="btnRegisterAppointment" layoutX="74.0" layoutY="541.0" mnemonicParsing="false" onAction="#openCreateForm" prefHeight="54.0" prefWidth="320.0" style="-fx-border-color: #bf0208; -fx-background-color: white; -fx-border-radius: 25; -fx-background-radius: 25;" text="Register Appointment">
+         <font>
+            <Font name="Lucida Console" size="23.0" />
+         </font></Button>
+      <Label layoutX="312.0" layoutY="70.0" text="parking system">
+         <font>
+            <Font name="Lucida Console" size="30.0" />
+         </font>
+      </Label>
+      <ImageView fitHeight="356.0" fitWidth="675.0" layoutX="113.0" layoutY="147.0" pickOnBounds="true" smooth="false">
+         <image>
+            <Image url="@../images/parking.jpeg" />
+         </image>
+      </ImageView>
+   </children>
+</Pane>
