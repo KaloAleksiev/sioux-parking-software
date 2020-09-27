@@ -1,25 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="900.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
     <children>
-        <Button layoutX="499.0" layoutY="541.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="320.0" text="Done">
+        <Button layoutX="499.0" layoutY="541.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="320.0" style="-fx-border-color: #bf0208; -fx-background-color: white; -fx-border-radius: 25; -fx-background-radius: 25;" text="Done">
             <font>
                 <Font name="Lucida Console" size="23.0" />
             </font></Button>
-        <Label layoutX="242.0" layoutY="24.0" prefHeight="39.0" prefWidth="417.0" text="SIOUX TECHNOLOGIES" textFill="#da0606">
+        <Label layoutX="280.0" layoutY="51.0" prefHeight="39.0" prefWidth="141.0" text="Create" textFill="#da0606">
             <font>
                 <Font name="Lucida Console" size="36.0" />
             </font>
         </Label>
-        <Button layoutX="74.0" layoutY="541.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="320.0" text="Cancel">
+        <Button layoutX="74.0" layoutY="541.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="320.0" style="-fx-border-color: #bf0208; -fx-background-color: white; -fx-border-radius: 25; -fx-background-radius: 25;" text="Cancel">
             <font>
                 <Font name="Lucida Console" size="23.0" />
             </font></Button>
-        <Label layoutX="312.0" layoutY="70.0" text="parking system">
+        <Label layoutX="425.0" layoutY="54.0" text="appointment">
             <font>
                 <Font name="Lucida Console" size="30.0" />
             </font>
@@ -69,5 +70,10 @@
             <Font name="Lucida Console" size="18.0" />
          </font>
       </Label>
+      <ImageView fitHeight="80.0" fitWidth="177.0" layoutX="36.0" layoutY="30.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/st.png" />
+         </image>
+      </ImageView>
     </children>
 </Pane>

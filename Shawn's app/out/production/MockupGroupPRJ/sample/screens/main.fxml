@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="900.0" stylesheets="@../styles/styles.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Button layoutX="507.0" layoutY="541.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="320.0" text="View Appointments">
          <font>
@@ -17,7 +17,7 @@
             <Font name="Lucida Console" size="36.0" />
          </font>
       </Label>
-      <Button layoutX="74.0" layoutY="541.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="320.0" text="Register Appointment">
+      <Button layoutX="74.0" layoutY="541.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="320.0" style="-fx-border-radius: 25px;" text="Register Appointment">
          <font>
             <Font name="Lucida Console" size="23.0" />
          </font></Button>
