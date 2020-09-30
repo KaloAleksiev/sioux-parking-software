@@ -15,6 +15,10 @@ public class DriverController {
         return true;
     }
 
+    public Driver getLastAddedDriver() {
+        return driverList.get(driverList.size() - 1);
+    }
+
     public boolean removeDriver(int id) {
         for (Driver driver : driverList) {
             if (driver.getId() == id) {

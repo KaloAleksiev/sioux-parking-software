@@ -22,7 +22,7 @@
             <Font name="Lucida Console" size="36.0" />
          </font>
       </Label>
-      <Button fx:id="btnRegisterAppointment" layoutX="74.0" layoutY="541.0" mnemonicParsing="false" onAction="#openCreateForm" prefHeight="54.0" prefWidth="320.0" style="-fx-border-color: #bf0208; -fx-background-color: white; -fx-border-radius: 25; -fx-background-radius: 25;" text="Register Appointment">
+      <Button fx:id="btnRegisterAppointment" layoutX="74.0" layoutY="541.0" mnemonicParsing="false" onAction="#openCreateFormButtonClick" prefHeight="54.0" prefWidth="320.0" style="-fx-border-color: #bf0208; -fx-background-color: white; -fx-border-radius: 25; -fx-background-radius: 25;" text="Register Appointment">
          <font>
             <Font name="Lucida Console" size="23.0" />
          </font></Button>
