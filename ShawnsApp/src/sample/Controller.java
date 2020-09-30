@@ -43,16 +43,15 @@ public class Controller {
     }
 
     public void createAppointmentButtonClick() {
-        dc.addDriver(new Driver(tbLicensePlate.getText(), Integer.parseInt(tbPhoneNumber.getText()), tbDriverName.getText()));
+        //dc.addDriver(new Driver(tbLicensePlate.getText(), Integer.parseInt(tbPhoneNumber.getText()), tbDriverName.getText()));
         List<Driver> driverList = new ArrayList<>();
-        driverList.add(dc.getLastAddedDriver());
-        Appointment appointment = new Appointment(dpAppointmentDate.getValue().getYear(), dpAppointmentDate.getValue().getMonthValue(), dpAppointmentDate.getValue().getDayOfMonth(), LocalTime.parse((String)cbAppointmentTime.getValue()), driverList);
+        driverList.add(new Driver(tbLicensePlate.getText(), Integer.parseInt(tbPhoneNumber.getText()), tbDriverName.getText()));
+        //driverList.add(dc.getLastAddedDriver());
+        Appointment appointment = new Appointment(dpAppointmentDate.getValue().getDayOfMonth(), dpAppointmentDate.getValue().getMonthValue(),dpAppointmentDate.getValue().getYear(),  LocalTime.parse((String)cbAppointmentTime.getValue()), driverList);
 
 
         Alert alert = new Alert(Alert.AlertType.INFORMATION, appointment.GetInfo());
-        //Alert alert = new Alert(Alert.AlertType.INFORMATION, Integer.toString(smth));
         alert.setHeaderText("Successfully created an appointment!");
-        //alert.getDialogPane().setExpandableContent(new ScrollPane(new TextArea(appointment.GetInfo())));
         alert.showAndWait();
     }
 }
