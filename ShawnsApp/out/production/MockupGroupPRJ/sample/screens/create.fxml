@@ -35,7 +35,10 @@
             <Font name="Lucida Console" size="12.0" />
          </font>
       </Button>
-      <TextField fx:id="tbDriverName" layoutX="145.0" layoutY="278.0" prefHeight="25.0" prefWidth="194.0" />
+      <TextField fx:id="tbDriverName" layoutX="145.0" layoutY="278.0" prefHeight="25.0" prefWidth="194.0">
+         <font>
+            <Font name="Comic Sans MS" size="12.0" />
+         </font></TextField>
       <TextField fx:id="tbPhoneNumber" layoutX="145.0" layoutY="365.0" prefHeight="25.0" prefWidth="194.0" />
       <TextField fx:id="tbLicensePlate" layoutX="145.0" layoutY="448.0" prefHeight="25.0" prefWidth="194.0" />
       <Label layoutX="126.0" layoutY="160.0" text="Personal details" textFill="#dd0303">
