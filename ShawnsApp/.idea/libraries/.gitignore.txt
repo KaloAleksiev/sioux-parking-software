@@ -1,0 +1,2 @@
+# Ignored as to not break the app library system
+/lib.xml
