@@ -11,10 +11,12 @@ import javafx.scene.control.DatePicker;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
 import sample.classes.Appointment;
+import sample.classes.DataControl;
 import sample.classes.Driver;
 import sample.classes.DriverController;
 import javafx.scene.control.TextField;
 import java.io.IOException;
+import java.sql.PreparedStatement;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -42,13 +44,19 @@ public class Controller {
         cbAppointmentTime.getItems().add("16:00:00");
     }
 
-    public void createAppointmentButtonClick() {
+    public void createAppointmentButtonClick() throws java.sql.SQLException {
         //dc.addDriver(new Driver(tbLicensePlate.getText(), Integer.parseInt(tbPhoneNumber.getText()), tbDriverName.getText()));
         List<Driver> driverList = new ArrayList<>();
         driverList.add(new Driver(tbLicensePlate.getText(), Integer.parseInt(tbPhoneNumber.getText()), tbDriverName.getText()));
         //driverList.add(dc.getLastAddedDriver());
         Appointment appointment = new Appointment(dpAppointmentDate.getValue().getDayOfMonth(), dpAppointmentDate.getValue().getMonthValue(),dpAppointmentDate.getValue().getYear(),  LocalTime.parse((String)cbAppointmentTime.getValue()), driverList);
 
+        DataControl dataControl = new DataControl();
+        String sql = "INSERT INTO appointment (datetime) VALUES (CURRENT_DATE());";
+        PreparedStatement statement = dataControl.connect().prepareStatement(sql);
+        statement.execute();
+        statement.close();
+        dataControl.disconnect();
 
         Alert alert = new Alert(Alert.AlertType.INFORMATION, appointment.GetInfo());
         alert.setHeaderText("Successfully created an appointment!");

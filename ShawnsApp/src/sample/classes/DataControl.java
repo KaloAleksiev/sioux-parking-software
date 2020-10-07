@@ -8,9 +8,9 @@ public class DataControl {
     // init database constants
     // com.mysql.jdbc.Driver
     private static final String DATABASE_DRIVER = "com.mysql.cj.jdbc.Driver";
-    private static final String DATABASE_URL = "studmysql01.fhict.local";
-    private static final String USERNAME = "dbi427262";
-    private static final String PASSWORD = "parola1234";
+    private static final String DATABASE_URL = "jdbc:mysql://localhost:3306/sioux";
+    private static final String USERNAME = "root";
+    private static final String PASSWORD = "";
     private static final String MAX_POOL = "250";
 
     // init connection object
