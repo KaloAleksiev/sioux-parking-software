@@ -8,6 +8,9 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="lib" level="project" />
+<<<<<<< .merge_file_a20348
     <orderEntry type="library" name="mysql-connector-java-8.0" level="project" />
+=======
+>>>>>>> .merge_file_a23300
   </component>
 </module>

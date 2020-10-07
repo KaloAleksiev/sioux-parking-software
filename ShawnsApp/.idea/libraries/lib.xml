@@ -1,6 +1,7 @@
 <component name="libraryTable">
   <library name="lib">
     <CLASSES>
+<<<<<<< .merge_file_a13912
       <root url="file://$PROJECT_DIR$/../../../../../../JavaFX/javafx-sdk-15/lib" />
     </CLASSES>
     <JAVADOC />
@@ -9,5 +10,15 @@
     </SOURCES>
     <jarDirectory url="file://$PROJECT_DIR$/../../../../../../JavaFX/javafx-sdk-15/lib" recursive="false" />
     <jarDirectory url="file://$PROJECT_DIR$/../../../../../../JavaFX/javafx-sdk-15/lib" recursive="false" type="SOURCES" />
+=======
+      <root url="file://D:/Programs/openjfx-11.0.2_windows-x64_bin-sdk/javafx-sdk-11.0.2/lib" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="file://D:/Programs/openjfx-11.0.2_windows-x64_bin-sdk/javafx-sdk-11.0.2/lib" />
+    </SOURCES>
+    <jarDirectory url="file://D:/Programs/openjfx-11.0.2_windows-x64_bin-sdk/javafx-sdk-11.0.2/lib" recursive="false" />
+    <jarDirectory url="file://D:/Programs/openjfx-11.0.2_windows-x64_bin-sdk/javafx-sdk-11.0.2/lib" recursive="false" type="SOURCES" />
+>>>>>>> .merge_file_a16164
   </library>
 </component>

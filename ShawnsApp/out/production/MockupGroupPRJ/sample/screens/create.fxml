@@ -4,15 +4,25 @@
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
+<<<<<<< .merge_file_a20656
 <?import javafx.scene.control.TextField?>
+=======
+<?import javafx.scene.control.ListView?>
+>>>>>>> .merge_file_a25892
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
+<<<<<<< .merge_file_a20656
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="900.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
     <children>
         <Button layoutX="499.0" layoutY="541.0" mnemonicParsing="false" onAction="#createAppointmentButtonClick" prefHeight="54.0" prefWidth="320.0" style="-fx-border-color: #bf0208; -fx-background-color: white; -fx-border-radius: 25; -fx-background-radius: 25;" text="Done">
+=======
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="900.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.CreateFormController">
+    <children>
+        <Button layoutX="499.0" layoutY="541.0" mnemonicParsing="false" onAction="#buttonCancelClick" prefHeight="54.0" prefWidth="320.0" style="-fx-border-color: #bf0208; -fx-background-color: white; -fx-border-radius: 25; -fx-background-radius: 25;" text="Done">
+>>>>>>> .merge_file_a25892
             <font>
                 <Font name="Lucida Console" size="23.0" />
             </font></Button>
@@ -30,15 +40,23 @@
                 <Font name="Lucida Console" size="30.0" />
             </font>
         </Label>
+<<<<<<< .merge_file_a20656
       <Button layoutX="814.0" layoutY="31.0" mnemonicParsing="false" onAction="#populateChoiceBox" text="Back">
+=======
+      <Button layoutX="814.0" layoutY="31.0" mnemonicParsing="false" text="Back">
+>>>>>>> .merge_file_a25892
          <font>
             <Font name="Lucida Console" size="12.0" />
          </font>
       </Button>
+<<<<<<< .merge_file_a20656
       <TextField fx:id="tbDriverName" layoutX="145.0" layoutY="278.0" prefHeight="25.0" prefWidth="194.0" />
       <TextField fx:id="tbPhoneNumber" layoutX="145.0" layoutY="365.0" prefHeight="25.0" prefWidth="194.0" />
       <TextField fx:id="tbLicensePlate" layoutX="145.0" layoutY="448.0" prefHeight="25.0" prefWidth="194.0" />
       <Label layoutX="126.0" layoutY="160.0" text="Personal details" textFill="#dd0303">
+=======
+      <Label layoutX="126.0" layoutY="158.0" text="Driver details" textFill="#dd0303">
+>>>>>>> .merge_file_a25892
          <font>
             <Font name="Lucida Console" size="24.0" />
          </font>
@@ -50,6 +68,7 @@
       </Label>
       <DatePicker fx:id="dpAppointmentDate" layoutX="536.0" layoutY="276.0" prefHeight="54.0" prefWidth="231.0" />
       <ChoiceBox fx:id="cbAppointmentTime" layoutX="536.0" layoutY="405.0" prefHeight="25.0" prefWidth="231.0" />
+<<<<<<< .merge_file_a20656
       <Label layoutX="214.0" layoutY="246.0" text="Name:">
          <font>
             <Font name="Lucida Console" size="18.0" />
@@ -65,6 +84,8 @@
             <Font name="Lucida Console" size="18.0" />
          </font>
       </Label>
+=======
+>>>>>>> .merge_file_a25892
       <Label layoutX="586.0" layoutY="380.0" text="Select time:">
          <font>
             <Font name="Lucida Console" size="18.0" />
@@ -80,5 +101,20 @@
             <Image url="@../images/st.png" />
          </image>
       </ImageView>
+<<<<<<< .merge_file_a20656
+=======
+      <ListView layoutX="108.0" layoutY="206.0" prefHeight="120.0" prefWidth="231.0" />
+      <Button layoutX="227.0" layoutY="342.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="88.0" style="-fx-border-color: #bf0208; -fx-background-color: white; -fx-border-radius: 25; -fx-background-radius: 25;" text="remove">
+         <font>
+            <Font name="Lucida Console" size="14.0" />
+         </font>
+      </Button>
+      <Button layoutX="126.0" layoutY="342.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="88.0" style="-fx-border-color: #bf0208; -fx-background-color: white; -fx-border-radius: 25; -fx-background-radius: 25;" text="add">
+         <font>
+            <Font name="Lucida Console" size="14.0" />
+         </font>
+      </Button>
+      <ListView layoutX="108.0" layoutY="390.0" prefHeight="120.0" prefWidth="231.0" />
+>>>>>>> .merge_file_a25892
     </children>
 </Pane>
