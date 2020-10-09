@@ -12,7 +12,7 @@
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="900.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.CreateFormController">
     <children>
-        <Button layoutX="499.0" layoutY="541.0" mnemonicParsing="false" onAction="#buttonCancelClick" prefHeight="54.0" prefWidth="320.0" style="-fx-border-color: #bf0208; -fx-background-color: white; -fx-border-radius: 25; -fx-background-radius: 25;" text="Done">
+        <Button layoutX="499.0" layoutY="541.0" mnemonicParsing="false" onAction="#createAppointmentButtonClick" prefHeight="54.0" prefWidth="320.0" style="-fx-border-color: #bf0208; -fx-background-color: white; -fx-border-radius: 25; -fx-background-radius: 25;" text="Done">
             <font>
                 <Font name="Lucida Console" size="23.0" />
             </font></Button>
@@ -62,19 +62,19 @@
             <Image url="@../images/st.png" />
          </image>
       </ImageView>
-      <ListView layoutX="108.0" layoutY="206.0" prefHeight="120.0" prefWidth="231.0" />
-      <Button layoutX="227.0" layoutY="342.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="88.0" style="-fx-border-color: #bf0208; -fx-background-color: white; -fx-border-radius: 25; -fx-background-radius: 25;" text="remove">
+      <ListView fx:id="lvAllDrivers" layoutX="108.0" layoutY="206.0" prefHeight="120.0" prefWidth="231.0" />
+      <Button layoutX="227.0" layoutY="342.0" mnemonicParsing="false" onAction="#btnRemoveDriver" prefHeight="39.0" prefWidth="88.0" style="-fx-border-color: #bf0208; -fx-background-color: white; -fx-border-radius: 25; -fx-background-radius: 25;" text="remove">
          <font>
             <Font name="Lucida Console" size="14.0" />
          </font>
       </Button>
-      <Button layoutX="126.0" layoutY="342.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="88.0" style="-fx-border-color: #bf0208; -fx-background-color: white; -fx-border-radius: 25; -fx-background-radius: 25;" text="add">
+      <Button layoutX="126.0" layoutY="342.0" mnemonicParsing="false" onAction="#btnAddDriver" prefHeight="39.0" prefWidth="88.0" style="-fx-border-color: #bf0208; -fx-background-color: white; -fx-border-radius: 25; -fx-background-radius: 25;" text="add">
          <font>
             <Font name="Lucida Console" size="14.0" />
          </font>
       </Button>
-      <ListView layoutX="108.0" layoutY="390.0" prefHeight="120.0" prefWidth="231.0" />
-      <Button layoutX="300.0" layoutY="149.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="39.0" style="-fx-border-color: #bf0208; -fx-background-color: white; -fx-border-radius: 25; -fx-background-radius: 25;" text="+">
+      <ListView fx:id="lvAddedDrivers" layoutX="108.0" layoutY="390.0" prefHeight="120.0" prefWidth="231.0" />
+      <Button layoutX="300.0" layoutY="149.0" mnemonicParsing="false" onAction="#buttonCreateDriverClick" prefHeight="39.0" prefWidth="39.0" style="-fx-border-color: #bf0208; -fx-background-color: white; -fx-border-radius: 25; -fx-background-radius: 25;" text="+">
          <font>
             <Font name="Lucida Console" size="14.0" />
          </font>

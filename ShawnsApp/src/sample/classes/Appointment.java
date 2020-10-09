@@ -1,6 +1,8 @@
 package sample.classes;
 
 import sample.classes.Driver;
+
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -21,14 +23,20 @@ public class Appointment {
         date = Calendar.getInstance();
         date.set(year, month, day);
         this.time = time;
-        this.driverList = driverList;
+        this.driverList = new ArrayList<>();
+        for (Driver driver : driverList) {
+            this.driverList.add(driver);
+        }
     }
 
     public Appointment(int day, int month, int year, LocalTime time, List<Driver> driverList, int id) {
         this.id = id;
         date.set(year, month, day);
         this.time = time;
-        this.driverList = driverList;
+        this.driverList = new ArrayList<>();
+        for (Driver driver : driverList) {
+            this.driverList.add(driver);
+        }
     }
 
     public void addDriver(Driver driver) { driverList.add(driver); }
@@ -45,5 +53,9 @@ public class Appointment {
             info += ".";
         }
         return info;
+    }
+
+    public ShowcaseAppointment getShowcaseAppointment() {
+        return new ShowcaseAppointment(this);
     }
 }

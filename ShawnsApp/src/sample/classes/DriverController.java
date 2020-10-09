@@ -8,11 +8,16 @@ import java.util.List;
 public class DriverController {
     List<Driver> driverList;
 
-    public DriverController() { driverList = new ArrayList<>(); }
+    public DriverController() {
+        driverList = new ArrayList<>();
+    }
 
-    public boolean addDriver(Driver driver) {
+    public void addDriver(Driver driver) {
         driverList.add(driver);
-        return true;
+    }
+
+    public List<Driver> getAllDrivers() {
+        return driverList;
     }
 
     public Driver getLastAddedDriver() {
