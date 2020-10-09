@@ -11,10 +11,14 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 import sample.classes.Appointment;
 import sample.classes.AppointmentController;
+import sample.classes.DataControl;
 import sample.classes.Driver;
 import sample.classes.DriverController;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.text.MessageFormat;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,6 +36,8 @@ public class CreateFormController implements Initializable {
     private List<Driver> availableDriversList;
     private List<Driver> addedDriversList;
 
+    private DataControl dataController;
+
 
     public void initData(DriverController dc, AppointmentController ac) {
         this.dc = dc;
@@ -48,6 +54,8 @@ public class CreateFormController implements Initializable {
     }
 
     public void populateChoiceBox() {
+        cbAppointmentTime.getItems().add("10:00:00");
+        cbAppointmentTime.getItems().add("11:00:00");
         cbAppointmentTime.getItems().add("12:00:00");
         cbAppointmentTime.getItems().add("13:00:00");
         cbAppointmentTime.getItems().add("14:00:00");
@@ -87,22 +95,26 @@ public class CreateFormController implements Initializable {
         updateDriversLists();
     }
 
-    public void createAppointmentButtonClick() {
+    public void createAppointmentButtonClick() throws SQLException {
         if (dpAppointmentDate.getValue() != null && cbAppointmentTime.getValue() != null) {
+            ac.AddAppointmentToDB(dpAppointmentDate.getValue().getDayOfMonth(),
+                    dpAppointmentDate.getValue().getMonthValue(),
+                    dpAppointmentDate.getValue().getYear(),
+                    LocalTime.parse(cbAppointmentTime.getValue()),
+                    addedDriversList);
+            int maxId = ac.GetMaxAppointmentID();
             ac.addAppointment(
                     new Appointment(
                             dpAppointmentDate.getValue().getDayOfMonth(),
                             dpAppointmentDate.getValue().getMonthValue(),
                             dpAppointmentDate.getValue().getYear(),
                             LocalTime.parse(cbAppointmentTime.getValue()),
-                            addedDriversList
+                            addedDriversList,
+                            maxId
                     )
             );
             Appointment appointment = ac.getLastAddedAppointment();
-            Alert alert = new Alert(Alert.AlertType.INFORMATION, appointment.GetInfo());
-            alert.setHeaderText("Successfully created an appointment!");
-            alert.showAndWait();
-            resetForm();
+            ac.UpdateDB(appointment);
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setHeaderText("Please fill in all the information!");

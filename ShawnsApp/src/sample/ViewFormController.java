@@ -41,7 +41,6 @@ public class ViewFormController implements Initializable {
         tcDate.setCellValueFactory(new PropertyValueFactory<ShowcaseAppointment, String>("date"));
         tcTime.setCellValueFactory(new PropertyValueFactory<ShowcaseAppointment, String>("time"));
         tcDriverNames.setCellValueFactory(new PropertyValueFactory<ShowcaseAppointment, String>("names"));
-
     }
 
     public ObservableList<ShowcaseAppointment> populateTableView() {

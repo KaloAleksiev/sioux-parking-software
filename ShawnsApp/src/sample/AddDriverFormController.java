@@ -15,6 +15,7 @@ import javafx.stage.Stage;
 import sample.classes.DriverController;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class AddDriverFormController implements Initializable{
@@ -33,13 +34,16 @@ public class AddDriverFormController implements Initializable{
     @Override
     public void initialize(URL url, ResourceBundle rb) { }
 
-    public void btnDoneClick() {
+    public void btnDoneClick() throws SQLException {
         if (tbLicensePlate.getText() != "" && tbPhoneNumber.getText() != "" && tbDriverName.getText() != "" ) {
+            dc.AddDriverToDB(tbPhoneNumber.getText(), tbLicensePlate.getText(), tbDriverName.getText());
+            int driverId = dc.GetMaxDriverID();
             dc.addDriver(
                     new Driver(
                             tbLicensePlate.getText(),
-                            Integer.parseInt(tbPhoneNumber.getText()),
-                            tbDriverName.getText()
+                            tbPhoneNumber.getText(),
+                            tbDriverName.getText(),
+                            driverId
                     )
             );
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
