@@ -2,8 +2,18 @@ plugins {
 	id 'org.springframework.boot' version '2.3.4.RELEASE'
 	id 'io.spring.dependency-management' version '1.0.10.RELEASE'
 	id 'java'
+	id 'application'
+	id 'org.openjfx.javafxplugin' version '0.0.8'
+}
+javafx {
+	version = "14"
+	modules = [ 'javafx.controls' ]
 }
 
+javafx {
+	version = "14"
+	modules = [ 'javafx.controls' ]
+}
 group = 'ShawnAppGradle'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '11'
