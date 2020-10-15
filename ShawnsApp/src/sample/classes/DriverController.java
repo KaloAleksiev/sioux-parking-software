@@ -1,18 +1,18 @@
 package sample.classes;
 
-import sample.classes.Driver;
+import sample.datasources.DataBase;
+import sample.interfaces.DataSource;
 
-import javax.xml.crypto.Data;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class DriverController {
     List<Driver> driverList;
-    DataControl dc;
+    DataSource dc;
 
     public DriverController() {
-        dc = new DataControl();
+        dc = new DataBase();
         driverList = new ArrayList<>();
     }
 

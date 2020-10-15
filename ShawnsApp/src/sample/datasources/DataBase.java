@@ -1,6 +1,9 @@
-package sample.classes;
+package sample.datasources;
 
 import javafx.scene.control.Alert;
+import sample.classes.Appointment;
+import sample.classes.Driver;
+import sample.interfaces.DataSource;
 
 import javax.xml.transform.Result;
 import java.sql.*;
@@ -9,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
-public class DataControl {
+public class DataBase implements DataSource {
 
     // init database constants
     private static final String DATABASE_DRIVER = "com.mysql.cj.jdbc.Driver";
@@ -105,7 +108,7 @@ public class DataControl {
         }
     }
 
-    public void AddAppointmentToDB(int day, int month, int year, LocalTime time, List<Driver> driverList) throws SQLException {
+    public void AddAppointmentToDB(int day, int month, int year, LocalTime time, List<sample.classes.Driver> driverList) throws SQLException {
         String sql = "INSERT INTO `appointment` (`date`, `time`) VALUES ('" + year + "-" + month + "-" + day + "', '" + time + "');";
         try {
             PreparedStatement statement = this.connect().prepareStatement(sql);
@@ -118,7 +121,7 @@ public class DataControl {
     }
 
     public void UpdateDB(Appointment appointment) {
-        for (Driver driver : appointment.getDriverList()) {
+        for (sample.classes.Driver driver : appointment.getDriverList()) {
             String sql = "INSERT INTO `driver_appointment` (`driver_id`, `appointment_id`) VALUES ('" + driver.getId() + "', '" + appointment.getId() + "');";
             try {
                 PreparedStatement statement = this.connect().prepareStatement(sql);
@@ -131,8 +134,8 @@ public class DataControl {
         }
     }
 
-    public List<Driver> GetDrivers() throws SQLException {
-        List<Driver> drivers = new ArrayList<>();
+    public List<sample.classes.Driver> GetDrivers() throws SQLException {
+        List<sample.classes.Driver> drivers = new ArrayList<>();
         Connection conn = this.connect();
         Statement stmt = conn.createStatement();
         String sql = "SELECT driver_id, license_plate, phone_number, name FROM `driver`";
@@ -143,7 +146,7 @@ public class DataControl {
                 String plate = rs.getString("license_plate");
                 String phone = rs.getString("phone_number");
                 String name = rs.getString("name");
-                Driver driver = new Driver(plate, phone, name, id);
+                sample.classes.Driver driver = new Driver(plate, phone, name, id);
                 drivers.add(driver);
             }
         } catch (SQLException e) {
@@ -187,11 +190,13 @@ public class DataControl {
                 String dateMonth = date.substring(5,7);
                 String dateDay = date.substring(8);
                 String time = rs.getString("time");
-                Appointment appointment = new Appointment(Integer.parseInt(dateDay), Integer.parseInt(dateMonth), Integer.parseInt(dateYear), LocalTime.parse(time), id);
 
-
-
-                appointments.add(appointment);
+                appointments.add(new Appointment(
+                        Integer.parseInt(dateDay),
+                        Integer.parseInt(dateMonth),
+                        Integer.parseInt(dateYear),
+                        LocalTime.parse(time), id)
+                );
             }
         } catch (SQLException e) {
             e.printStackTrace();

@@ -11,14 +11,12 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 import sample.classes.Appointment;
 import sample.classes.AppointmentController;
-import sample.classes.DataControl;
+import sample.datasources.DataBase;
 import sample.classes.Driver;
 import sample.classes.DriverController;
 import java.io.IOException;
 import java.net.URL;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.text.MessageFormat;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -36,7 +34,7 @@ public class CreateFormController implements Initializable {
     private List<Driver> availableDriversList;
     private List<Driver> addedDriversList;
 
-    private DataControl dataController;
+    private DataBase dataController;
 
 
     public void initData(DriverController dc, AppointmentController ac) {

@@ -51,7 +51,12 @@ public class Appointment {
     public void addDriver(Driver driver) { driverList.add(driver); }
 
     public String GetInfo() {
-        String info = "Date: " + this.date.get(Calendar.DAY_OF_MONTH) + "-" + this.date.get(Calendar.MONTH) + "-" + this.date.get(Calendar.YEAR) + ", " + "time: " + this.time.toString();
+        String info = "Date: "
+                + this.date.get(Calendar.DAY_OF_MONTH) + "-"
+                + this.date.get(Calendar.MONTH) + "-"
+                + this.date.get(Calendar.YEAR) + ", "
+                + "time: " + this.time.toString();
+
         if (driverList.size() == 0) {
             info += ", no drivers.";
         } else {

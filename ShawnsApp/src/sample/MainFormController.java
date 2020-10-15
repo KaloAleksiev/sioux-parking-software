@@ -41,8 +41,6 @@ public  class MainFormController implements Initializable {
                     appointment.addDriver(dc.GetDriverById(a));
                 }
             }
-
-
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }

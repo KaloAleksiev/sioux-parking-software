@@ -11,7 +11,10 @@ public class ShowcaseAppointment {
 
     public ShowcaseAppointment(Appointment appointment) {
         this.appointment = appointment;
-        this.date = appointment.date.get(Calendar.DAY_OF_MONTH) + "-" + appointment.date.get(Calendar.MONTH) + "-" + appointment.date.get(Calendar.YEAR);
+        this.date = appointment.date.get(Calendar.DAY_OF_MONTH)
+                + "-" + appointment.date.get(Calendar.MONTH)
+                + "-" + appointment.date.get(Calendar.YEAR);
+
         this.time = String.valueOf(appointment.getTime());
         this.names = "";
         for (Driver driver : appointment.getDriverList()) {
@@ -19,15 +22,9 @@ public class ShowcaseAppointment {
         }
     }
 
-    public String getDate() {
-        return date;
-    }
+    public String getDate() { return date; }
 
-    public String getTime() {
-        return time;
-    }
+    public String getTime() { return time; }
 
-    public String getNames() {
-        return names;
-    }
+    public String getNames() { return names; }
 }

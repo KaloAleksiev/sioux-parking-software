@@ -1,7 +1,7 @@
 package sample.classes;
 
-import sample.classes.Appointment;
-import sample.classes.Driver;
+import sample.datasources.DataBase;
+import sample.interfaces.DataSource;
 
 import java.sql.SQLException;
 import java.time.LocalTime;
@@ -11,10 +11,10 @@ import java.util.List;
 public class AppointmentController {
     List<Appointment> appointmentList;
 
-    DataControl dc;
+    DataSource ds;
 
     public AppointmentController() {
-        dc = new DataControl();
+        ds = new DataBase();
         appointmentList = new ArrayList<>();
     }
 
@@ -40,22 +40,22 @@ public class AppointmentController {
     }
 
     public void AddAppointmentToDB(int day, int month, int year, LocalTime time, List<Driver> driverList) throws SQLException {
-        dc.AddAppointmentToDB(day, month, year, time, driverList);
+        ds.AddAppointmentToDB(day, month, year, time, driverList);
     }
 
     public int GetMaxAppointmentID() throws SQLException {
-        return dc.GetMaxAppointmentID();
+        return ds.GetMaxAppointmentID();
     }
 
     public void UpdateDB(Appointment appointment) {
-        dc.UpdateDB(appointment);
+        ds.UpdateDB(appointment);
     }
 
     public List<Appointment> GetAppointments() throws SQLException {
-        return dc.GetAppointments();
+        return ds.GetAppointments();
     }
 
     public List<Integer> GetDriversForAppointment(Appointment appointment) throws SQLException {
-        return dc.GetDriversForAppointment(appointment);
+        return ds.GetDriversForAppointment(appointment);
     }
 }
