@@ -1,6 +1,8 @@
 package sample.classes;
 
 import sample.classes.Driver;
+
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -12,7 +14,7 @@ public class Appointment {
     LocalTime time;
     List<Driver> driverList;
 
-    public int getId() { return id; }
+    public int getId() { return this.id; }
     public Calendar getDate() { return date; }
     public LocalTime getTime() { return time; }
     public List<Driver> getDriverList() { return driverList; }
@@ -21,14 +23,29 @@ public class Appointment {
         date = Calendar.getInstance();
         date.set(year, month, day);
         this.time = time;
-        this.driverList = driverList;
+        this.driverList = new ArrayList<>();
+        for (Driver driver : driverList) {
+            this.driverList.add(driver);
+        }
     }
 
     public Appointment(int day, int month, int year, LocalTime time, List<Driver> driverList, int id) {
         this.id = id;
+        date = Calendar.getInstance();
         date.set(year, month, day);
         this.time = time;
-        this.driverList = driverList;
+        this.driverList = new ArrayList<>();
+        for (Driver driver : driverList) {
+            this.driverList.add(driver);
+        }
+    }
+
+    public Appointment(int day, int month, int year, LocalTime time, int id) {
+        this.id = id;
+        date = Calendar.getInstance();
+        date.set(year, month, day);
+        this.time = time;
+        this.driverList = new ArrayList<>();
     }
 
     public void addDriver(Driver driver) { driverList.add(driver); }
@@ -45,5 +62,9 @@ public class Appointment {
             info += ".";
         }
         return info;
+    }
+
+    public ShowcaseAppointment getShowcaseAppointment() {
+        return new ShowcaseAppointment(this);
     }
 }
