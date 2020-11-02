@@ -8,9 +8,12 @@ import sample.interfaces.DataSource;
 import javax.xml.transform.Result;
 import java.sql.*;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Properties;
+import java.util.function.Predicate;
 
 public class DataBase implements DataSource {
 
@@ -79,7 +82,7 @@ public class DataBase implements DataSource {
     }
 
     public int GetMaxAppointmentID() throws SQLException {
-        int id = 5;
+        int id = 1;
         Connection conn = this.connect();
         Statement stmt = conn.createStatement();
         String sql = "SELECT MAX(appointment_id) AS 'max' FROM `appointment`";
@@ -87,6 +90,9 @@ public class DataBase implements DataSource {
             ResultSet rs = stmt.executeQuery(sql);
             while(rs.next()) {
                 id = rs.getInt("max");
+            }
+            if(id == 0){
+                id = 1;
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -109,7 +115,8 @@ public class DataBase implements DataSource {
     }
 
     public void AddAppointmentToDB(int day, int month, int year, LocalTime time, List<sample.classes.Driver> driverList) throws SQLException {
-        String sql = "INSERT INTO `appointment` (`date`, `time`) VALUES ('" + year + "-" + month + "-" + day + "', '" + time + "');";
+        System.out.print(time);
+        String sql = "INSERT INTO `appointment` (`date`, `time`) VALUES ('" + year + "-" + month + "-" + day + "', '" + time + ":00');";
         try {
             PreparedStatement statement = this.connect().prepareStatement(sql);
             statement.execute();
@@ -157,22 +164,32 @@ public class DataBase implements DataSource {
         }
     }
 
-    public List<Integer> GetDriversForAppointment(Appointment appointment) throws SQLException {
-        List<Integer> list = new ArrayList<>();
+    public List<Driver> GetDriversForAppointment(Appointment appointment) throws SQLException {
+        List<Driver> drivers = new ArrayList<>();
         Connection conn = this.connect();
         Statement stmt = conn.createStatement();
-        String sql = "SELECT driver_id FROM `driver_appointment` WHERE appointment_id IS '" + appointment.getId() + "';";
+        String sql = "" +
+                "SELECT d.driver_id,d.license_plate,d.phone_number, d.name " +
+                "FROM `driver` AS d INNER JOIN `driver_appointment` AS da " +
+                "ON d.driver_id = da.driver_id " +
+                "WHERE da.appointment_id =" + appointment.getId()+";";
+
         try {
             ResultSet rs = stmt.executeQuery(sql);
             while(rs.next()) {
-                int id  = rs.getInt("driver_id");
-                list.add(id);
+                int id  = rs.getInt("d.driver_id");
+                String lp = rs.getString("d.license_plate");
+                String phone = rs.getString("d.phone_number");
+                String name = rs.getString("d.name");
+
+                Driver d = new Driver(lp, phone,name,id);
+                drivers.add(d);
             }
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
             this.disconnect();
-            return list;
+            return drivers;
         }
     }
 
@@ -180,11 +197,11 @@ public class DataBase implements DataSource {
         List<Appointment> appointments = new ArrayList<>();
         Connection conn = this.connect();
         Statement stmt = conn.createStatement();
-        String sql = "SELECT 'appointment_id', 'date', 'time' FROM `appointment`";
-        try {
+        String sql = "SELECT `appointment_id`, `date`, `time` FROM `appointment`";
+        try{
             ResultSet rs = stmt.executeQuery(sql);
             while(rs.next()) {
-                int id  = rs.getInt("appointment_id");
+                String id  = rs.getString("appointment_id");
                 String date = rs.getString("date");
                 String dateYear = date.substring(0,4);
                 String dateMonth = date.substring(5,7);
@@ -195,14 +212,80 @@ public class DataBase implements DataSource {
                         Integer.parseInt(dateDay),
                         Integer.parseInt(dateMonth),
                         Integer.parseInt(dateYear),
-                        LocalTime.parse(time), id)
+                        LocalTime.parse(time),
+                        Integer.parseInt(id))
                 );
             }
-        } catch (SQLException e) {
+        }
+        catch(SQLException e){
             e.printStackTrace();
-        } finally {
+        }
+        finally {
             this.disconnect();
             return appointments;
         }
     }
+
+    public void ChangeDate(int day, int month, int year, int appId){
+        String sql = "UPDATE appointment SET date = '" + year + "-" + month + "-" + day + "' WHERE appointment_id =" + appId;
+        try {
+            PreparedStatement statement = this.connect().prepareStatement(sql);
+            statement.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            this.disconnect();
+        }
+    }
+
+    public void ChangeTime(LocalTime time, int appId){
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+        System.out.println(time.format(formatter));
+        String sql = "UPDATE appointment SET time = '"+time+"' WHERE  appointment_id= '" + appId + "';";
+        try {
+            PreparedStatement statement = this.connect().prepareStatement(sql);
+            statement.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            this.disconnect();
+        }
+    }
+
+    public void ChangeDrivers(List<Driver> newDrivers, Appointment ap){
+
+        List<Driver> nd = new ArrayList<>();
+        for (Driver d:newDrivers) {
+            nd.add(d);
+        }
+        for (Driver d:ap.getDriverList()){
+            if(!nd.stream().anyMatch(o -> o.getId() == (d.getId()))){
+                String sql = "DELETE FROM driver_appointment WHERE driver_id="+ d.getId() +" AND appointment_id="+ap.getId();
+                try {
+                    PreparedStatement statement = this.connect().prepareStatement(sql);
+                    statement.execute();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                } finally {
+                    this.disconnect();
+                }
+            }
+            else if(nd.stream().anyMatch(o -> o.getId() == (d.getId()))){
+                nd.removeIf(dr -> (dr.getId() == d.getId()));
+            }
+        }
+        for (Driver dr:nd) {
+            String sql = "INSERT INTO `driver_appointment` (`driver_id`, `appointment_id`) VALUES (" + dr.getId() + ", " + ap.getId() + ");";
+            try {
+                PreparedStatement statement = this.connect().prepareStatement(sql);
+                statement.execute();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } finally {
+                this.disconnect();
+            }
+        }
+    }
+
+    
 }

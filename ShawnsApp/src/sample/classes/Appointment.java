@@ -40,12 +40,32 @@ public class Appointment {
         }
     }
 
+    public Appointment(int id, Calendar date, LocalTime time, List<Driver> driverList) {
+        this.id = id;
+        this.date = date;
+        this.time = time;
+        this.driverList = driverList;
+    }
+
     public Appointment(int day, int month, int year, LocalTime time, int id) {
         this.id = id;
         date = Calendar.getInstance();
         date.set(year, month, day);
         this.time = time;
         this.driverList = new ArrayList<>();
+    }
+
+    public void setDate(int day, int month, int year) {
+        date = Calendar.getInstance();
+        date.set(year, month, day);
+    }
+
+    public void setTime(LocalTime time) {
+        this.time = time;
+    }
+
+    public void setDriverList(List<Driver> driverList) {
+        this.driverList = driverList;
     }
 
     public void addDriver(Driver driver) { driverList.add(driver); }

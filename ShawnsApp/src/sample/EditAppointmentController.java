@@ -11,18 +11,24 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 import sample.classes.Appointment;
 import sample.classes.AppointmentController;
-import sample.datasources.DataBase;
 import sample.classes.Driver;
 import sample.classes.DriverController;
+
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.TemporalAccessor;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class CreateFormController implements Initializable {
+public class EditAppointmentController implements Initializable {
+
+
     @FXML private DatePicker dpAppointmentDate;
     @FXML private ChoiceBox<String> cbAppointmentTime;
     @FXML private ListView<String> lvAllDrivers;
@@ -30,25 +36,42 @@ public class CreateFormController implements Initializable {
 
     private DriverController dc;
     private AppointmentController ac;
+    private Appointment current;
 
     private List<Driver> availableDriversList;
     private List<Driver> addedDriversList;
 
-    private DataBase dataController;
 
-
-    public void initData(DriverController dc, AppointmentController ac) {
+    public void initData(DriverController dc, AppointmentController ac, Appointment app) {
         this.dc = dc;
         this.ac = ac;
+        this.current = new Appointment(app.getId(), app.getDate(), app.getTime(), app.getDriverList());
+
+
         addedDriversList = new ArrayList<>();
         availableDriversList = new ArrayList<>();
-        availableDriversList = this.dc.getAllDrivers();
-        populateListView();
+
+        for (Driver d :dc.getAllDrivers()) {
+
+            if(app.getDriverList().stream().anyMatch(o -> o.getId() == (d.getId()))){
+                addedDriversList.add(d);
+            }
+            else if(!app.getDriverList().stream().anyMatch(o -> o.getId() == (d.getId()))){
+                availableDriversList.add(d);
+            }
+        }
+        fillInInfo();
     }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         populateChoiceBox();
+    }
+
+    public void fillInInfo(){
+        updateDriversLists();
+        SetDate();
+        SetTime();
     }
 
     public void populateChoiceBox() {
@@ -72,11 +95,38 @@ public class CreateFormController implements Initializable {
             lvAddedDrivers.getItems().add(driver.GetInfo());
         }
     }
+    public void SetDate(){
+        DateTimeFormatter formatter = null;
+        String formatString = "";
+        if(this.current.getDate().get(Calendar.DAY_OF_MONTH) < 10){
 
-    public void populateListView() {
-        for (Driver driver : availableDriversList) {
-            lvAllDrivers.getItems().add(driver.GetInfo());
+            formatString+="d-";
         }
+        else{
+            formatString+="dd-";
+        }
+
+        if(this.current.getDate().get(Calendar.MONTH) < 10){
+            formatString+="M-";
+        }
+        else{
+            formatString+="MM-";
+        }
+        formatString+="yyyy";
+        formatter = DateTimeFormatter.ofPattern(formatString);
+
+        String info =
+                + this.current.getDate().get(Calendar.DAY_OF_MONTH) + "-"
+                + this.current.getDate().get(Calendar.MONTH) + "-"
+                + this.current.getDate().get(Calendar.YEAR);
+        LocalDate localDate = LocalDate.parse(info, formatter);
+        dpAppointmentDate.setValue(localDate);
+    }
+
+    public void SetTime(){
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+        cbAppointmentTime.setValue(this.current.getTime().format(formatter));
+
     }
 
     public void btnAddDriver() {
@@ -93,20 +143,31 @@ public class CreateFormController implements Initializable {
         updateDriversLists();
     }
 
-    public void createAppointmentButtonClick() throws SQLException {
-        if (dpAppointmentDate.getValue() != null && cbAppointmentTime.getValue() != null) {
-            ac.createAppointment(dpAppointmentDate.getValue().getDayOfMonth(),
-                    dpAppointmentDate.getValue().getMonthValue(),
-                    dpAppointmentDate.getValue().getYear(),
-                    LocalTime.parse(cbAppointmentTime.getValue()),
-                    addedDriversList);
-            ac.UpdateDB(ac.getLastAddedAppointment());
-        } else {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setHeaderText("Please fill in all the information!");
-            alert.showAndWait();
+    public void editAppointmentButtonClick() throws SQLException {
+
+        if(!this.current.getDriverList().equals(this.addedDriversList)){
+            ac.ChangeDrivers(this.addedDriversList, this.current);
         }
-        resetForm();
+
+        if(this.current.getTime() != LocalTime.parse(cbAppointmentTime.getValue())){
+            ac.changeTime(LocalTime.parse(cbAppointmentTime.getValue()), this.current.getId());
+        }
+
+        Calendar date = Calendar.getInstance();
+        date.set(dpAppointmentDate.getValue().getYear(), dpAppointmentDate.getValue().getMonthValue(), dpAppointmentDate.getValue().getDayOfMonth());
+        if(this.current.getDate().compareTo(date) != 0) {
+            System.out.println("diff");
+            System.out.println(date);
+            System.out.println(this.current.getDate());
+            ac.changeDate(dpAppointmentDate.getValue().getDayOfMonth(),
+                    dpAppointmentDate.getValue().getMonthValue(),
+                    dpAppointmentDate.getValue().getYear(), this.current.getId());
+        }
+//        } else {
+//            Alert alert = new Alert(Alert.AlertType.ERROR);
+//            alert.setHeaderText("Please fill in all the information!");
+//            alert.showAndWait();
+//        }
     }
 
     public void resetForm() {
@@ -123,13 +184,13 @@ public class CreateFormController implements Initializable {
         updateDriversLists();
     }
 
-    public void buttonCancelClick(ActionEvent event) throws IOException {
+    public void buttonCancelClick(ActionEvent event) throws IOException, SQLException {
         FXMLLoader fxmlLoader = new FXMLLoader();
-        fxmlLoader.setLocation(getClass().getResource("screens/main.fxml"));
+        fxmlLoader.setLocation(getClass().getResource("screens/view.fxml"));
         Parent root = fxmlLoader.load();
         Scene createFormScene = new Scene(root);
 
-        MainFormController mfc = fxmlLoader.getController();
+        ViewFormController mfc = fxmlLoader.getController();
         mfc.initData(dc, ac);
 
         Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();

@@ -19,9 +19,13 @@ import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public  class MainFormController implements Initializable {
-    DriverController dc = new DriverController();
-    AppointmentController ac = new AppointmentController();
-    public int idCounter = 100;
+    DriverController dc;
+    AppointmentController ac;
+
+    public MainFormController() throws SQLException {
+        dc = new DriverController();
+        ac = new AppointmentController();
+    }
 
     public void initData(DriverController dc, AppointmentController ac) {
         this.dc = dc;
@@ -30,20 +34,7 @@ public  class MainFormController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        try {
-            for (Driver driver : dc.GetDriversFromDB()) {
-                dc.addDriver(driver);
-            }
 
-            for (Appointment appointment : ac.GetAppointments()) {
-                ac.addAppointment(appointment);
-                for (int a : ac.GetDriversForAppointment(appointment)) {
-                    appointment.addDriver(dc.GetDriverById(a));
-                }
-            }
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
     }
 
     public void openCreateFormButtonClick(ActionEvent event) throws IOException {
@@ -60,7 +51,7 @@ public  class MainFormController implements Initializable {
         window.show();
     }
 
-    public void openViewFormButtonClick(ActionEvent event) throws IOException {
+    public void openViewFormButtonClick(ActionEvent event) throws IOException, SQLException {
         FXMLLoader fxmlLoader = new FXMLLoader();
         fxmlLoader.setLocation(getClass().getResource("screens/view.fxml"));
         Parent root = fxmlLoader.load();

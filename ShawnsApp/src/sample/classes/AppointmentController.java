@@ -6,6 +6,7 @@ import sample.interfaces.DataSource;
 import java.sql.SQLException;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class AppointmentController {
@@ -13,17 +14,38 @@ public class AppointmentController {
 
     DataSource ds;
 
-    public AppointmentController() {
+    public AppointmentController() throws SQLException {
         ds = new DataBase();
         appointmentList = new ArrayList<>();
-    }
+        appointmentList = ds.GetAppointments();
+        for (Appointment a:appointmentList) {
+            List<Driver> drivers = ds.GetDriversForAppointment(a);
+            a.setDriverList(drivers);
+        }
+        for (Driver d:appointmentList.get(0).getDriverList()
+             ) {
+            System.out.print(d.GetInfo());
+        }
 
-    public void addAppointment(Appointment apt) {
-        appointmentList.add(apt);
     }
 
     public List<Appointment> getAllAppointments() {
         return appointmentList;
+    }
+
+    public void changeDate(int day, int month, int year, int id){
+        getAppointmentById(id).setDate(day, month, year);
+        ds.ChangeDate(day, month, year, id);
+    }
+
+    public void changeTime(LocalTime time, int id){
+        getAppointmentById(id).setTime(time);
+        ds.ChangeTime(time,id);
+    }
+
+    public void ChangeDrivers(List<Driver>newDrivers, Appointment app){
+        getAppointmentById(app.getId()).setDriverList(newDrivers);
+        ds.ChangeDrivers(newDrivers, app);
     }
 
     public Appointment getAppointmentById(int id) {
@@ -39,8 +61,12 @@ public class AppointmentController {
         return appointmentList.get(appointmentList.size() - 1);
     }
 
-    public void AddAppointmentToDB(int day, int month, int year, LocalTime time, List<Driver> driverList) throws SQLException {
+    public void createAppointment(int day, int month, int year, LocalTime time, List<Driver> driverList) throws SQLException {
         ds.AddAppointmentToDB(day, month, year, time, driverList);
+        int id = ds.GetMaxAppointmentID();
+        Appointment app = new Appointment(day, month, year, time, driverList, id);
+        appointmentList.add(app);
+        ds.UpdateDB(app);
     }
 
     public int GetMaxAppointmentID() throws SQLException {
@@ -51,11 +77,11 @@ public class AppointmentController {
         ds.UpdateDB(appointment);
     }
 
-    public List<Appointment> GetAppointments() throws SQLException {
-        return ds.GetAppointments();
-    }
-
-    public List<Integer> GetDriversForAppointment(Appointment appointment) throws SQLException {
-        return ds.GetDriversForAppointment(appointment);
-    }
+//    public List<Appointment> GetAppointments() throws SQLException {
+//        return ds.GetAppointments();
+//    }
+//
+//    public List<Driver> GetDriversForAppointment(Appointment appointment) throws SQLException {
+//        return ds.GetDriversForAppointment(appointment);
+//    }
 }

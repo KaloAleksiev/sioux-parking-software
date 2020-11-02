@@ -16,6 +16,7 @@ import sample.classes.*;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -41,6 +42,7 @@ public class ViewFormController implements Initializable {
         tcDate.setCellValueFactory(new PropertyValueFactory<ShowcaseAppointment, String>("date"));
         tcTime.setCellValueFactory(new PropertyValueFactory<ShowcaseAppointment, String>("time"));
         tcDriverNames.setCellValueFactory(new PropertyValueFactory<ShowcaseAppointment, String>("names"));
+
     }
 
     public ObservableList<ShowcaseAppointment> populateTableView() {
@@ -49,5 +51,37 @@ public class ViewFormController implements Initializable {
             appointments.add(apt.getShowcaseAppointment());
         }
         return appointments;
+    }
+
+    public void editAppointmentsClick(ActionEvent event) throws IOException {
+        TableView.TableViewSelectionModel<ShowcaseAppointment> showApp = tvAppointments.getSelectionModel();
+        Appointment app = ac.getAppointmentById(showApp.getSelectedItem().GetId());
+
+        FXMLLoader fxmlLoader = new FXMLLoader();
+        fxmlLoader.setLocation(getClass().getResource("screens/editAppointment.fxml"));
+        Parent root = fxmlLoader.load();
+        Scene createFormScene = new Scene(root);
+
+        EditAppointmentController editAppointmentController = fxmlLoader.getController();
+        editAppointmentController.initData(dc, ac, app);
+
+        Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+        window.setScene(createFormScene);
+        window.show();
+
+    }
+
+    public void buttonCancelClick(ActionEvent event) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader();
+        fxmlLoader.setLocation(getClass().getResource("screens/main.fxml"));
+        Parent root = fxmlLoader.load();
+        Scene createFormScene = new Scene(root);
+
+        MainFormController mfc = fxmlLoader.getController();
+        mfc.initData(dc, ac);
+
+        Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+        window.setScene(createFormScene);
+        window.show();
     }
 }

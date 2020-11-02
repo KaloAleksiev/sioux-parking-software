@@ -39,16 +39,8 @@ public class AddDriverFormController implements Initializable{
     public void btnDoneClick() throws SQLException {
         // If all the Text Boxes are filled, creates a new Driver, otherwise throws an Error Notification.
         if (tbLicensePlate.getText() != "" && tbPhoneNumber.getText() != "" && tbDriverName.getText() != "" ) {
-            dc.AddDriverToDB(tbPhoneNumber.getText(), tbLicensePlate.getText(), tbDriverName.getText());
-            int driverId = dc.GetMaxDriverID();
-            dc.addDriver(
-                    new Driver(
-                            tbLicensePlate.getText(),
-                            tbPhoneNumber.getText(),
-                            tbDriverName.getText(),
-                            driverId
-                    )
-            );
+            dc.AddDriver(tbPhoneNumber.getText(), tbLicensePlate.getText(), tbDriverName.getText());
+
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setHeaderText("Please fill in all the information!");
