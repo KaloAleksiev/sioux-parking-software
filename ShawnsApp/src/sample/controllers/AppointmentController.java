@@ -23,10 +23,6 @@ public class AppointmentController {
             List<Driver> drivers = ds.GetDriversForAppointment(a);
             a.setDriverList(drivers);
         }
-        for (Driver d:appointmentList.get(0).getDriverList()
-             ) {
-            System.out.print(d.GetInfo());
-        }
     }
 
     public List<Appointment> getAllAppointments() {
