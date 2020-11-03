@@ -1,7 +1,8 @@
-package sample.classes;
+package sample.controllers;
 
 import sample.datasources.DataBase;
 import sample.interfaces.DataSource;
+import sample.models.Driver;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -15,7 +16,6 @@ public class DriverController {
         dc = new DataBase();
         driverList = new ArrayList<>();
         driverList = dc.GetDrivers();
-
     }
 
     public List<Driver> getAllDrivers() {

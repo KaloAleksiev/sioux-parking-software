@@ -1,4 +1,4 @@
-package sample.classes;
+package sample.models;
 
 import java.util.Calendar;
 import java.util.List;
@@ -15,9 +15,9 @@ public class ShowcaseAppointment {
         List<Driver> dr = appointment.getDriverList();
         this.appointment = appointment;
         this.id = this.appointment.getId();
-        this.date = appointment.date.get(Calendar.DAY_OF_MONTH)
-                + "-" + appointment.date.get(Calendar.MONTH)
-                + "-" + appointment.date.get(Calendar.YEAR);
+        this.date = appointment.getDate().get(Calendar.DAY_OF_MONTH)
+                + "-" + appointment.getDate().get(Calendar.MONTH)
+                + "-" + appointment.getDate().get(Calendar.YEAR);
 
         this.time = String.valueOf(appointment.getTime());
         this.names = "";

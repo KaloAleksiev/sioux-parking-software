@@ -1,4 +1,4 @@
-package sample;
+package sample.screenControllers;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -9,11 +9,12 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
-import sample.classes.Appointment;
-import sample.classes.AppointmentController;
+import sample.controllers.AppointmentController;
 import sample.datasources.DataBase;
-import sample.classes.Driver;
-import sample.classes.DriverController;
+import sample.models.Driver;
+import sample.controllers.DriverController;
+import sample.models.FXMLhelper;
+
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
@@ -34,12 +35,15 @@ public class CreateFormController implements Initializable {
     private List<Driver> availableDriversList;
     private List<Driver> addedDriversList;
 
-    private DataBase dataController;
+    private FXMLLoader fxmlLoader;
+    private FXMLhelper fxmlHelper;
 
 
     public void initData(DriverController dc, AppointmentController ac) {
         this.dc = dc;
         this.ac = ac;
+        fxmlLoader = new FXMLLoader();
+        fxmlHelper = new FXMLhelper();
         addedDriversList = new ArrayList<>();
         availableDriversList = new ArrayList<>();
         availableDriversList = this.dc.getAllDrivers();
@@ -124,30 +128,19 @@ public class CreateFormController implements Initializable {
     }
 
     public void buttonCancelClick(ActionEvent event) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader();
-        fxmlLoader.setLocation(getClass().getResource("screens/main.fxml"));
-        Parent root = fxmlLoader.load();
-        Scene createFormScene = new Scene(root);
 
-        MainFormController mfc = fxmlLoader.getController();
-        mfc.initData(dc, ac);
+        Scene scene = fxmlHelper.createScene("main");
+        MainFormController cfc = fxmlHelper.getFxmlLoader().getController();
+        cfc.initData(dc, ac);
+        fxmlHelper.showScene(scene, event);
 
-        Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
-        window.setScene(createFormScene);
-        window.show();
     }
 
     public void buttonCreateDriverClick(ActionEvent event) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader();
-        fxmlLoader.setLocation(getClass().getResource("screens/driver.fxml"));
-        Parent root = fxmlLoader.load();
-        Scene createFormScene = new Scene(root);
 
-        AddDriverFormController adfc = fxmlLoader.getController();
-        adfc.initData(dc, ac);
-
-        Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
-        window.setScene(createFormScene);
-        window.show();
+        Scene scene = fxmlHelper.createScene("driver");
+        AddDriverFormController cfc = fxmlHelper.getFxmlLoader().getController();
+        cfc.initData(dc, ac);
+        fxmlHelper.showScene(scene, event);
     }
 }

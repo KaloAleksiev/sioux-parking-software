@@ -1,6 +1,6 @@
-package sample;
+package sample.screenControllers;
 
-import sample.classes.*;
+import sample.controllers.AppointmentController;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -12,7 +12,9 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import sample.classes.DriverController;
+import sample.controllers.DriverController;
+import sample.models.FXMLhelper;
+
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
@@ -26,6 +28,7 @@ public class AddDriverFormController implements Initializable{
 
     DriverController dc;
     AppointmentController ac;
+    private FXMLhelper fxmlHelper;
 
     public void initData(DriverController dc, AppointmentController ac) {
         // When the Form is opened, the Controllers are transferred from the previous Form.
@@ -34,7 +37,9 @@ public class AddDriverFormController implements Initializable{
     }
 
     @Override
-    public void initialize(URL url, ResourceBundle rb) { }
+    public void initialize(URL url, ResourceBundle rb) {
+        this.fxmlHelper = new FXMLhelper();
+    }
 
     public void btnDoneClick() throws SQLException {
         // If all the Text Boxes are filled, creates a new Driver, otherwise throws an Error Notification.
@@ -60,19 +65,9 @@ public class AddDriverFormController implements Initializable{
     }
 
     public void openCreateForm(ActionEvent event) throws IOException {
-        // Opens the Create Form.
-        FXMLLoader fxmlLoader = new FXMLLoader();
-        fxmlLoader.setLocation(getClass().getResource("screens/create.fxml"));
-        Parent root = fxmlLoader.load();
-        Scene createFormScene = new Scene(root);
-
-        // Transfers the Controllers to the next opened Form.
-        CreateFormController cfc = fxmlLoader.getController();
+        Scene scene = fxmlHelper.createScene("create");
+        CreateFormController cfc = fxmlHelper.getFxmlLoader().getController();
         cfc.initData(dc, ac);
-
-        // Shows the Create Form.
-        Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
-        window.setScene(createFormScene);
-        window.show();
+        fxmlHelper.showScene(scene, event);
     }
 }

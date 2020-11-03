@@ -1,4 +1,4 @@
-package sample;
+package sample.screenControllers;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -9,10 +9,11 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
-import sample.classes.Appointment;
-import sample.classes.AppointmentController;
-import sample.classes.Driver;
-import sample.classes.DriverController;
+import sample.models.Appointment;
+import sample.controllers.AppointmentController;
+import sample.models.Driver;
+import sample.controllers.DriverController;
+import sample.models.FXMLhelper;
 
 import java.io.IOException;
 import java.net.URL;
@@ -20,7 +21,6 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.time.temporal.TemporalAccessor;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -37,6 +37,7 @@ public class EditAppointmentController implements Initializable {
     private DriverController dc;
     private AppointmentController ac;
     private Appointment current;
+    private FXMLhelper fxmlHelper;
 
     private List<Driver> availableDriversList;
     private List<Driver> addedDriversList;
@@ -66,6 +67,7 @@ public class EditAppointmentController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         populateChoiceBox();
+        this.fxmlHelper = new FXMLhelper();
     }
 
     public void fillInInfo(){
@@ -98,15 +100,15 @@ public class EditAppointmentController implements Initializable {
     public void SetDate(){
         DateTimeFormatter formatter = null;
         String formatString = "";
-        if(this.current.getDate().get(Calendar.DAY_OF_MONTH) < 10){
-
+        if(this.current.getDate().get(Calendar.DAY_OF_MONTH) < 9){
             formatString+="d-";
         }
         else{
             formatString+="dd-";
         }
+        int tashak = this.current.getDate().get(Calendar.MONTH);
+        if(this.current.getDate().get(Calendar.MONTH) < 9){
 
-        if(this.current.getDate().get(Calendar.MONTH) < 10){
             formatString+="M-";
         }
         else{
@@ -156,9 +158,6 @@ public class EditAppointmentController implements Initializable {
         Calendar date = Calendar.getInstance();
         date.set(dpAppointmentDate.getValue().getYear(), dpAppointmentDate.getValue().getMonthValue(), dpAppointmentDate.getValue().getDayOfMonth());
         if(this.current.getDate().compareTo(date) != 0) {
-            System.out.println("diff");
-            System.out.println(date);
-            System.out.println(this.current.getDate());
             ac.changeDate(dpAppointmentDate.getValue().getDayOfMonth(),
                     dpAppointmentDate.getValue().getMonthValue(),
                     dpAppointmentDate.getValue().getYear(), this.current.getId());
@@ -185,30 +184,16 @@ public class EditAppointmentController implements Initializable {
     }
 
     public void buttonCancelClick(ActionEvent event) throws IOException, SQLException {
-        FXMLLoader fxmlLoader = new FXMLLoader();
-        fxmlLoader.setLocation(getClass().getResource("screens/view.fxml"));
-        Parent root = fxmlLoader.load();
-        Scene createFormScene = new Scene(root);
-
-        ViewFormController mfc = fxmlLoader.getController();
-        mfc.initData(dc, ac);
-
-        Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
-        window.setScene(createFormScene);
-        window.show();
+        Scene scene = fxmlHelper.createScene("view");
+        ViewFormController cfc = fxmlHelper.getFxmlLoader().getController();
+        cfc.initData(dc, ac);
+        fxmlHelper.showScene(scene, event);
     }
 
     public void buttonCreateDriverClick(ActionEvent event) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader();
-        fxmlLoader.setLocation(getClass().getResource("screens/driver.fxml"));
-        Parent root = fxmlLoader.load();
-        Scene createFormScene = new Scene(root);
-
-        AddDriverFormController adfc = fxmlLoader.getController();
-        adfc.initData(dc, ac);
-
-        Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
-        window.setScene(createFormScene);
-        window.show();
+        Scene scene = fxmlHelper.createScene("driver");
+        AddDriverFormController cfc = fxmlHelper.getFxmlLoader().getController();
+        cfc.initData(dc, ac);
+        fxmlHelper.showScene(scene, event);
     }
 }

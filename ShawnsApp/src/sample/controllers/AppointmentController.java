@@ -1,12 +1,13 @@
-package sample.classes;
+package sample.controllers;
 
 import sample.datasources.DataBase;
 import sample.interfaces.DataSource;
+import sample.models.Appointment;
+import sample.models.Driver;
 
 import java.sql.SQLException;
 import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 public class AppointmentController {
@@ -26,7 +27,6 @@ public class AppointmentController {
              ) {
             System.out.print(d.GetInfo());
         }
-
     }
 
     public List<Appointment> getAllAppointments() {
@@ -50,7 +50,7 @@ public class AppointmentController {
 
     public Appointment getAppointmentById(int id) {
         for ( Appointment apt : appointmentList ) {
-            if (apt.id == id) {
+            if (apt.getId() == id) {
                 return apt;
             }
         }
@@ -69,14 +69,12 @@ public class AppointmentController {
         ds.UpdateDB(app);
     }
 
-    public int GetMaxAppointmentID() throws SQLException {
-        return ds.GetMaxAppointmentID();
-    }
-
     public void UpdateDB(Appointment appointment) {
         ds.UpdateDB(appointment);
     }
-
+//    public int GetMaxAppointmentID() throws SQLException {
+//        return ds.GetMaxAppointmentID();
+//    }
 //    public List<Appointment> GetAppointments() throws SQLException {
 //        return ds.GetAppointments();
 //    }

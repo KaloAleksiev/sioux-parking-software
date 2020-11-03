@@ -1,18 +1,15 @@
-package sample.classes;
-
-import sample.classes.Driver;
+package sample.models;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.GregorianCalendar;
 import java.util.List;
 import java.time.LocalTime;
 
 public class Appointment {
-    int id;
-    Calendar date;
-    LocalTime time;
-    List<Driver> driverList;
+    private int id;
+    private Calendar date;
+    private LocalTime time;
+    private List<Driver> driverList;
 
     public int getId() { return this.id; }
     public Calendar getDate() { return date; }
@@ -70,24 +67,24 @@ public class Appointment {
 
     public void addDriver(Driver driver) { driverList.add(driver); }
 
-    public String GetInfo() {
-        String info = "Date: "
-                + this.date.get(Calendar.DAY_OF_MONTH) + "-"
-                + this.date.get(Calendar.MONTH) + "-"
-                + this.date.get(Calendar.YEAR) + ", "
-                + "time: " + this.time.toString();
-
-        if (driverList.size() == 0) {
-            info += ", no drivers.";
-        } else {
-            info += ", drivers: ";
-            for (Driver driver : driverList) {
-                info += " " + driver.GetInfo() + "\n";
-            }
-            info += ".";
-        }
-        return info;
-    }
+//    public String GetInfo() {
+//        String info = "Date: "
+//                + this.date.get(Calendar.DAY_OF_MONTH) + "-"
+//                + this.date.get(Calendar.MONTH) + "-"
+//                + this.date.get(Calendar.YEAR) + ", "
+//                + "time: " + this.time.toString();
+//
+//        if (driverList.size() == 0) {
+//            info += ", no drivers.";
+//        } else {
+//            info += ", drivers: ";
+//            for (Driver driver : driverList) {
+//                info += " " + driver.GetInfo() + "\n";
+//            }
+//            info += ".";
+//        }
+//        return info;
+//    }
 
     public ShowcaseAppointment getShowcaseAppointment() {
         return new ShowcaseAppointment(this);

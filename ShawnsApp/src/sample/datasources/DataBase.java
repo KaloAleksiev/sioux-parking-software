@@ -1,19 +1,15 @@
 package sample.datasources;
 
-import javafx.scene.control.Alert;
-import sample.classes.Appointment;
-import sample.classes.Driver;
+import sample.models.Appointment;
+import sample.models.Driver;
 import sample.interfaces.DataSource;
 
-import javax.xml.transform.Result;
 import java.sql.*;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 import java.util.Properties;
-import java.util.function.Predicate;
 
 public class DataBase implements DataSource {
 
@@ -114,7 +110,7 @@ public class DataBase implements DataSource {
         }
     }
 
-    public void AddAppointmentToDB(int day, int month, int year, LocalTime time, List<sample.classes.Driver> driverList) throws SQLException {
+    public void AddAppointmentToDB(int day, int month, int year, LocalTime time, List<sample.models.Driver> driverList) throws SQLException {
         System.out.print(time);
         String sql = "INSERT INTO `appointment` (`date`, `time`) VALUES ('" + year + "-" + month + "-" + day + "', '" + time + ":00');";
         try {
@@ -128,7 +124,7 @@ public class DataBase implements DataSource {
     }
 
     public void UpdateDB(Appointment appointment) {
-        for (sample.classes.Driver driver : appointment.getDriverList()) {
+        for (sample.models.Driver driver : appointment.getDriverList()) {
             String sql = "INSERT INTO `driver_appointment` (`driver_id`, `appointment_id`) VALUES ('" + driver.getId() + "', '" + appointment.getId() + "');";
             try {
                 PreparedStatement statement = this.connect().prepareStatement(sql);
@@ -141,8 +137,8 @@ public class DataBase implements DataSource {
         }
     }
 
-    public List<sample.classes.Driver> GetDrivers() throws SQLException {
-        List<sample.classes.Driver> drivers = new ArrayList<>();
+    public List<sample.models.Driver> GetDrivers() throws SQLException {
+        List<sample.models.Driver> drivers = new ArrayList<>();
         Connection conn = this.connect();
         Statement stmt = conn.createStatement();
         String sql = "SELECT driver_id, license_plate, phone_number, name FROM `driver`";
@@ -153,7 +149,7 @@ public class DataBase implements DataSource {
                 String plate = rs.getString("license_plate");
                 String phone = rs.getString("phone_number");
                 String name = rs.getString("name");
-                sample.classes.Driver driver = new Driver(plate, phone, name, id);
+                sample.models.Driver driver = new Driver(plate, phone, name, id);
                 drivers.add(driver);
             }
         } catch (SQLException e) {
@@ -173,7 +169,6 @@ public class DataBase implements DataSource {
                 "FROM `driver` AS d INNER JOIN `driver_appointment` AS da " +
                 "ON d.driver_id = da.driver_id " +
                 "WHERE da.appointment_id =" + appointment.getId()+";";
-
         try {
             ResultSet rs = stmt.executeQuery(sql);
             while(rs.next()) {
@@ -209,7 +204,7 @@ public class DataBase implements DataSource {
                 String time = rs.getString("time");
 
                 appointments.add(new Appointment(
-                        Integer.parseInt(dateDay),
+                        Integer .parseInt(dateDay),
                         Integer.parseInt(dateMonth),
                         Integer.parseInt(dateYear),
                         LocalTime.parse(time),
@@ -253,7 +248,6 @@ public class DataBase implements DataSource {
     }
 
     public void ChangeDrivers(List<Driver> newDrivers, Appointment ap){
-
         List<Driver> nd = new ArrayList<>();
         for (Driver d:newDrivers) {
             nd.add(d);
@@ -286,6 +280,4 @@ public class DataBase implements DataSource {
             }
         }
     }
-
-    
 }

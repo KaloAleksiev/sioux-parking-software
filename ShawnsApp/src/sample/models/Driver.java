@@ -1,4 +1,4 @@
-package sample.classes;
+package sample.models;
 
 public class Driver {
     int id;

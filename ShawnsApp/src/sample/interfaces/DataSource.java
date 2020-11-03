@@ -1,7 +1,7 @@
 package sample.interfaces;
 
-import sample.classes.Appointment;
-import sample.classes.Driver;
+import sample.models.Appointment;
+import sample.models.Driver;
 
 import java.sql.SQLException;
 import java.time.LocalTime;
