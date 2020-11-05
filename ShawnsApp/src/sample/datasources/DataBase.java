@@ -112,7 +112,6 @@ public class DataBase implements DataSource {
     }
 
     public void AddAppointmentToDB(int day, int month, int year, LocalTime time, List<sample.models.Driver> driverList) throws SQLException {
-
         String month1 = Integer.toString(month);
         String day1 = Integer.toString(day);
         if(day < 10){
@@ -121,7 +120,6 @@ public class DataBase implements DataSource {
         if(month < 10){
             month1 = "0" + month;
         }
-
         String sql = "INSERT INTO `appointment` (`date`, `time`) VALUES ('" + year + "-" + month1 + "-" + day1 + "', '" + time + ":00');";
         try {
             PreparedStatement statement = this.connect().prepareStatement(sql);
@@ -134,7 +132,7 @@ public class DataBase implements DataSource {
     }
 
     public void UpdateDB(Appointment appointment) {
-        for (sample.models.Driver driver : appointment.getDriverList()) {
+        for (Driver driver : appointment.getDriverList()) {
             String sql = "INSERT INTO `driver_appointment` (`driver_id`, `appointment_id`) VALUES ('" + driver.getId() + "', '" + appointment.getId() + "');";
             try {
                 PreparedStatement statement = this.connect().prepareStatement(sql);
@@ -288,6 +286,18 @@ public class DataBase implements DataSource {
             } finally {
                 this.disconnect();
             }
+        }
+    }
+
+    public void DeleteAppointment(int id){
+        String sql = "DELETE FROM appointment WHERE  appointment_id= '" + id + "';";
+        try {
+            PreparedStatement statement = this.connect().prepareStatement(sql);
+            statement.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            this.disconnect();
         }
     }
 }

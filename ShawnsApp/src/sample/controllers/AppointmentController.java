@@ -66,8 +66,9 @@ public class AppointmentController {
         ds.UpdateDB(app);
     }
 
-    public void UpdateDB(Appointment appointment) {
-        ds.UpdateDB(appointment);
+    public void deleteAppointment(Appointment app){
+        ds.DeleteAppointment(app.getId());
+        appointmentList.removeIf(a ->(a.getId() == app.getId()));
     }
 //    public int GetMaxAppointmentID() throws SQLException {
 //        return ds.GetMaxAppointmentID();

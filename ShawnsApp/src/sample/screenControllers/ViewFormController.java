@@ -70,6 +70,21 @@ public class ViewFormController implements Initializable {
         }
     }
 
+    public void deleteAppointmentClick(ActionEvent event) {
+        try{
+            TableView.TableViewSelectionModel<ShowcaseAppointment> showApp = tvAppointments.getSelectionModel();
+            Appointment app = ac.getAppointmentById(showApp.getSelectedItem().GetId());
+            ac.deleteAppointment(app);
+            tvAppointments.getItems().clear();
+            populateTableView();
+        }
+        catch(NullPointerException ex){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText("Please select an appointment!");
+            alert.showAndWait();
+        }
+    }
+
     public void buttonCancelClick(ActionEvent event) throws IOException {
         Scene scene = fxmlHelper.createScene("main");
         MainFormController cfc = fxmlHelper.getFxmlLoader().getController();
@@ -136,4 +151,6 @@ public class ViewFormController implements Initializable {
         dpViewApp.setValue(null);
         tbSearchName.setText("");
     }
+
+
 }

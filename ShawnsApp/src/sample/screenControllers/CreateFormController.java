@@ -106,7 +106,6 @@ public class CreateFormController implements Initializable {
                     dpAppointmentDate.getValue().getYear(),
                     LocalTime.parse(cbAppointmentTime.getValue()),
                     addedDriversList);
-            ac.UpdateDB(ac.getLastAddedAppointment());
             Scene scene = fxmlHelper.createScene("view");
             ViewFormController cfc = fxmlHelper.getFxmlLoader().getController();
             cfc.initData(dc, ac);

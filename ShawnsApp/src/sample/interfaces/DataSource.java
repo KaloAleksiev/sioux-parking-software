@@ -19,4 +19,5 @@ public interface DataSource {
     void ChangeDate(int day, int month, int year, int appId);
     void ChangeTime(LocalTime time, int appId);
     void ChangeDrivers(List<Driver> newDrivers, Appointment ap);
+    void DeleteAppointment(int id);
 }

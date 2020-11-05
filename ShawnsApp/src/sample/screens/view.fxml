@@ -7,7 +7,7 @@
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="900.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.screenControllers.ViewFormController">
     <children>
-        <Button layoutX="82.0" layoutY="546.0" mnemonicParsing="false" onAction="#buttonCancelClick" prefHeight="54.0" prefWidth="320.0" style="-fx-border-color: #bf0208; -fx-background-color: white; -fx-border-radius: 25; -fx-background-radius: 25;" text="Cancel">
+        <Button layoutX="82.0" layoutY="546.0" mnemonicParsing="false" onAction="#buttonCancelClick" prefHeight="54.0" prefWidth="200.0" style="-fx-border-color: #bf0208; -fx-background-color: white; -fx-border-radius: 25; -fx-background-radius: 25;" text="Cancel">
             <font>
                 <Font name="Lucida Console" size="23.0" />
             </font></Button>
@@ -17,10 +17,16 @@
                 <Font name="Lucida Console" size="36.0" />
             </font>
         </Label>
-        <Button layoutX="488.0" layoutY="546.0" mnemonicParsing="false" onAction="#editAppointmentsClick" prefHeight="54.0" prefWidth="320.0" style="-fx-border-color: #bf0208; -fx-background-color: white; -fx-border-radius: 25; -fx-background-radius: 25;" text="Edit">
+        <Button layoutX="608.0" layoutY="546.0" mnemonicParsing="false" onAction="#editAppointmentsClick" prefHeight="54.0" prefWidth="200.0" style="-fx-border-color: #bf0208; -fx-background-color: white; -fx-border-radius: 25; -fx-background-radius: 25;" text="Edit">
             <font>
                 <Font name="Lucida Console" size="23.0" />
-            </font></Button>
+            </font>
+        </Button>
+        <Button layoutX="346.0" layoutY="546.0" mnemonicParsing="false" onAction="#deleteAppointmentClick" prefHeight="54.0" prefWidth="200.0" style="-fx-border-color: #bf0208; -fx-background-color: white; -fx-border-radius: 25; -fx-background-radius: 25;" text="Delete">
+            <font>
+                <Font name="Lucida Console" size="23.0" />
+            </font>
+        </Button>
         <Label layoutX="402.0" layoutY="45.0" text="appointments">
             <font>
                 <Font name="Lucida Console" size="30.0" />
