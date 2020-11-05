@@ -41,11 +41,11 @@ public class AddDriverFormController implements Initializable{
         this.fxmlHelper = new FXMLhelper();
     }
 
-    public void btnDoneClick() throws SQLException {
+    public void btnDoneClick(ActionEvent event) throws SQLException, IOException {
         // If all the Text Boxes are filled, creates a new Driver, otherwise throws an Error Notification.
         if (tbLicensePlate.getText() != "" && tbPhoneNumber.getText() != "" && tbDriverName.getText() != "" ) {
             dc.AddDriver(tbPhoneNumber.getText(), tbLicensePlate.getText(), tbDriverName.getText());
-
+            openCreateForm(event);
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setHeaderText("Please fill in all the information!");
@@ -70,6 +70,4 @@ public class AddDriverFormController implements Initializable{
         cfc.initData(dc, ac);
         fxmlHelper.showScene(scene, event);
     }
-
-
 }

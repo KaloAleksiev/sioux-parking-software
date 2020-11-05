@@ -8,6 +8,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import sample.controllers.AppointmentController;
 import sample.datasources.DataBase;
@@ -133,26 +134,23 @@ public class CreateFormController implements Initializable {
     }
 
     public void buttonCancelClick(ActionEvent event) throws IOException {
-
         Scene scene = fxmlHelper.createScene("main");
         MainFormController cfc = fxmlHelper.getFxmlLoader().getController();
         cfc.initData(dc, ac);
         fxmlHelper.showScene(scene, event);
-
     }
 
     public void buttonCreateDriverClick(ActionEvent event) throws IOException {
-
         Scene scene = fxmlHelper.createScene("driver");
         AddDriverFormController cfc = fxmlHelper.getFxmlLoader().getController();
         cfc.initData(dc, ac);
         fxmlHelper.showScene(scene, event);
     }
 
-    public void goBack(ActionEvent event) throws IOException {
+    public void goBack(MouseEvent event) throws IOException {
         Scene scene = fxmlHelper.createScene("main");
         MainFormController cfc = fxmlHelper.getFxmlLoader().getController();
         cfc.initData(dc, ac);
-        fxmlHelper.showScene(scene, event);
+        fxmlHelper.showSceneMouse(scene, event);
     }
 }

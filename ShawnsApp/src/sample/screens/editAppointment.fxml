@@ -7,7 +7,7 @@
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="900.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.screenControllers.EditAppointmentController">
     <children>
-        <Button layoutX="499.0" layoutY="541.0" mnemonicParsing="false" onAction="#editAppointmentButtonClick" prefHeight="54.0" prefWidth="320.0" style="-fx-border-color: #bf0208; -fx-background-color: white; -fx-border-radius: 25; -fx-background-radius: 25;" text="Edit">
+        <Button layoutX="488.0" layoutY="546.0" mnemonicParsing="false" onAction="#editAppointmentButtonClick" prefHeight="54.0" prefWidth="320.0" style="-fx-border-color: #bf0208; -fx-background-color: white; -fx-border-radius: 25; -fx-background-radius: 25;" text="Edit">
             <font>
                 <Font name="Lucida Console" size="23.0" />
             </font></Button>
@@ -16,7 +16,7 @@
                 <Font name="Lucida Console" size="36.0" />
             </font>
         </Label>
-        <Button layoutX="74.0" layoutY="541.0" mnemonicParsing="false" onAction="#buttonCancelClick" prefHeight="54.0" prefWidth="320.0" style="-fx-border-color: #bf0208; -fx-background-color: white; -fx-border-radius: 25; -fx-background-radius: 25;" text="Cancel">
+        <Button layoutX="82.0" layoutY="546.0" mnemonicParsing="false" onAction="#buttonCancelClick" prefHeight="54.0" prefWidth="320.0" style="-fx-border-color: #bf0208; -fx-background-color: white; -fx-border-radius: 25; -fx-background-radius: 25;" text="Cancel">
             <font>
                 <Font name="Lucida Console" size="23.0" />
             </font></Button>
@@ -25,7 +25,7 @@
                 <Font name="Lucida Console" size="30.0" />
             </font>
         </Label>
-        <Label layoutX="130.0" layoutY="158.0" text="Driver details" textFill="#dd0303">
+        <Label layoutX="150.0" layoutY="158.0" prefHeight="20.0" prefWidth="169.0" text="Driver details" textFill="#dd0303">
             <font>
                 <Font name="Lucida Console" size="20.0" />
             </font>
@@ -63,11 +63,6 @@
                 <Font name="Lucida Console" size="14.0" />
             </font>
         </Button>
-        <ListView fx:id="lvAddedDrivers" layoutX="86.0" layoutY="390.0" prefHeight="120.0" prefWidth="303.0" />
-        <Button layoutX="320.0" layoutY="149.0" mnemonicParsing="false" onAction="#buttonCreateDriverClick" prefHeight="39.0" prefWidth="39.0" style="-fx-border-color: #bf0208; -fx-background-color: white; -fx-border-radius: 25; -fx-background-radius: 25;" text="+">
-            <font>
-                <Font name="Lucida Console" size="14.0" />
-            </font>
-        </Button>
+        <ListView fx:id="lvAddedDrivers" layoutX="83.0" layoutY="390.0" prefHeight="120.0" prefWidth="303.0" />
     </children>
 </Pane>

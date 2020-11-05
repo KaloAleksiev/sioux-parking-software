@@ -189,10 +189,10 @@ public class EditAppointmentController implements Initializable {
         fxmlHelper.showScene(scene, event);
     }
 
-    public void buttonCreateDriverClick(ActionEvent event) throws IOException {
-        Scene scene = fxmlHelper.createScene("driver");
-        AddDriverFormController cfc = fxmlHelper.getFxmlLoader().getController();
-        cfc.initData(dc, ac);
-        fxmlHelper.showScene(scene, event);
-    }
+//    public void buttonCreateDriverClick(ActionEvent event) throws IOException {
+//        Scene scene = fxmlHelper.createScene("driver");
+//        AddDriverFormController cfc = fxmlHelper.getFxmlLoader().getController();
+//        cfc.initData(dc, ac);
+//        fxmlHelper.showScene(scene, event);
+//    }
 }

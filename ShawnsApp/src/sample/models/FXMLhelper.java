@@ -5,10 +5,12 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 
 import java.io.IOException;
+import java.util.Calendar;
 
 public class FXMLhelper {
 
@@ -30,6 +32,26 @@ public class FXMLhelper {
     }
 
     public void showScene(Scene scene, ActionEvent event){
+        Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+        window.setScene(scene);
+        window.show();
+    }
+
+    public String GetDateAsString(Calendar date){
+        String month = Integer.toString(date.get(Calendar.MONTH));
+        String day = Integer.toString(date.get(Calendar.DAY_OF_MONTH));
+        String year = Integer.toString(date.get(Calendar.YEAR));
+        if(date.DAY_OF_MONTH < 10){
+            day = "0"+ day;
+        }
+        if(date.MONTH < 10){
+            month = "0" + month;
+        }
+        String str = day+month+year;
+        return str;
+    }
+
+    public void showSceneMouse(Scene scene, MouseEvent event){
         Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
         window.setScene(scene);
         window.show();

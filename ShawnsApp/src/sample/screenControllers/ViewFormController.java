@@ -4,20 +4,15 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
-import javafx.stage.Stage;
+import javafx.scene.input.MouseEvent;
 import sample.controllers.AppointmentController;
 import sample.controllers.DriverController;
 import sample.models.*;
-import sample.screenControllers.EditAppointmentController;
-import sample.screenControllers.MainFormController;
 
 import java.io.IOException;
 import java.net.URL;
@@ -31,7 +26,7 @@ public class ViewFormController implements Initializable {
     @FXML private TableColumn<ShowcaseAppointment, String> tcDriverNames;
     @FXML private DatePicker dpViewApp;
     @FXML private TextField tbSearchName;
-    @FXML private Button backBt;
+
 
     private DriverController dc;
     private AppointmentController ac;
@@ -60,12 +55,19 @@ public class ViewFormController implements Initializable {
     }
 
     public void editAppointmentsClick(ActionEvent event) throws IOException {
-        TableView.TableViewSelectionModel<ShowcaseAppointment> showApp = tvAppointments.getSelectionModel();
-        Appointment app = ac.getAppointmentById(showApp.getSelectedItem().GetId());
-        Scene scene = fxmlHelper.createScene("editAppointment");
-        EditAppointmentController cfc = fxmlHelper.getFxmlLoader().getController();
-        cfc.initData(dc, ac, app);
-        fxmlHelper.showScene(scene, event);
+        try{
+            TableView.TableViewSelectionModel<ShowcaseAppointment> showApp = tvAppointments.getSelectionModel();
+            Appointment app = ac.getAppointmentById(showApp.getSelectedItem().GetId());
+            Scene scene = fxmlHelper.createScene("editAppointment");
+            EditAppointmentController cfc = fxmlHelper.getFxmlLoader().getController();
+            cfc.initData(dc, ac, app);
+            fxmlHelper.showScene(scene, event);
+        }
+        catch(NullPointerException ex){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText("Please select an appointment!");
+            alert.showAndWait();
+        }
     }
 
     public void buttonCancelClick(ActionEvent event) throws IOException {
@@ -105,34 +107,33 @@ public class ViewFormController implements Initializable {
             allAppointments.add(apt.getShowcaseAppointment());
         }
             //Filter
-            if(dpViewApp.getValue() == null){
-                tvAppointments.setItems(allAppointments);
-            }
-            else{
-                Calendar date = Calendar.getInstance();
-                date.set(dpViewApp.getValue().getYear(), dpViewApp.getValue().getMonthValue(), dpViewApp.getValue().getDayOfMonth());
-                for (ShowcaseAppointment a:allAppointments) {
-                    if(a.appointment.getDate().compareTo(date) == 0){
-                        appointments.add(a);
-                    }
-                }
-                tvAppointments.setItems(appointments);
-            }
+        if(dpViewApp.getValue() == null){
+            tvAppointments.setItems(allAppointments);
         }
+        else{
+            Calendar date = Calendar.getInstance();
+            date.clear();
+            date.set(dpViewApp.getValue().getYear(), dpViewApp.getValue().getMonthValue(), dpViewApp.getValue().getDayOfMonth());
 
-
-
-    public void goBack(ActionEvent event) throws IOException {
+            for (ShowcaseAppointment a:allAppointments) {
+                String date1= fxmlHelper.GetDateAsString(a.appointment.getDate());
+                String date2= fxmlHelper.GetDateAsString(date);
+                if(date1.equals(date2) ){
+                    appointments.add(a);
+                }
+            }
+            tvAppointments.setItems(appointments);
+        }
+    }
+    public void goBack(MouseEvent event) throws IOException {
         Scene scene = fxmlHelper.createScene("main");
         MainFormController cfc = fxmlHelper.getFxmlLoader().getController();
         cfc.initData(dc, ac);
-        fxmlHelper.showScene(scene, event);
+        fxmlHelper.showSceneMouse(scene, event);
     }
 
-
-    public void resetFilter(ActionEvent event) {
+    public void resetFilters(MouseEvent mouseEvent) {
         dpViewApp.setValue(null);
         tbSearchName.setText("");
-
     }
 }

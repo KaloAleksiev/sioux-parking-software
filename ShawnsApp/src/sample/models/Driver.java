@@ -26,9 +26,6 @@ public class Driver {
 
     public String GetInfo() {
         return "Name: " + this.name +
-                ", licence plate number: " + this.licencePlate +
-                ", phone number: " + this.phoneNumber;
+                ", licence plate number: " + this.licencePlate;
     }
-
-
 }

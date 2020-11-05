@@ -7,21 +7,21 @@
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="900.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.screenControllers.ViewFormController">
     <children>
-        <Button layoutX="507.0" layoutY="541.0" mnemonicParsing="false" onAction="#buttonCancelClick" prefHeight="54.0" prefWidth="320.0" style="-fx-border-color: #bf0208; -fx-background-color: white; -fx-border-radius: 25; -fx-background-radius: 25;" text="Cancel">
+        <Button layoutX="82.0" layoutY="546.0" mnemonicParsing="false" onAction="#buttonCancelClick" prefHeight="54.0" prefWidth="320.0" style="-fx-border-color: #bf0208; -fx-background-color: white; -fx-border-radius: 25; -fx-background-radius: 25;" text="Cancel">
             <font>
                 <Font name="Lucida Console" size="23.0" />
             </font></Button>
 
-        <Label layoutX="283.0" layoutY="42.0" prefHeight="39.0" prefWidth="111.0" text="View" textAlignment="CENTER" textFill="#da0606">
+        <Label layoutX="291.0" layoutY="42.0" prefHeight="39.0" prefWidth="111.0" text="View" textAlignment="CENTER" textFill="#da0606">
             <font>
                 <Font name="Lucida Console" size="36.0" />
             </font>
         </Label>
-        <Button layoutX="74.0" layoutY="541.0" mnemonicParsing="false" onAction="#editAppointmentsClick" prefHeight="54.0" prefWidth="320.0" style="-fx-border-color: #bf0208; -fx-background-color: white; -fx-border-radius: 25; -fx-background-radius: 25;" text="Edit">
+        <Button layoutX="488.0" layoutY="546.0" mnemonicParsing="false" onAction="#editAppointmentsClick" prefHeight="54.0" prefWidth="320.0" style="-fx-border-color: #bf0208; -fx-background-color: white; -fx-border-radius: 25; -fx-background-radius: 25;" text="Edit">
             <font>
                 <Font name="Lucida Console" size="23.0" />
             </font></Button>
-        <Label layoutX="388.0" layoutY="45.0" text="appointments">
+        <Label layoutX="402.0" layoutY="45.0" text="appointments">
             <font>
                 <Font name="Lucida Console" size="30.0" />
             </font>
@@ -50,8 +50,16 @@
             <Image url="@../images/st.png" />
          </image>
       </ImageView>
-      <Button fx:id="backBt" layoutX="799.0" layoutY="49.0" mnemonicParsing="false" onAction="#goBack" text="Back" />
-      <Button fx:id="resetBt" layoutX="420.0" layoutY="162.0" mnemonicParsing="false" onAction="#resetFilter" text="Reset" />
+      <ImageView fx:id="ivReset" fitHeight="33.0" fitWidth="40.0" layoutX="426.0" layoutY="158.0" onMouseClicked="#resetFilters" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;">
+         <image>
+            <Image url="@../images/updateArrow.png" />
+         </image></ImageView>
+      <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fitHeight="48.0" fitWidth="42.0" layoutX="804.0" layoutY="41.0" onMouseClicked="#goBack" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;">
+         <image>
+            <Image url="@../images/leftArrow.png" />
+         </image>
+      </ImageView>
 
     </children>
 </Pane>
