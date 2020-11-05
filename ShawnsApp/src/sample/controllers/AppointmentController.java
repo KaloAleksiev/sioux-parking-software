@@ -1,6 +1,7 @@
 package sample.controllers;
 
 import sample.datasources.DataBase;
+import sample.datasources.LocalDB;
 import sample.interfaces.DataSource;
 import sample.models.Appointment;
 import sample.models.Driver;
@@ -17,7 +18,7 @@ public class AppointmentController {
     DataSource ds;
 
     public AppointmentController() throws SQLException {
-        ds = new DataBase();
+        ds = new LocalDB();
         appointmentList = new ArrayList<>();
         appointmentList = ds.GetAppointments();
         for (Appointment a:appointmentList) {

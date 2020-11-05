@@ -1,6 +1,7 @@
 package sample.controllers;
 
 import sample.datasources.DataBase;
+import sample.datasources.LocalDB;
 import sample.interfaces.DataSource;
 import sample.models.Driver;
 
@@ -13,7 +14,7 @@ public class DriverController {
     DataSource dc;
 
     public DriverController() throws SQLException {
-        dc = new DataBase();
+        dc = new LocalDB();
         driverList = new ArrayList<>();
         driverList = dc.GetDrivers();
     }
