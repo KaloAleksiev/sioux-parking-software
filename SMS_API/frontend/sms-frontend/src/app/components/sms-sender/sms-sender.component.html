@@ -1,1 +1,7 @@
-<p>sms-sender works!</p>
+<form class="form" (ngSubmit)="onSubmit()">
+    <input class="textbox" type="text" name="phoneNumber" [(ngModel)]="phoneNumber" placeholder="Phone number...">
+    <br>
+    <input class="textbox" type="text" name="message" [(ngModel)]="message" placeholder="Message...">
+    <br>
+    <input type="submit" value="Submit" class="btn">
+</form>
