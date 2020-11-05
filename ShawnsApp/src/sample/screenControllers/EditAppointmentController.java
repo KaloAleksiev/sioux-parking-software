@@ -145,7 +145,7 @@ public class EditAppointmentController implements Initializable {
         updateDriversLists();
     }
 
-    public void editAppointmentButtonClick() throws SQLException {
+    public void editAppointmentButtonClick(ActionEvent event) throws SQLException, IOException {
 
         if(!this.current.getDriverList().equals(this.addedDriversList)){
             ac.ChangeDrivers(this.addedDriversList, this.current);
@@ -162,11 +162,10 @@ public class EditAppointmentController implements Initializable {
                     dpAppointmentDate.getValue().getMonthValue(),
                     dpAppointmentDate.getValue().getYear(), this.current.getId());
         }
-//        } else {
-//            Alert alert = new Alert(Alert.AlertType.ERROR);
-//            alert.setHeaderText("Please fill in all the information!");
-//            alert.showAndWait();
-//        }
+        Scene scene = fxmlHelper.createScene("view");
+        ViewFormController cfc = fxmlHelper.getFxmlLoader().getController();
+        cfc.initData(dc, ac);
+        fxmlHelper.showScene(scene,event );
     }
 
     public void resetForm() {

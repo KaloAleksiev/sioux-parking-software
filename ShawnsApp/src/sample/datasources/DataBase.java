@@ -5,6 +5,7 @@ import sample.models.Driver;
 import sample.interfaces.DataSource;
 
 import java.sql.*;
+import java.text.DecimalFormat;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -111,8 +112,17 @@ public class DataBase implements DataSource {
     }
 
     public void AddAppointmentToDB(int day, int month, int year, LocalTime time, List<sample.models.Driver> driverList) throws SQLException {
-        System.out.print(time);
-        String sql = "INSERT INTO `appointment` (`date`, `time`) VALUES ('" + year + "-" + month + "-" + day + "', '" + time + ":00');";
+
+        String month1 = Integer.toString(month);
+        String day1 = Integer.toString(day);
+        if(day < 10){
+            day1 = "0"+ day;
+        }
+        if(month < 10){
+            month1 = "0" + month;
+        }
+
+        String sql = "INSERT INTO `appointment` (`date`, `time`) VALUES ('" + year + "-" + month1 + "-" + day1 + "', '" + time + ":00');";
         try {
             PreparedStatement statement = this.connect().prepareStatement(sql);
             statement.execute();

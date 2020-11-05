@@ -36,7 +36,7 @@
             <Font name="Lucida Console" size="18.0" />
          </font>
       </Label>
-      <DatePicker fx:id="dpViewApp" layoutX="212.0" layoutY="162.0" onAction="#FilterByDate" />
+      <DatePicker fx:id="dpViewApp" layoutX="212.0" layoutY="162.0" onAction="#filterByDate" />
       <TextField fx:id="tbSearchName" layoutX="659.0" layoutY="162.0" onKeyPressed="#SearchByName" />
       <TableView fx:id="tvAppointments" layoutX="75.0" layoutY="217.0" prefHeight="264.0" prefWidth="750.0">
         <columns>
@@ -50,5 +50,8 @@
             <Image url="@../images/st.png" />
          </image>
       </ImageView>
+      <Button fx:id="backBt" layoutX="799.0" layoutY="49.0" mnemonicParsing="false" onAction="#goBack" text="Back" />
+      <Button fx:id="resetBt" layoutX="420.0" layoutY="162.0" mnemonicParsing="false" onAction="#resetFilter" text="Reset" />
+
     </children>
 </Pane>

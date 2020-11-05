@@ -29,8 +29,9 @@ public class ViewFormController implements Initializable {
     @FXML private TableColumn<ShowcaseAppointment, String> tcDate;
     @FXML private TableColumn<ShowcaseAppointment, String> tcTime;
     @FXML private TableColumn<ShowcaseAppointment, String> tcDriverNames;
-    @FXML DatePicker dpViewApp;
-    @FXML TextField tbSearchName;
+    @FXML private DatePicker dpViewApp;
+    @FXML private TextField tbSearchName;
+    @FXML private Button backBt;
 
     private DriverController dc;
     private AppointmentController ac;
@@ -77,47 +78,61 @@ public class ViewFormController implements Initializable {
 
     public void SearchByName(KeyEvent keyEvent) {
         tvAppointments.getItems().clear();
-        String str = tbSearchName.getText();
+        String str = tbSearchName.getText().toLowerCase();
+        ObservableList<ShowcaseAppointment> allAppointments = FXCollections.observableArrayList();
+        ObservableList<ShowcaseAppointment> filteredAppointments = FXCollections.observableArrayList();
+        //GetAllAppointments
+        for (Appointment apt: ac.getAllAppointments()) {
+            allAppointments.add(apt.getShowcaseAppointment());
+        }
+        //Filter
+        if(str == ""){
+            tvAppointments.setItems(allAppointments);
+        }else{
+            for (ShowcaseAppointment a:allAppointments) {
+                if(a.appointment.getDriverList().stream().anyMatch(d -> d.getName().toLowerCase().startsWith(str))){
+                    filteredAppointments.add(a);
+                }
+            }
+            tvAppointments.setItems(filteredAppointments);
+        }
+    }
+    public void filterByDate(ActionEvent event) {
         ObservableList<ShowcaseAppointment> allAppointments = FXCollections.observableArrayList();
         ObservableList<ShowcaseAppointment> appointments = FXCollections.observableArrayList();
         //GetAllAppointments
         for (Appointment apt: ac.getAllAppointments()) {
             allAppointments.add(apt.getShowcaseAppointment());
         }
-        //Filter
-        for (ShowcaseAppointment a:allAppointments) {
-            for(Driver d:a.appointment.getDriverList()){
-                if(d.getName().toLowerCase().contains(str.toLowerCase())){
-                    appointments.add(a);
+            //Filter
+            if(dpViewApp.getValue() == null){
+                tvAppointments.setItems(allAppointments);
+            }
+            else{
+                Calendar date = Calendar.getInstance();
+                date.set(dpViewApp.getValue().getYear(), dpViewApp.getValue().getMonthValue(), dpViewApp.getValue().getDayOfMonth());
+                for (ShowcaseAppointment a:allAppointments) {
+                    if(a.appointment.getDate().compareTo(date) == 0){
+                        appointments.add(a);
+                    }
                 }
+                tvAppointments.setItems(appointments);
             }
         }
-        tvAppointments.setItems(appointments);
+
+
+
+    public void goBack(ActionEvent event) throws IOException {
+        Scene scene = fxmlHelper.createScene("main");
+        MainFormController cfc = fxmlHelper.getFxmlLoader().getController();
+        cfc.initData(dc, ac);
+        fxmlHelper.showScene(scene, event);
     }
 
-    public void FilterByDate(ActionEvent event) {
-        try{
-            Calendar date = Calendar.getInstance();
-            date.set(dpViewApp.getValue().getYear(), dpViewApp.getValue().getMonthValue(), dpViewApp.getValue().getDayOfMonth());
-            ObservableList<ShowcaseAppointment> allAppointments = FXCollections.observableArrayList();
-            ObservableList<ShowcaseAppointment> appointments = FXCollections.observableArrayList();
-            //GetAllAppointments
-            for (Appointment apt: ac.getAllAppointments()) {
-                allAppointments.add(apt.getShowcaseAppointment());
-            }
-            //Filter
-            for (ShowcaseAppointment a:allAppointments) {
-                if(a.appointment.getDate().compareTo(date) != 0){
-                    appointments.add(a);
-                }
-            }
-            tvAppointments.setItems(appointments);
-        }
-        catch (NullPointerException ex){
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setHeaderText("Date not selected!");
-            alert.showAndWait();
-        }
+
+    public void resetFilter(ActionEvent event) {
+        dpViewApp.setValue(null);
+        tbSearchName.setText("");
 
     }
 }

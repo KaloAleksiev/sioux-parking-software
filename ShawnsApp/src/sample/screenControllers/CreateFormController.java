@@ -28,6 +28,7 @@ public class CreateFormController implements Initializable {
     @FXML private ChoiceBox<String> cbAppointmentTime;
     @FXML private ListView<String> lvAllDrivers;
     @FXML private ListView<String> lvAddedDrivers;
+    @FXML private Button btBack;
 
     private DriverController dc;
     private AppointmentController ac;
@@ -97,7 +98,7 @@ public class CreateFormController implements Initializable {
         updateDriversLists();
     }
 
-    public void createAppointmentButtonClick() throws SQLException {
+    public void createAppointmentButtonClick(ActionEvent event) throws SQLException, IOException {
         if (dpAppointmentDate.getValue() != null && cbAppointmentTime.getValue() != null) {
             ac.createAppointment(dpAppointmentDate.getValue().getDayOfMonth(),
                     dpAppointmentDate.getValue().getMonthValue(),
@@ -105,6 +106,10 @@ public class CreateFormController implements Initializable {
                     LocalTime.parse(cbAppointmentTime.getValue()),
                     addedDriversList);
             ac.UpdateDB(ac.getLastAddedAppointment());
+            Scene scene = fxmlHelper.createScene("view");
+            ViewFormController cfc = fxmlHelper.getFxmlLoader().getController();
+            cfc.initData(dc, ac);
+            fxmlHelper.showScene(scene, event);
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setHeaderText("Please fill in all the information!");
@@ -140,6 +145,13 @@ public class CreateFormController implements Initializable {
 
         Scene scene = fxmlHelper.createScene("driver");
         AddDriverFormController cfc = fxmlHelper.getFxmlLoader().getController();
+        cfc.initData(dc, ac);
+        fxmlHelper.showScene(scene, event);
+    }
+
+    public void goBack(ActionEvent event) throws IOException {
+        Scene scene = fxmlHelper.createScene("main");
+        MainFormController cfc = fxmlHelper.getFxmlLoader().getController();
         cfc.initData(dc, ac);
         fxmlHelper.showScene(scene, event);
     }

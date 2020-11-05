@@ -6,6 +6,7 @@ import sample.models.Appointment;
 import sample.models.Driver;
 
 import java.sql.SQLException;
+import java.text.DecimalFormat;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
