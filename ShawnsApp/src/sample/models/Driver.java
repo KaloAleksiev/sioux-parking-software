@@ -28,4 +28,16 @@ public class Driver {
         return "Name: " + this.name +
                 ", licence plate number: " + this.licencePlate;
     }
+
+    public void setLicencePlate(String licencePlate) {
+        this.licencePlate = licencePlate;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 }

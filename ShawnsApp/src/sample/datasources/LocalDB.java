@@ -5,7 +5,6 @@ import sample.models.Driver;
 import sample.interfaces.DataSource;
 
 import java.sql.*;
-import java.text.DecimalFormat;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -74,8 +73,8 @@ public class LocalDB implements DataSource {
             e.printStackTrace();
         } finally {
             this.disconnect();
-            return id;
         }
+        return id;
     }
 
     public int GetMaxAppointmentID() throws SQLException {
@@ -95,8 +94,8 @@ public class LocalDB implements DataSource {
             e.printStackTrace();
         } finally {
             this.disconnect();
-            return id;
         }
+        return id;
     }
 
     public void AddDriverToDB(String plate, String phone, String name) {
@@ -111,7 +110,7 @@ public class LocalDB implements DataSource {
         }
     }
 
-    public void AddAppointmentToDB(int day, int month, int year, LocalTime time, List<sample.models.Driver> driverList) throws SQLException {
+    public void AddAppointmentToDB(int day, int month, int year, LocalTime time, List<sample.models.Driver> driverList){
 
         String month1 = Integer.toString(month);
         String day1 = Integer.toString(day);
@@ -166,8 +165,8 @@ public class LocalDB implements DataSource {
             e.printStackTrace();
         } finally {
             this.disconnect();
-            return drivers;
         }
+        return drivers;
     }
 
     public List<Driver> GetDriversForAppointment(Appointment appointment) throws SQLException {
@@ -194,8 +193,8 @@ public class LocalDB implements DataSource {
             e.printStackTrace();
         } finally {
             this.disconnect();
-            return drivers;
         }
+        return drivers;
     }
 
     public List<Appointment> GetAppointments() throws SQLException {
@@ -227,8 +226,8 @@ public class LocalDB implements DataSource {
         }
         finally {
             this.disconnect();
-            return appointments;
         }
+        return appointments;
     }
 
     public void ChangeDate(int day, int month, int year, int appId){
@@ -259,11 +258,9 @@ public class LocalDB implements DataSource {
 
     public void ChangeDrivers(List<Driver> newDrivers, Appointment ap){
         List<Driver> nd = new ArrayList<>();
-        for (Driver d:newDrivers) {
-            nd.add(d);
-        }
+        nd.addAll(newDrivers);
         for (Driver d:ap.getDriverList()){
-            if(!nd.stream().anyMatch(o -> o.getId() == (d.getId()))){
+            if(nd.stream().noneMatch(o -> o.getId() == (d.getId()))){
                 String sql = "DELETE FROM driver_appointment WHERE driver_id="+ d.getId() +" AND appointment_id="+ap.getId();
                 try {
                     PreparedStatement statement = this.connect().prepareStatement(sql);
@@ -291,8 +288,24 @@ public class LocalDB implements DataSource {
         }
     }
 
-    @Override
+
     public void DeleteAppointment(int id) {
+
+    }
+
+    public void ChangeDriverName(String name, int driverId) {
+
+    }
+
+    public void ChangeDriverLicensePlate(String license, int driverId) {
+
+    }
+
+    public void ChangeDriverNumber(int number, int driverId) {
+
+    }
+
+    public void DeleteDriver(int id) {
 
     }
 }

@@ -29,7 +29,7 @@ public class CreateFormController implements Initializable {
     @FXML private ChoiceBox<String> cbAppointmentTime;
     @FXML private ListView<String> lvAllDrivers;
     @FXML private ListView<String> lvAddedDrivers;
-    @FXML private Button btBack;
+
 
     private DriverController dc;
     private AppointmentController ac;
@@ -58,13 +58,13 @@ public class CreateFormController implements Initializable {
     }
 
     public void populateChoiceBox() {
-        cbAppointmentTime.getItems().add("10:00:00");
-        cbAppointmentTime.getItems().add("11:00:00");
-        cbAppointmentTime.getItems().add("12:00:00");
-        cbAppointmentTime.getItems().add("13:00:00");
-        cbAppointmentTime.getItems().add("14:00:00");
-        cbAppointmentTime.getItems().add("15:00:00");
-        cbAppointmentTime.getItems().add("16:00:00");
+        cbAppointmentTime.getItems().add("10:00");
+        cbAppointmentTime.getItems().add("11:00");
+        cbAppointmentTime.getItems().add("12:00");
+        cbAppointmentTime.getItems().add("13:00");
+        cbAppointmentTime.getItems().add("14:00");
+        cbAppointmentTime.getItems().add("15:00");
+        cbAppointmentTime.getItems().add("16:00");
     }
 
     public void updateDriversLists() {
@@ -104,7 +104,7 @@ public class CreateFormController implements Initializable {
             ac.createAppointment(dpAppointmentDate.getValue().getDayOfMonth(),
                     dpAppointmentDate.getValue().getMonthValue(),
                     dpAppointmentDate.getValue().getYear(),
-                    LocalTime.parse(cbAppointmentTime.getValue()),
+                    LocalTime.parse(cbAppointmentTime.getValue()+":00"),
                     addedDriversList);
             Scene scene = fxmlHelper.createScene("view");
             ViewFormController cfc = fxmlHelper.getFxmlLoader().getController();

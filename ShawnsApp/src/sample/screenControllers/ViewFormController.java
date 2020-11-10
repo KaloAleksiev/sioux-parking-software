@@ -17,6 +17,7 @@ import sample.models.*;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Calendar;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class ViewFormController implements Initializable {
@@ -74,12 +75,23 @@ public class ViewFormController implements Initializable {
         try{
             TableView.TableViewSelectionModel<ShowcaseAppointment> showApp = tvAppointments.getSelectionModel();
             Appointment app = ac.getAppointmentById(showApp.getSelectedItem().GetId());
-            ac.deleteAppointment(app);
-            tvAppointments.getItems().clear();
-            populateTableView();
+
+            //Create the alert
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Delete Appointment");
+            alert.setHeaderText("Are you sure you want to delete this appointment?");
+            alert.setContentText("All data would be lost!");
+            Optional<ButtonType> res = alert.showAndWait();
+
+            //get the result from the appointment
+            if(res.get() == ButtonType.OK){
+                ac.deleteAppointment(app);
+                tvAppointments.getItems().remove(showApp);
+                tvAppointments.setItems(populateTableView());
+            }
         }
         catch(NullPointerException ex){
-            Alert alert = new Alert(Alert.AlertType.ERROR);
+            Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setHeaderText("Please select an appointment!");
             alert.showAndWait();
         }

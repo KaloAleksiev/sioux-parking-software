@@ -14,7 +14,7 @@ public class DriverController {
     DataSource dc;
 
     public DriverController() throws SQLException {
-        dc = new LocalDB();
+        dc = new DataBase();
         driverList = new ArrayList<>();
         driverList = dc.GetDrivers();
     }
@@ -30,37 +30,22 @@ public class DriverController {
         driverList.add(d);
     }
 
-    public int GetMaxDriverID() throws SQLException {
-        return dc.GetMaxDriverID();
+    public Driver GetDriverById(int id) {
+        for (Driver driver : driverList ) {
+            if (driver.getId() == id) {
+                return driver;
+            }
+        }
+        return null;
     }
-    //    public void addDriver(Driver driver) {
-//        driverList.add(driver);
-//    }
 
-//    public List<Driver> GetDriversFromDB() throws SQLException {
-//        return dc.GetDrivers();
-//    }
-
-//    public Driver GetDriverById(int id) {
-//        for (Driver driver : driverList ) {
-//            if (driver.getId() == id) {
-//                return driver;
-//            }
-//        }
-//        return null;
-//    }
-//
-//    public Driver getLastAddedDriver() {
-//        return driverList.get(driverList.size() - 1);
-//    }
-
-//    public boolean removeDriver(int id) {
-//        for (Driver driver : driverList) {
-//            if (driver.getId() == id) {
-//                driverList.remove(driver);
-//                return true;
-//            }
-//        }
-//        return false;
-//    }
+    public boolean removeDriver(int id) {
+        for (Driver driver : driverList) {
+            if (driver.getId() == id) {
+                driverList.remove(driver);
+                return true;
+            }
+        }
+        return false;
+    }
 }

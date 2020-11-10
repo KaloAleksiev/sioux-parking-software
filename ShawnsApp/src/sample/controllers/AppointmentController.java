@@ -18,7 +18,7 @@ public class AppointmentController {
     DataSource ds;
 
     public AppointmentController() throws SQLException {
-        ds = new LocalDB();
+        ds = new DataBase();
         appointmentList = new ArrayList<>();
         appointmentList = ds.GetAppointments();
         for (Appointment a:appointmentList) {
