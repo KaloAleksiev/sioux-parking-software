@@ -22,7 +22,7 @@ public interface DataSource {
     void DeleteAppointment(int id);
     void ChangeDriverName(String name, int driverId);
     void ChangeDriverLicensePlate(String license, int driverId);
-    void ChangeDriverNumber(int number, int driverId);
+    void ChangeDriverNumber(String number, int driverId);
     void DeleteDriver(int id);
 
 }

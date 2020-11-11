@@ -14,7 +14,6 @@ import java.util.List;
 
 public class AppointmentController {
     List<Appointment> appointmentList;
-
     DataSource ds;
 
     public AppointmentController() throws SQLException {
@@ -55,10 +54,6 @@ public class AppointmentController {
         return null;
     }
 
-    public Appointment getLastAddedAppointment() {
-        return appointmentList.get(appointmentList.size() - 1);
-    }
-
     public void createAppointment(int day, int month, int year, LocalTime time, List<Driver> driverList) throws SQLException {
         ds.AddAppointmentToDB(day, month, year, time, driverList);
         int id = ds.GetMaxAppointmentID();
@@ -71,14 +66,4 @@ public class AppointmentController {
         ds.DeleteAppointment(app.getId());
         appointmentList.removeIf(a ->(a.getId() == app.getId()));
     }
-//    public int GetMaxAppointmentID() throws SQLException {
-//        return ds.GetMaxAppointmentID();
-//    }
-//    public List<Appointment> GetAppointments() throws SQLException {
-//        return ds.GetAppointments();
-//    }
-//
-//    public List<Driver> GetDriversForAppointment(Appointment appointment) throws SQLException {
-//        return ds.GetDriversForAppointment(appointment);
-//    }
 }

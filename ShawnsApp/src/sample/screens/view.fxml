@@ -56,14 +56,14 @@
             <Image url="@../images/st.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="ivReset" fitHeight="33.0" fitWidth="40.0" layoutX="426.0" layoutY="158.0" onMouseClicked="#resetFilters" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;">
+      <ImageView fx:id="ivReset" fitHeight="48.0" fitWidth="42.0" layoutX="425.0" layoutY="153.0" onMouseClicked="#resetFilters" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;">
          <image>
-            <Image url="@../images/updateArrow.png" />
+            <Image url="@../images/loading.png" />
          </image></ImageView>
       <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
       <ImageView fitHeight="48.0" fitWidth="42.0" layoutX="804.0" layoutY="41.0" onMouseClicked="#goBack" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;">
          <image>
-            <Image url="@../images/leftArrow.png" />
+            <Image url="@../images/back.png" />
          </image>
       </ImageView>
 

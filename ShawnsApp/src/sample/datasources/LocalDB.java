@@ -301,9 +301,10 @@ public class LocalDB implements DataSource {
 
     }
 
-    public void ChangeDriverNumber(int number, int driverId) {
+    public void ChangeDriverNumber(String number, int driverId) {
 
     }
+
 
     public void DeleteDriver(int id) {
 

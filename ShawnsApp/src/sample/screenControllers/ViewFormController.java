@@ -31,12 +31,12 @@ public class ViewFormController implements Initializable {
 
     private DriverController dc;
     private AppointmentController ac;
-    private FXMLhelper fxmlHelper;
+    private Helper fxmlHelper;
 
     public void initData(DriverController dc, AppointmentController ac) {
         this.dc = dc;
         this.ac = ac;
-        this.fxmlHelper = new FXMLhelper();
+        this.fxmlHelper = new Helper();
         tvAppointments.setItems(populateTableView());
     }
 
@@ -103,7 +103,6 @@ public class ViewFormController implements Initializable {
         cfc.initData(dc, ac);
         fxmlHelper.showScene(scene, event);
     }
-    
 
     public void SearchByName(KeyEvent keyEvent) {
         tvAppointments.getItems().clear();
@@ -163,6 +162,4 @@ public class ViewFormController implements Initializable {
         dpViewApp.setValue(null);
         tbSearchName.setText("");
     }
-
-
 }

@@ -25,24 +25,24 @@
                 <Font name="Lucida Console" size="30.0" />
             </font>
         </Label>
-      <Label layoutX="130.0" layoutY="158.0" text="Driver details" textFill="#dd0303">
+      <Label layoutX="130.0" layoutY="158.0" text="Driver details" textFill="#bf0208">
          <font>
             <Font name="Lucida Console" size="20.0" />
          </font>
       </Label>
-      <Label layoutX="537.0" layoutY="158.0" text="Appointment details" textFill="#cd0303">
+      <Label layoutX="617.0" layoutY="158.0" text="Appointment details" textFill="#bf0208">
          <font>
             <Font name="Lucida Console" size="20.0" />
          </font>
       </Label>
-      <DatePicker fx:id="dpAppointmentDate" layoutX="536.0" layoutY="253.0" prefHeight="54.0" prefWidth="231.0" />
-      <ChoiceBox fx:id="cbAppointmentTime" layoutX="536.0" layoutY="405.0" prefHeight="25.0" prefWidth="231.0" />
-      <Label layoutX="586.0" layoutY="380.0" text="Select time:">
+      <DatePicker fx:id="dpAppointmentDate" layoutX="616.0" layoutY="269.0" prefHeight="25.0" prefWidth="231.0" />
+      <ChoiceBox fx:id="cbAppointmentTime" layoutX="616.0" layoutY="388.0" prefHeight="25.0" prefWidth="231.0" />
+      <Label layoutX="673.0" layoutY="349.0" text="Select time:">
          <font>
             <Font name="Lucida Console" size="18.0" />
          </font>
       </Label>
-      <Label layoutX="586.0" layoutY="218.0" text="Select date:">
+      <Label layoutX="666.0" layoutY="229.0" text="Select date:">
          <font>
             <Font name="Lucida Console" size="18.0" />
          </font>
@@ -52,27 +52,32 @@
             <Image url="@../images/st.png" />
          </image>
       </ImageView>
-      <ListView fx:id="lvAllDrivers" layoutX="83.0" layoutY="206.0" prefHeight="120.0" prefWidth="303.0" />
-      <Button layoutX="251.0" layoutY="342.0" mnemonicParsing="false" onAction="#btnRemoveDriver" prefHeight="39.0" prefWidth="88.0" style="-fx-border-color: #bf0208; -fx-background-color: white; -fx-border-radius: 25; -fx-background-radius: 25;" text="remove">
+      <ListView fx:id="lvAllDrivers" layoutX="82.0" layoutY="201.0" prefHeight="120.0" prefWidth="434.0" />
+      <Button layoutX="381.0" layoutY="340.0" mnemonicParsing="false" onAction="#btnRemoveDriver" prefHeight="39.0" prefWidth="88.0" style="-fx-border-color: #bf0208; -fx-background-color: white; -fx-border-radius: 25; -fx-background-radius: 25;" text="remove">
          <font>
             <Font name="Lucida Console" size="14.0" />
          </font>
       </Button>
-      <Button layoutX="126.0" layoutY="342.0" mnemonicParsing="false" onAction="#btnAddDriver" prefHeight="39.0" prefWidth="88.0" style="-fx-border-color: #bf0208; -fx-background-color: white; -fx-border-radius: 25; -fx-background-radius: 25;" text="add">
+      <Button layoutX="130.0" layoutY="340.0" mnemonicParsing="false" onAction="#btnAddDriver" prefHeight="39.0" prefWidth="88.0" style="-fx-border-color: #bf0208; -fx-background-color: white; -fx-border-radius: 25; -fx-background-radius: 25;" text="add">
          <font>
             <Font name="Lucida Console" size="14.0" />
          </font>
       </Button>
-      <ListView fx:id="lvAddedDrivers" layoutX="83.0" layoutY="390.0" prefHeight="120.0" prefWidth="303.0" />
-      <Button layoutX="320.0" layoutY="149.0" mnemonicParsing="false" onAction="#buttonCreateDriverClick" prefHeight="39.0" prefWidth="39.0" style="-fx-border-color: #bf0208; -fx-background-color: white; -fx-border-radius: 25; -fx-background-radius: 25;" text="+">
-         <font>
-            <Font name="Lucida Console" size="14.0" />
-         </font>
-      </Button>
+      <ListView fx:id="lvAddedDrivers" layoutX="83.0" layoutY="390.0" prefHeight="120.0" prefWidth="434.0" />
         <ImageView fitHeight="48.0" fitWidth="42.0" layoutX="804.0" layoutY="41.0" onMouseClicked="#goBack" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;">
             <image>
-                <Image url="@../images/leftArrow.png" />
+                <Image url="@../images/back.png" />
             </image>
         </ImageView>
+      <ImageView fitHeight="48.0" fitWidth="42.0" layoutX="423.0" layoutY="148.0" onMouseClicked="#EditDriver" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;">
+         <image>
+            <Image url="@../images/edit.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="48.0" fitWidth="42.0" layoutX="469.0" layoutY="148.0" onMouseClicked="#buttonCreateDriverClick" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;">
+         <image>
+            <Image url="@../images/addDriver.png" />
+         </image>
+      </ImageView>
     </children>
 </Pane>

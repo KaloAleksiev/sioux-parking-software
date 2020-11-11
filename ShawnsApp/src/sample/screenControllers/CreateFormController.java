@@ -4,17 +4,13 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
-import javafx.stage.Stage;
 import sample.controllers.AppointmentController;
-import sample.datasources.DataBase;
 import sample.models.Driver;
 import sample.controllers.DriverController;
-import sample.models.FXMLhelper;
+import sample.models.Helper;
 
 import java.io.IOException;
 import java.net.URL;
@@ -38,14 +34,14 @@ public class CreateFormController implements Initializable {
     private List<Driver> addedDriversList;
 
     private FXMLLoader fxmlLoader;
-    private FXMLhelper fxmlHelper;
+    private Helper fxmlHelper;
 
 
     public void initData(DriverController dc, AppointmentController ac) {
         this.dc = dc;
         this.ac = ac;
         fxmlLoader = new FXMLLoader();
-        fxmlHelper = new FXMLhelper();
+        fxmlHelper = new Helper();
         addedDriversList = new ArrayList<>();
         availableDriversList = new ArrayList<>();
         availableDriversList = this.dc.getAllDrivers();
@@ -139,11 +135,11 @@ public class CreateFormController implements Initializable {
         fxmlHelper.showScene(scene, event);
     }
 
-    public void buttonCreateDriverClick(ActionEvent event) throws IOException {
+    public void buttonCreateDriverClick(MouseEvent event) throws IOException {
         Scene scene = fxmlHelper.createScene("driver");
         AddDriverFormController cfc = fxmlHelper.getFxmlLoader().getController();
         cfc.initData(dc, ac);
-        fxmlHelper.showScene(scene, event);
+        fxmlHelper.showSceneMouse(scene, event);
     }
 
     public void goBack(MouseEvent event) throws IOException {
@@ -151,5 +147,21 @@ public class CreateFormController implements Initializable {
         MainFormController cfc = fxmlHelper.getFxmlLoader().getController();
         cfc.initData(dc, ac);
         fxmlHelper.showSceneMouse(scene, event);
+    }
+
+    public void EditDriver(MouseEvent event) throws IOException {
+        Driver d = null;
+        try{
+            d = availableDriversList.get(lvAllDrivers.getSelectionModel().getSelectedIndex());
+            Scene scene = fxmlHelper.createScene("editDriver");
+            EditDriverFromController cfc = fxmlHelper.getFxmlLoader().getController();
+            cfc.initData(dc, ac, d);
+            fxmlHelper.showSceneMouse(scene, event);
+        }
+        catch(IndexOutOfBoundsException ex){
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setHeaderText("Please select a driver!");
+            alert.showAndWait();
+        }
     }
 }

@@ -124,7 +124,7 @@ public class DataBase implements DataSource {
         }
     }
 
-    public List<sample.models.Driver> GetDrivers() throws SQLException {
+    public List<Driver> GetDrivers() throws SQLException {
         List<sample.models.Driver> drivers = new ArrayList<>();
         Connection conn = this.connect();
         Statement stmt = conn.createStatement();
@@ -143,8 +143,8 @@ public class DataBase implements DataSource {
             e.printStackTrace();
         } finally {
             this.disconnect();
-            return drivers;
         }
+        return drivers;
     }
 
     public List<Driver> GetDriversForAppointment(Appointment appointment) throws SQLException {
@@ -255,7 +255,7 @@ public class DataBase implements DataSource {
         executeStatement(sql);
     }
 
-    public void ChangeDriverNumber(int number, int driverId){
+    public void ChangeDriverNumber(String number, int driverId){
         String sql = "UPDATE driver SET phone_number = '"+number+"' WHERE  driver_id= '" + driverId + "';";
         executeStatement(sql);
     }

@@ -10,13 +10,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DriverController {
-    List<Driver> driverList;
-    DataSource dc;
+    private List<Driver> driverList;
+    private DataSource dc;
 
     public DriverController() throws SQLException {
         dc = new DataBase();
         driverList = new ArrayList<>();
-        driverList = dc.GetDrivers();
+        driverList = new ArrayList<Driver>();
+        driverList.addAll(dc.GetDrivers());
     }
 
     public List<Driver> getAllDrivers() {
@@ -29,6 +30,18 @@ public class DriverController {
         Driver d = new Driver(plate, phone, name, id);
         driverList.add(d);
     }
+    public void ChangeName(String name, int id){
+        this.GetDriverById(id).setName(name);
+        dc.ChangeDriverName(name, id);
+    }
+    public void ChangeLicense(String license, int id){
+        this.GetDriverById(id).setLicencePlate(license);
+        dc.ChangeDriverLicensePlate(license, id);
+    }
+    public void ChangeNumber(String number, int id){
+        this.GetDriverById(id).setPhoneNumber(number);
+        dc.ChangeDriverNumber(number, id);
+    }
 
     public Driver GetDriverById(int id) {
         for (Driver driver : driverList ) {
@@ -39,13 +52,8 @@ public class DriverController {
         return null;
     }
 
-    public boolean removeDriver(int id) {
-        for (Driver driver : driverList) {
-            if (driver.getId() == id) {
-                driverList.remove(driver);
-                return true;
-            }
-        }
-        return false;
+    public void removeDriver(int id) {
+        Driver d = GetDriverById(id);
+        this.driverList.remove(d);
     }
 }

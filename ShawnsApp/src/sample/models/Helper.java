@@ -12,7 +12,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.Calendar;
 
-public class FXMLhelper {
+public class Helper {
 
     private FXMLLoader fxmlLoader;
 
@@ -20,7 +20,7 @@ public class FXMLhelper {
         return fxmlLoader;
     }
 
-    public FXMLhelper() {
+    public Helper() {
         this.fxmlLoader = new FXMLLoader();
     }
 

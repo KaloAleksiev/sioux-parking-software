@@ -1,15 +1,11 @@
 package sample.screenControllers;
 
 import javafx.event.ActionEvent;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.stage.Stage;
 import javafx.scene.Scene;
 import sample.controllers.AppointmentController;
 import sample.controllers.DriverController;
-import sample.models.FXMLhelper;
+import sample.models.Helper;
 
 import java.io.IOException;
 import java.net.URL;
@@ -19,7 +15,7 @@ import java.util.ResourceBundle;
 public  class MainFormController implements Initializable {
     DriverController dc;
     AppointmentController ac;
-    FXMLhelper fxmlHelper;
+    Helper fxmlHelper;
 
     public MainFormController() throws SQLException {
         dc = new DriverController();
@@ -33,7 +29,7 @@ public  class MainFormController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        fxmlHelper = new FXMLhelper();
+        fxmlHelper = new Helper();
     }
 
     public void openCreateFormButtonClick(ActionEvent event) throws IOException {

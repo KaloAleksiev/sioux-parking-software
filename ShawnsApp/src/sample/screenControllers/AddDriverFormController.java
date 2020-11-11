@@ -4,16 +4,12 @@ import sample.controllers.AppointmentController;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
-import javafx.stage.Stage;
 import sample.controllers.DriverController;
-import sample.models.FXMLhelper;
+import sample.models.Helper;
 
 import java.io.IOException;
 import java.net.URL;
@@ -28,7 +24,7 @@ public class AddDriverFormController implements Initializable{
 
     DriverController dc;
     AppointmentController ac;
-    private FXMLhelper fxmlHelper;
+    private Helper fxmlHelper;
 
     public void initData(DriverController dc, AppointmentController ac) {
         // When the Form is opened, the Controllers are transferred from the previous Form.
@@ -38,7 +34,7 @@ public class AddDriverFormController implements Initializable{
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        this.fxmlHelper = new FXMLhelper();
+        this.fxmlHelper = new Helper();
     }
 
     public void btnDoneClick(ActionEvent event) throws SQLException, IOException {
