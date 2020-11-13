@@ -36,13 +36,13 @@
          </font>
       </Label>
       <DatePicker fx:id="dpAppointmentDate" layoutX="616.0" layoutY="269.0" prefHeight="25.0" prefWidth="231.0" />
-      <ChoiceBox fx:id="cbAppointmentTime" layoutX="616.0" layoutY="388.0" prefHeight="25.0" prefWidth="231.0" />
-      <Label layoutX="673.0" layoutY="349.0" text="Select time:">
+      <ChoiceBox fx:id="cbAppointmentTime" layoutX="616.0" layoutY="358.0" onMouseClicked="#SelectTime" prefHeight="25.0" prefWidth="231.0" />
+      <Label layoutX="670.0" layoutY="319.0" text="Select time:">
          <font>
             <Font name="Lucida Console" size="18.0" />
          </font>
       </Label>
-      <Label layoutX="666.0" layoutY="229.0" text="Select date:">
+      <Label layoutX="670.0" layoutY="229.0" text="Select date:">
          <font>
             <Font name="Lucida Console" size="18.0" />
          </font>
@@ -79,5 +79,16 @@
             <Image url="@../images/addDriver.png" />
          </image>
       </ImageView>
+      <TextField fx:id="tbTime" layoutX="616.0" layoutY="431.0" onKeyTyped="#timeManual" prefHeight="25.0" prefWidth="231.0" />
+      <Label fx:id="lblTime" layoutX="673.0" layoutY="471.0" prefHeight="25.0" prefWidth="119.0" style="-fx-font-style: italic;" text="Format: &quot;23:56&quot;" visible="false">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <Label layoutX="673.0" layoutY="401.0" text="Input time:">
+         <font>
+            <Font name="Lucida Console" size="18.0" />
+         </font>
+      </Label>
     </children>
 </Pane>

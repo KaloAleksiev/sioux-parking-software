@@ -6,12 +6,17 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Paint;
 import sample.controllers.AppointmentController;
 import sample.models.Driver;
 import sample.controllers.DriverController;
 import sample.models.Helper;
 
+import java.awt.*;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
@@ -25,6 +30,8 @@ public class CreateFormController implements Initializable {
     @FXML private ChoiceBox<String> cbAppointmentTime;
     @FXML private ListView<String> lvAllDrivers;
     @FXML private ListView<String> lvAddedDrivers;
+    @FXML private TextField tbTime;
+    @FXML private Label lblTime;
 
 
     private DriverController dc;
@@ -96,26 +103,50 @@ public class CreateFormController implements Initializable {
     }
 
     public void createAppointmentButtonClick(ActionEvent event) throws SQLException, IOException {
-        if (dpAppointmentDate.getValue() != null && cbAppointmentTime.getValue() != null) {
+
+        LocalTime time = null;
+        if(cbAppointmentTime.getValue() == null){
+            if(!tbTime.getText().isEmpty())
+                if(fxmlHelper.REGEXTime(tbTime.getText()))
+                    time = LocalTime.parse(tbTime.getText()+":00");
+        }
+        else{
+            time = LocalTime.parse(cbAppointmentTime.getValue()+":00");
+        }
+
+        if(time == null){
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setHeaderText("Time is not selected/incorrect!");
+            alert.setContentText("Please select a timeslot from the selection box or type in a correct time!");
+            alert.showAndWait();
+        }
+        else if(dpAppointmentDate.getValue() == null){
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setHeaderText("Date is not selected!");
+            alert.setContentText("Please select a date from the calendar!");
+            alert.showAndWait();
+        }
+        else if(addedDriversList.size() == 0){
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setHeaderText("No drivers for the current appointment");
+            alert.setContentText("Please add at least one driver to the appointment!");
+            alert.showAndWait();
+        }
+        else {
             ac.createAppointment(dpAppointmentDate.getValue().getDayOfMonth(),
                     dpAppointmentDate.getValue().getMonthValue(),
                     dpAppointmentDate.getValue().getYear(),
-                    LocalTime.parse(cbAppointmentTime.getValue()+":00"),
+                    time,
                     addedDriversList);
             Scene scene = fxmlHelper.createScene("view");
             ViewFormController cfc = fxmlHelper.getFxmlLoader().getController();
             cfc.initData(dc, ac);
             fxmlHelper.showScene(scene, event);
-        } else {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setHeaderText("Please fill in all the information!");
-            alert.showAndWait();
         }
         resetForm();
     }
 
     public void resetForm() {
-        dpAppointmentDate.setValue(null);
         cbAppointmentTime.setValue(null);
         List<Driver> standInList = new ArrayList<>();
         for (Driver driver : addedDriversList) {
@@ -163,5 +194,21 @@ public class CreateFormController implements Initializable {
             alert.setHeaderText("Please select a driver!");
             alert.showAndWait();
         }
+    }
+
+    public void timeManual(KeyEvent keyEvent) {
+        cbAppointmentTime.getSelectionModel().clearSelection();
+        lblTime.visibleProperty().setValue(true);
+        if(fxmlHelper.REGEXTime(tbTime.getText())){
+            lblTime.setTextFill(Paint.valueOf("#32CD32"));
+        }
+        else{
+            lblTime.setTextFill(Paint.valueOf("#FF0000"));
+        }
+    }
+
+    public void SelectTime(MouseEvent mouseEvent) {
+        tbTime.setText("");
+        lblTime.visibleProperty().setValue(false);
     }
 }

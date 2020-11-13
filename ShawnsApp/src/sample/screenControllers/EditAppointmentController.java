@@ -5,6 +5,9 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Paint;
 import sample.models.Appointment;
 import sample.controllers.AppointmentController;
 import sample.models.Driver;
@@ -24,12 +27,12 @@ import java.util.ResourceBundle;
 
 public class EditAppointmentController implements Initializable {
 
-
-
     @FXML private DatePicker dpAppointmentDate;
     @FXML private ChoiceBox<String> cbAppointmentTime;
     @FXML private ListView<String> lvAllDrivers;
     @FXML private ListView<String> lvAddedDrivers;
+    @FXML private Label lblTime;
+    @FXML private TextField tbTime;
 
     private DriverController dc;
     private AppointmentController ac;
@@ -74,13 +77,9 @@ public class EditAppointmentController implements Initializable {
     }
 
     public void populateChoiceBox() {
-        cbAppointmentTime.getItems().add("10:00:00");
-        cbAppointmentTime.getItems().add("11:00:00");
-        cbAppointmentTime.getItems().add("12:00:00");
-        cbAppointmentTime.getItems().add("13:00:00");
-        cbAppointmentTime.getItems().add("14:00:00");
-        cbAppointmentTime.getItems().add("15:00:00");
-        cbAppointmentTime.getItems().add("16:00:00");
+        for (int i = 10; i <18 ; i++) {
+            cbAppointmentTime.getItems().add(+i+":00");
+        }
     }
 
     public void updateDriversLists() {
@@ -97,14 +96,13 @@ public class EditAppointmentController implements Initializable {
     public void SetDate(){
         DateTimeFormatter formatter = null;
         String formatString = "";
-        if(this.current.getDate().get(Calendar.DAY_OF_MONTH) < 9){
+        if(this.current.getDate().get(Calendar.DAY_OF_MONTH) <=9){
             formatString+="d-";
         }
         else{
             formatString+="dd-";
         }
-        int tashak = this.current.getDate().get(Calendar.MONTH);
-        if(this.current.getDate().get(Calendar.MONTH) < 9){
+        if(this.current.getDate().get(Calendar.MONTH) <= 9){
 
             formatString+="M-";
         }
@@ -123,9 +121,8 @@ public class EditAppointmentController implements Initializable {
     }
 
     public void SetTime(){
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
         cbAppointmentTime.setValue(this.current.getTime().format(formatter));
-
     }
 
     public void btnAddDriver() {
@@ -148,8 +145,18 @@ public class EditAppointmentController implements Initializable {
             ac.ChangeDrivers(this.addedDriversList, this.current);
         }
 
-        if(this.current.getTime() != LocalTime.parse(cbAppointmentTime.getValue())){
-            ac.changeTime(LocalTime.parse(cbAppointmentTime.getValue()), this.current.getId());
+        LocalTime time = null;
+        if(cbAppointmentTime.getValue() == null){
+            if(!tbTime.getText().isEmpty())
+                if(fxmlHelper.REGEXTime(tbTime.getText()))
+                    time = LocalTime.parse(tbTime.getText()+":00");
+        }
+        else{
+            time = LocalTime.parse(cbAppointmentTime.getValue()+":00");
+        }
+
+        if(this.current.getTime() != time && time != null){
+            ac.changeTime(time, this.current.getId());
         }
 
         Calendar date = Calendar.getInstance();
@@ -186,4 +193,42 @@ public class EditAppointmentController implements Initializable {
         fxmlHelper.showScene(scene, event);
     }
 
+    public void timeManual(KeyEvent keyEvent) {
+        cbAppointmentTime.getSelectionModel().clearSelection();
+        lblTime.visibleProperty().setValue(true);
+        if(fxmlHelper.REGEXTime(tbTime.getText())){
+            lblTime.setTextFill(Paint.valueOf("#32CD32"));
+        }
+        else{
+            lblTime.setTextFill(Paint.valueOf("#FF0000"));
+        }
+    }
+
+    public void buttonCreateDriverClick(MouseEvent event) throws IOException {
+        Scene scene = fxmlHelper.createScene("driver");
+        AddDriverFormController cfc = fxmlHelper.getFxmlLoader().getController();
+        cfc.initData(dc, ac);
+        fxmlHelper.showSceneMouse(scene, event);
+    }
+
+    public void EditDriver(MouseEvent event) {
+        Driver d = null;
+        try{
+            d = availableDriversList.get(lvAllDrivers.getSelectionModel().getSelectedIndex());
+            Scene scene = fxmlHelper.createScene("editDriver");
+            EditDriverFromController cfc = fxmlHelper.getFxmlLoader().getController();
+            cfc.initData(dc, ac, d);
+            fxmlHelper.showSceneMouse(scene, event);
+        }
+        catch(IndexOutOfBoundsException | IOException ex){
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setHeaderText("Please select a driver!");
+            alert.showAndWait();
+        }
+    }
+
+    public void SelectTime(MouseEvent mouseEvent) {
+        tbTime.setText("");
+        lblTime.visibleProperty().setValue(false);
+    }
 }

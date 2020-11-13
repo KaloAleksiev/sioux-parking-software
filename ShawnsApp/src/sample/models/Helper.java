@@ -11,6 +11,8 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.Calendar;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Helper {
 
@@ -55,5 +57,15 @@ public class Helper {
         Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
         window.setScene(scene);
         window.show();
+    }
+
+    public boolean REGEXTime(String s){
+        Pattern p = Pattern.compile("(?:^$)|(?:^([0-9]|0[1-9]|1[0-9]|2[0-4])(:|\\.)[0-5][0-9]$)|(?:^([1-9]|0[1-9]|1[0-2])(:|\\.)[0-5][0-9] (A|a|P|p)(M|m)$)");
+        Matcher m = p.matcher(s);
+        boolean b = m.matches();
+        if(b == true){
+            return true;
+        }
+        return false;
     }
 }
