@@ -1,5 +1,5 @@
 button {
-    background-color: lightblue;
+    -fx-background-color: lightblue;
     border-radius: 25px;
 }
 main {

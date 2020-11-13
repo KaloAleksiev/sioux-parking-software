@@ -122,7 +122,12 @@ public class EditAppointmentController implements Initializable {
 
     public void SetTime(){
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
-        cbAppointmentTime.setValue(this.current.getTime().format(formatter));
+        if(cbAppointmentTime.getItems().stream().anyMatch(o -> o.equals(this.current.getTime().format(formatter)))){
+            cbAppointmentTime.setValue(this.current.getTime().format(formatter));
+        }
+        else{
+            tbTime.setText(this.current.getTime().format(formatter));
+        }
     }
 
     public void btnAddDriver() {
