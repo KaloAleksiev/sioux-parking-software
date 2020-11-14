@@ -7,6 +7,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import sample.Main;
 
 
 import java.io.IOException;
@@ -36,6 +37,8 @@ public class Helper {
     public void showScene(Scene scene, ActionEvent event){
         Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
         window.setScene(scene);
+        scene.getStylesheets().add
+                (this.getClass().getResource("../styles/styles.css").toExternalForm());
         window.show();
     }
 
@@ -56,6 +59,8 @@ public class Helper {
     public void showSceneMouse(Scene scene, MouseEvent event){
         Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
         window.setScene(scene);
+        scene.getStylesheets().add
+                (this.getClass().getResource("../styles/styles.css").toExternalForm());
         window.show();
     }
 

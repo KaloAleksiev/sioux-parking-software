@@ -43,7 +43,7 @@ public class AddDriverFormController implements Initializable{
             dc.AddDriver(tbPhoneNumber.getText(), tbLicensePlate.getText(), tbDriverName.getText());
             openCreateForm(event);
         } else {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
+            Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setHeaderText("Please fill in all the information!");
             alert.showAndWait();
         }

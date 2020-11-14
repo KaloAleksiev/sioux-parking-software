@@ -7,7 +7,7 @@
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="900.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.screenControllers.AddDriverFormController">
     <children>
-        <Button layoutX="499.0" layoutY="541.0" mnemonicParsing="false" onAction="#btnDoneClick" prefHeight="54.0" prefWidth="320.0" style="-fx-border-color: #bf0208; -fx-background-color: white; -fx-border-radius: 25; -fx-background-radius: 25;" text="Done">
+        <Button layoutX="499.0" layoutY="541.0" mnemonicParsing="false" onAction="#btnDoneClick" prefHeight="54.0" prefWidth="320.0" style="-fx-border-color: #bf0208; -fx-border-radius: 25; -fx-background-radius: 25;" text="Done">
             <font>
                 <Font name="Lucida Console" size="23.0" />
             </font></Button>
@@ -16,7 +16,7 @@
                 <Font name="Lucida Console" size="36.0" />
             </font>
         </Label>
-        <Button layoutX="74.0" layoutY="541.0" mnemonicParsing="false" onAction="#btnCancelClick" prefHeight="54.0" prefWidth="320.0" style="-fx-border-color: #bf0208; -fx-background-color: white; -fx-border-radius: 25; -fx-background-radius: 25;" text="Cancel">
+        <Button layoutX="74.0" layoutY="541.0" mnemonicParsing="false" onAction="#btnCancelClick" prefHeight="54.0" prefWidth="320.0" style="-fx-border-color: #bf0208; -fx-border-radius: 25; -fx-background-radius: 25;" text="Cancel">
             <font>
                 <Font name="Lucida Console" size="23.0" />
             </font></Button>

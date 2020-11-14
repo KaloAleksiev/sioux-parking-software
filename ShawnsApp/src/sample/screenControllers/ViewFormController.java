@@ -28,7 +28,6 @@ public class ViewFormController implements Initializable {
     @FXML private DatePicker dpViewApp;
     @FXML private TextField tbSearchName;
 
-
     private DriverController dc;
     private AppointmentController ac;
     private Helper fxmlHelper;
@@ -104,7 +103,7 @@ public class ViewFormController implements Initializable {
         fxmlHelper.showScene(scene, event);
     }
 
-    public void SearchByName(KeyEvent keyEvent) {
+    public void SearchByName() {
         tvAppointments.getItems().clear();
         String str = tbSearchName.getText().toLowerCase();
         ObservableList<ShowcaseAppointment> allAppointments = FXCollections.observableArrayList();
@@ -125,7 +124,7 @@ public class ViewFormController implements Initializable {
             tvAppointments.setItems(filteredAppointments);
         }
     }
-    public void filterByDate(ActionEvent event) {
+    public void filterByDate() {
         ObservableList<ShowcaseAppointment> allAppointments = FXCollections.observableArrayList();
         ObservableList<ShowcaseAppointment> appointments = FXCollections.observableArrayList();
         //GetAllAppointments
@@ -161,5 +160,6 @@ public class ViewFormController implements Initializable {
     public void resetFilters(MouseEvent mouseEvent) {
         dpViewApp.setValue(null);
         tbSearchName.setText("");
+        SearchByName();
     }
 }

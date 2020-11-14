@@ -131,17 +131,33 @@ public class EditAppointmentController implements Initializable {
     }
 
     public void btnAddDriver() {
-        int selectedIndex = lvAllDrivers.getSelectionModel().getSelectedIndex();
-        addedDriversList.add(availableDriversList.get(selectedIndex));
-        availableDriversList.remove(selectedIndex);
-        updateDriversLists();
+        try{
+            int selectedIndex = lvAllDrivers.getSelectionModel().getSelectedIndex();
+            addedDriversList.add(availableDriversList.get(selectedIndex));
+            availableDriversList.remove(selectedIndex);
+            updateDriversLists();
+        }
+        catch(IndexOutOfBoundsException ex){
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setHeaderText("Driver not selected!");
+            alert.setContentText("Please select a driver from the list on top!");
+            alert.showAndWait();
+        }
     }
 
     public void btnRemoveDriver() {
-        int selectedIndex = lvAddedDrivers.getSelectionModel().getSelectedIndex();
-        availableDriversList.add(addedDriversList.get(selectedIndex));
-        addedDriversList.remove(selectedIndex);
-        updateDriversLists();
+        try{
+            int selectedIndex = lvAddedDrivers.getSelectionModel().getSelectedIndex();
+            availableDriversList.add(addedDriversList.get(selectedIndex));
+            addedDriversList.remove(selectedIndex);
+            updateDriversLists();
+        }
+        catch(IndexOutOfBoundsException ex){
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setHeaderText("Driver not selected!");
+            alert.setContentText("Please select a driver from the list on the bottom!");
+            alert.showAndWait();
+        }
     }
 
     public void editAppointmentButtonClick(ActionEvent event) throws SQLException, IOException {
@@ -175,20 +191,6 @@ public class EditAppointmentController implements Initializable {
         ViewFormController cfc = fxmlHelper.getFxmlLoader().getController();
         cfc.initData(dc, ac);
         fxmlHelper.showScene(scene,event );
-    }
-
-    public void resetForm() {
-        dpAppointmentDate.setValue(null);
-        cbAppointmentTime.setValue(null);
-        List<Driver> standInList = new ArrayList<>();
-        for (Driver driver : addedDriversList) {
-            standInList.add(driver);
-        }
-        for (Driver driver : standInList) {
-            addedDriversList.remove(driver);
-            availableDriversList.add(driver);
-        }
-        updateDriversLists();
     }
 
     public void buttonCancelClick(ActionEvent event) throws IOException, SQLException {
