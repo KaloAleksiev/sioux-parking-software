@@ -64,14 +64,19 @@
             </font>
         </Button>
         <ListView fx:id="lvAddedDrivers" layoutX="83.0" layoutY="390.0" prefHeight="120.0" prefWidth="434.0" />
-        <ImageView fitHeight="48.0" fitWidth="42.0" layoutX="423.0" layoutY="148.0" onMouseClicked="#EditDriver" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;">
+        <ImageView styleClass="ble" fitHeight="48.0" fitWidth="42.0" layoutX="423.0" layoutY="148.0" onMouseClicked="#editDriver" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;">
             <image>
                 <Image url="@../images/edit.png" />
             </image>
         </ImageView>
-        <ImageView fitHeight="48.0" fitWidth="42.0" layoutX="469.0" layoutY="148.0" onMouseClicked="#buttonCreateDriverClick" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;">
+        <ImageView styleClass="ble" fitHeight="48.0" fitWidth="42.0" layoutX="469.0" layoutY="148.0" onMouseClicked="#buttonCreateDriverClick" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;">
             <image>
                 <Image url="@../images/addDriver.png" />
+            </image>
+        </ImageView>
+        <ImageView styleClass="ble" fitHeight="48.0" fitWidth="42.0" layoutX="376.0" layoutY="148.0" onMouseClicked="#buttonDeleteDriverClick" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;">
+            <image>
+                <Image url="@../images/trash.png" />
             </image>
         </ImageView>
         <TextField fx:id="tbTime" layoutX="616.0" layoutY="431.0" onKeyTyped="#timeManual" prefHeight="25.0" prefWidth="231.0" />

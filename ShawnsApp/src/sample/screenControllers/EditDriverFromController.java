@@ -7,10 +7,10 @@ import javafx.scene.Scene;
 import javafx.scene.control.TextField;
 import sample.controllers.AppointmentController;
 import sample.controllers.DriverController;
+import sample.models.Appointment;
 import sample.models.Driver;
-import sample.models.Helper;
+import sample.Helper;
 
-import java.awt.*;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -25,16 +25,18 @@ public class EditDriverFromController implements Initializable {
     private DriverController dc;
     private AppointmentController ac;
     private Helper helper;
+    private Appointment appointment;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         this.helper = new Helper();
     }
 
-    public void initData(DriverController dc, AppointmentController ac, Driver d) {
+    public void initData(DriverController dc, AppointmentController ac, Driver d, Appointment appointment) {
         this.forEditing = d;
         this.dc = dc;
         this.ac = ac;
+        this.appointment = appointment;
 
         tbDriverName.setText(this.forEditing.getName());
         tbLicensePlate.setText(this.forEditing.getLicencePlate());
@@ -43,25 +45,34 @@ public class EditDriverFromController implements Initializable {
 
     public void btnDoneClick(ActionEvent event) throws IOException {
         if(tbDriverName.getText() != this.forEditing.getName()){
-            dc.ChangeName(tbDriverName.getText(), this.forEditing.getId());
+            dc.changeName(tbDriverName.getText(), this.forEditing.getId());
         }
         if(tbPhoneNumber.getText() != this.forEditing.getPhoneNumber()){
-            dc.ChangeNumber(tbPhoneNumber.getText(), this.forEditing.getId());
+            dc.changeNumber(tbPhoneNumber.getText(), this.forEditing.getId());
         }
         if(tbLicensePlate.getText() != this.forEditing.getLicencePlate()){
-            dc.ChangeLicense(tbLicensePlate.getText(), this.forEditing.getId());
+            dc.changeLicense(tbLicensePlate.getText(), this.forEditing.getId());
         }
-
-        Scene scene = helper.createScene("create");
-        CreateFormController cfc = helper.getFxmlLoader().getController();
-        cfc.initData(dc,ac);
-        helper.showScene(scene, event);
+        determineForm(event, this.appointment);
     }
 
     public void btnCancelClick(ActionEvent event) throws IOException {
-        Scene scene = helper.createScene("create");
-        CreateFormController cfc = helper.getFxmlLoader().getController();
-        cfc.initData(dc, ac);
-        helper.showScene(scene, event);
+        determineForm(event, this.appointment);
+    }
+
+    public void determineForm(ActionEvent event, Appointment app) throws IOException {
+
+        if(app == null){
+            Scene scene = helper.createScene("create");
+            CreateFormController cfc = helper.getFxmlLoader().getController();
+            cfc.initData(dc, ac);
+            helper.showScene(scene, event);
+        }
+        else {
+            Scene scene = helper.createScene("editAppointment");
+            EditAppointmentController cfc = helper.getFxmlLoader().getController();
+            cfc.initData(dc, ac, app);
+            helper.showScene(scene, event);
+        }
     }
 }

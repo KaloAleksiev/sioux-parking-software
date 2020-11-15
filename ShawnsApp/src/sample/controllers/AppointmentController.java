@@ -40,7 +40,7 @@ public class AppointmentController {
         ds.ChangeTime(time,id);
     }
 
-    public void ChangeDrivers(List<Driver>newDrivers, Appointment app){
+    public void changeDrivers(List<Driver>newDrivers, Appointment app){
         getAppointmentById(app.getId()).setDriverList(newDrivers);
         ds.ChangeDrivers(newDrivers, app);
     }

@@ -8,8 +8,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import sample.Helper;
 import sample.controllers.AppointmentController;
 import sample.controllers.DriverController;
 import sample.models.*;
@@ -30,12 +30,12 @@ public class ViewFormController implements Initializable {
 
     private DriverController dc;
     private AppointmentController ac;
-    private Helper fxmlHelper;
+    private Helper helper;
 
     public void initData(DriverController dc, AppointmentController ac) {
         this.dc = dc;
         this.ac = ac;
-        this.fxmlHelper = new Helper();
+        this.helper = new Helper();
         tvAppointments.setItems(populateTableView());
     }
 
@@ -58,10 +58,10 @@ public class ViewFormController implements Initializable {
         try{
             TableView.TableViewSelectionModel<ShowcaseAppointment> showApp = tvAppointments.getSelectionModel();
             Appointment app = ac.getAppointmentById(showApp.getSelectedItem().GetId());
-            Scene scene = fxmlHelper.createScene("editAppointment");
-            EditAppointmentController cfc = fxmlHelper.getFxmlLoader().getController();
+            Scene scene = helper.createScene("editAppointment");
+            EditAppointmentController cfc = helper.getFxmlLoader().getController();
             cfc.initData(dc, ac, app);
-            fxmlHelper.showScene(scene, event);
+            helper.showScene(scene, event);
         }
         catch(NullPointerException ex){
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -97,10 +97,10 @@ public class ViewFormController implements Initializable {
     }
 
     public void buttonCancelClick(ActionEvent event) throws IOException {
-        Scene scene = fxmlHelper.createScene("main");
-        MainFormController cfc = fxmlHelper.getFxmlLoader().getController();
+        Scene scene = helper.createScene("main");
+        MainFormController cfc = helper.getFxmlLoader().getController();
         cfc.initData(dc, ac);
-        fxmlHelper.showScene(scene, event);
+        helper.showScene(scene, event);
     }
 
     public void SearchByName() {
@@ -141,8 +141,8 @@ public class ViewFormController implements Initializable {
             date.set(dpViewApp.getValue().getYear(), dpViewApp.getValue().getMonthValue(), dpViewApp.getValue().getDayOfMonth());
 
             for (ShowcaseAppointment a:allAppointments) {
-                String date1= fxmlHelper.GetDateAsString(a.appointment.getDate());
-                String date2= fxmlHelper.GetDateAsString(date);
+                String date1= helper.GetDateAsString(a.appointment.getDate());
+                String date2= helper.GetDateAsString(date);
                 if(date1.equals(date2) ){
                     appointments.add(a);
                 }
@@ -151,10 +151,10 @@ public class ViewFormController implements Initializable {
         }
     }
     public void goBack(MouseEvent event) throws IOException {
-        Scene scene = fxmlHelper.createScene("main");
-        MainFormController cfc = fxmlHelper.getFxmlLoader().getController();
+        Scene scene = helper.createScene("main");
+        MainFormController cfc = helper.getFxmlLoader().getController();
         cfc.initData(dc, ac);
-        fxmlHelper.showSceneMouse(scene, event);
+        helper.showSceneMouse(scene, event);
     }
 
     public void resetFilters(MouseEvent mouseEvent) {

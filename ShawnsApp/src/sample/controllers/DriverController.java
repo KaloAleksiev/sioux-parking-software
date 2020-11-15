@@ -1,7 +1,6 @@
 package sample.controllers;
 
 import sample.datasources.DataBase;
-import sample.datasources.LocalDB;
 import sample.interfaces.DataSource;
 import sample.models.Driver;
 
@@ -24,26 +23,26 @@ public class DriverController {
         return driverList;
     }
 
-    public void AddDriver(String phone, String plate, String name) throws SQLException {
+    public void addDriver(String phone, String plate, String name) throws SQLException {
         dc.AddDriverToDB(plate, phone, name);
         int id = dc.GetMaxDriverID();
         Driver d = new Driver(plate, phone, name, id);
         driverList.add(d);
     }
-    public void ChangeName(String name, int id){
-        this.GetDriverById(id).setName(name);
+    public void changeName(String name, int id){
+        this.getDriverById(id).setName(name);
         dc.ChangeDriverName(name, id);
     }
-    public void ChangeLicense(String license, int id){
-        this.GetDriverById(id).setLicencePlate(license);
+    public void changeLicense(String license, int id){
+        this.getDriverById(id).setLicencePlate(license);
         dc.ChangeDriverLicensePlate(license, id);
     }
-    public void ChangeNumber(String number, int id){
-        this.GetDriverById(id).setPhoneNumber(number);
+    public void changeNumber(String number, int id){
+        this.getDriverById(id).setPhoneNumber(number);
         dc.ChangeDriverNumber(number, id);
     }
 
-    public Driver GetDriverById(int id) {
+    public Driver getDriverById(int id) {
         for (Driver driver : driverList ) {
             if (driver.getId() == id) {
                 return driver;
@@ -52,8 +51,8 @@ public class DriverController {
         return null;
     }
 
-    public void removeDriver(int id) {
-        Driver d = GetDriverById(id);
-        this.driverList.remove(d);
+    public void deleteDriver(int id) {
+        this.driverList.removeIf(d -> d.getId() == id );
+        dc.DeleteDriver(id);
     }
 }

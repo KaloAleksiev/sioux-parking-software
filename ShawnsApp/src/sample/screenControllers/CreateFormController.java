@@ -14,15 +14,15 @@ import javafx.scene.paint.Paint;
 import sample.controllers.AppointmentController;
 import sample.models.Driver;
 import sample.controllers.DriverController;
-import sample.models.Helper;
+import sample.Helper;
 
-import java.awt.*;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class CreateFormController implements Initializable {
@@ -33,7 +33,6 @@ public class CreateFormController implements Initializable {
     @FXML private TextField tbTime;
     @FXML private Label lblTime;
 
-
     private DriverController dc;
     private AppointmentController ac;
 
@@ -41,14 +40,14 @@ public class CreateFormController implements Initializable {
     private List<Driver> addedDriversList;
 
     private FXMLLoader fxmlLoader;
-    private Helper fxmlHelper;
+    private Helper helper;
 
 
     public void initData(DriverController dc, AppointmentController ac) {
         this.dc = dc;
         this.ac = ac;
         fxmlLoader = new FXMLLoader();
-        fxmlHelper = new Helper();
+        helper = new Helper();
         addedDriversList = new ArrayList<>();
         availableDriversList = new ArrayList<>();
         availableDriversList = this.dc.getAllDrivers();
@@ -119,7 +118,7 @@ public class CreateFormController implements Initializable {
         LocalTime time = null;
         if(cbAppointmentTime.getValue() == null){
             if(!tbTime.getText().isEmpty())
-                if(fxmlHelper.REGEXTime(tbTime.getText()))
+                if(helper.REGEXTime(tbTime.getText()))
                     time = LocalTime.parse(tbTime.getText()+":00");
         }
         else{
@@ -150,12 +149,91 @@ public class CreateFormController implements Initializable {
                     dpAppointmentDate.getValue().getYear(),
                     time,
                     addedDriversList);
-            Scene scene = fxmlHelper.createScene("view");
-            ViewFormController cfc = fxmlHelper.getFxmlLoader().getController();
+            Scene scene = helper.createScene("view");
+            ViewFormController cfc = helper.getFxmlLoader().getController();
             cfc.initData(dc, ac);
-            fxmlHelper.showScene(scene, event);
+            helper.showScene(scene, event);
         }
         resetForm();
+    }
+
+    public void buttonDeleteDriverClick(MouseEvent event) {
+        Driver d;
+        try{
+            d = availableDriversList.get(lvAllDrivers.getSelectionModel().getSelectedIndex());
+
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Delete Driver");
+            alert.setHeaderText("Are you sure you want to delete this driver?");
+            alert.setContentText("All data would be lost!");
+            Optional<ButtonType> res = alert.showAndWait();
+
+            //get the result from the appointment
+            if(res.get() == ButtonType.OK){
+                dc.deleteDriver(d.getId());
+                availableDriversList.remove(d);
+                updateDriversLists();
+            }
+        }
+        catch(IndexOutOfBoundsException ex){
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setHeaderText("Driver not selected!");
+            alert.setContentText("Please select a driver from the list on top!");
+            alert.showAndWait();
+        }
+    }
+
+    public void buttonCancelClick(ActionEvent event) throws IOException {
+        Scene scene = helper.createScene("main");
+        MainFormController cfc = helper.getFxmlLoader().getController();
+        cfc.initData(dc, ac);
+        helper.showScene(scene, event);
+    }
+
+    public void buttonCreateDriverClick(MouseEvent event) throws IOException {
+        Scene scene = helper.createScene("driver");
+        AddDriverFormController cfc = helper.getFxmlLoader().getController();
+        cfc.initData(dc, ac, null);
+        helper.showSceneMouse(scene, event);
+    }
+
+    public void goBack(MouseEvent event) throws IOException {
+        Scene scene = helper.createScene("main");
+        MainFormController cfc = helper.getFxmlLoader().getController();
+        cfc.initData(dc, ac);
+        helper.showSceneMouse(scene, event);
+    }
+
+    public void EditDriver(MouseEvent event) throws IOException {
+        Driver d = null;
+        try{
+            d = availableDriversList.get(lvAllDrivers.getSelectionModel().getSelectedIndex());
+            Scene scene = helper.createScene("editDriver");
+            EditDriverFromController cfc = helper.getFxmlLoader().getController();
+            cfc.initData(dc, ac, d, null);
+            helper.showSceneMouse(scene, event);
+        }
+        catch(IndexOutOfBoundsException ex){
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setHeaderText("Please select a driver!");
+            alert.showAndWait();
+        }
+    }
+
+    public void timeManual(KeyEvent keyEvent) {
+        cbAppointmentTime.getSelectionModel().clearSelection();
+        lblTime.visibleProperty().setValue(true);
+        if(helper.REGEXTime(tbTime.getText())){
+            lblTime.setTextFill(Paint.valueOf("#32CD32"));
+        }
+        else{
+            lblTime.setTextFill(Paint.valueOf("#FF0000"));
+        }
+    }
+
+    public void SelectTime(MouseEvent mouseEvent) {
+        tbTime.setText("");
+        lblTime.visibleProperty().setValue(false);
     }
 
     public void resetForm() {
@@ -169,58 +247,5 @@ public class CreateFormController implements Initializable {
             availableDriversList.add(driver);
         }
         updateDriversLists();
-    }
-
-    public void buttonCancelClick(ActionEvent event) throws IOException {
-        Scene scene = fxmlHelper.createScene("main");
-        MainFormController cfc = fxmlHelper.getFxmlLoader().getController();
-        cfc.initData(dc, ac);
-        fxmlHelper.showScene(scene, event);
-    }
-
-    public void buttonCreateDriverClick(MouseEvent event) throws IOException {
-        Scene scene = fxmlHelper.createScene("driver");
-        AddDriverFormController cfc = fxmlHelper.getFxmlLoader().getController();
-        cfc.initData(dc, ac);
-        fxmlHelper.showSceneMouse(scene, event);
-    }
-
-    public void goBack(MouseEvent event) throws IOException {
-        Scene scene = fxmlHelper.createScene("main");
-        MainFormController cfc = fxmlHelper.getFxmlLoader().getController();
-        cfc.initData(dc, ac);
-        fxmlHelper.showSceneMouse(scene, event);
-    }
-
-    public void EditDriver(MouseEvent event) throws IOException {
-        Driver d = null;
-        try{
-            d = availableDriversList.get(lvAllDrivers.getSelectionModel().getSelectedIndex());
-            Scene scene = fxmlHelper.createScene("editDriver");
-            EditDriverFromController cfc = fxmlHelper.getFxmlLoader().getController();
-            cfc.initData(dc, ac, d);
-            fxmlHelper.showSceneMouse(scene, event);
-        }
-        catch(IndexOutOfBoundsException ex){
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setHeaderText("Please select a driver!");
-            alert.showAndWait();
-        }
-    }
-
-    public void timeManual(KeyEvent keyEvent) {
-        cbAppointmentTime.getSelectionModel().clearSelection();
-        lblTime.visibleProperty().setValue(true);
-        if(fxmlHelper.REGEXTime(tbTime.getText())){
-            lblTime.setTextFill(Paint.valueOf("#32CD32"));
-        }
-        else{
-            lblTime.setTextFill(Paint.valueOf("#FF0000"));
-        }
-    }
-
-    public void SelectTime(MouseEvent mouseEvent) {
-        tbTime.setText("");
-        lblTime.visibleProperty().setValue(false);
     }
 }
