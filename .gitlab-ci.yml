@@ -1,8 +1,4 @@
 build:
   script:
+    - cd SMS_API
     - ./gradlew assemble
- 
-test:
-  stage: test
-  script:
-    - ./gradlew test
