@@ -1,8 +1,8 @@
+stages:
+- build
+
 build:
+  stage: build
   script:
+    - cd SMS_API/twilio
     - ./gradlew assemble
- 
-test:
-  stage: test
-  script:
-    - ./gradlew test
