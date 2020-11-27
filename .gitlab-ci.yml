@@ -1,15 +1,8 @@
 stages:
 - build
-- test
 
 build:
   stage: build
   script:
-    - cd ShawnsApp
-    - ./gradlew build
- 
-test:
-  stage: test
-  script:
-    - cd ShawnsApp
-    - ./gradlew test
+    - cd SMS_API
+    - ./gradlew assemble
