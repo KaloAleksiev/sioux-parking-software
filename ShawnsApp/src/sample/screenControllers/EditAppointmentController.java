@@ -17,10 +17,10 @@ import sample.Helper;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
+import org.joda.time.LocalDate;
 
 public class EditAppointmentController implements Initializable {
 
@@ -115,8 +115,8 @@ public class EditAppointmentController implements Initializable {
             ac.changeTime(time, this.current.getId());
         }
 
-        Calendar date = Calendar.getInstance();
-        date.set(dpAppointmentDate.getValue().getYear(), dpAppointmentDate.getValue().getMonthValue(), dpAppointmentDate.getValue().getDayOfMonth());
+        LocalDate date = new LocalDate(dpAppointmentDate.getValue().getYear(), dpAppointmentDate.getValue().getMonthValue(), dpAppointmentDate.getValue().getDayOfMonth());
+
         if(this.current.getDate().compareTo(date) != 0) {
             ac.changeDate(dpAppointmentDate.getValue().getDayOfMonth(),
                     dpAppointmentDate.getValue().getMonthValue(),
@@ -231,13 +231,13 @@ public class EditAppointmentController implements Initializable {
     public void setDate(){
         DateTimeFormatter formatter = null;
         String formatString = "";
-        if(this.current.getDate().get(Calendar.DAY_OF_MONTH) <=9){
+        if(this.current.getDate().getDayOfMonth() <=9){
             formatString+="d-";
         }
         else{
             formatString+="dd-";
         }
-        if(this.current.getDate().get(Calendar.MONTH) <= 9){
+        if(this.current.getDate().getMonthOfYear() <= 9){
 
             formatString+="M-";
         }
@@ -248,11 +248,10 @@ public class EditAppointmentController implements Initializable {
         formatter = DateTimeFormatter.ofPattern(formatString);
 
         String info =
-                + this.current.getDate().get(Calendar.DAY_OF_MONTH) + "-"
-                        + this.current.getDate().get(Calendar.MONTH) + "-"
-                        + this.current.getDate().get(Calendar.YEAR);
-        LocalDate localDate = LocalDate.parse(info, formatter);
-        dpAppointmentDate.setValue(localDate);
+                + this.current.getDate().getDayOfMonth() + "-"
+                        + this.current.getDate().getMonthOfYear() + "-"
+                        + this.current.getDate().getYear();
+        dpAppointmentDate.setValue(java.time.LocalDate.parse(info,formatter));
     }
 
     public void setTime(){

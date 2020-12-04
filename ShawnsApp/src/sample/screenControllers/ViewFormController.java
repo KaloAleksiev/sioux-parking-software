@@ -9,6 +9,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import org.joda.time.LocalDate;
 import sample.Helper;
 import sample.controllers.AppointmentController;
 import sample.controllers.DriverController;
@@ -136,9 +137,7 @@ public class ViewFormController implements Initializable {
             tvAppointments.setItems(allAppointments);
         }
         else{
-            Calendar date = Calendar.getInstance();
-            date.clear();
-            date.set(dpViewApp.getValue().getYear(), dpViewApp.getValue().getMonthValue(), dpViewApp.getValue().getDayOfMonth());
+            LocalDate date = new LocalDate(dpViewApp.getValue().getYear(), dpViewApp.getValue().getMonthValue(), dpViewApp.getValue().getDayOfMonth());
 
             for (ShowcaseAppointment a:allAppointments) {
                 String date1= helper.GetDateAsString(a.appointment.getDate());

@@ -7,6 +7,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import org.joda.time.LocalDate;
 import sample.models.Appointment;
 import sample.screenControllers.CreateFormController;
 import sample.screenControllers.EditAppointmentController;
@@ -45,14 +46,14 @@ public class Helper {
         window.show();
     }
 
-    public String GetDateAsString(Calendar date){
-        String month = Integer.toString(date.get(Calendar.MONTH));
-        String day = Integer.toString(date.get(Calendar.DAY_OF_MONTH));
-        String year = Integer.toString(date.get(Calendar.YEAR));
-        if(date.DAY_OF_MONTH < 10){
+    public String GetDateAsString(LocalDate date){
+        String month = Integer.toString(date.getMonthOfYear());
+        String day = Integer.toString(date.getDayOfMonth());
+        String year = Integer.toString(date.getYear());
+        if(date.dayOfMonth().get() < 10){
             day = "0"+ day;
         }
-        if(date.MONTH < 10){
+        if(date.monthOfYear().get() < 10){
             month = "0" + month;
         }
         String str = day+month+year;
