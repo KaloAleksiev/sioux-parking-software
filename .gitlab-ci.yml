@@ -19,7 +19,7 @@ BuildShawnsApp:
 TestTwilio:
   stage: testTwilio
   script:
-    - cd cd SMS_API/twilio
+    - cd SMS_API/twilio
     - echo test Twilio
 
 TestShawnsApp:
