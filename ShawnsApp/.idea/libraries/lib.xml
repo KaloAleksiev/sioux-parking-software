@@ -1,6 +1,7 @@
 <component name="libraryTable">
   <library name="lib">
     <CLASSES>
+<<<<<<< HEAD
 <<<<<<< .merge_file_a13912
       <root url="file://$PROJECT_DIR$/../../../../../../JavaFX/javafx-sdk-15/lib" />
     </CLASSES>
@@ -12,13 +13,21 @@
     <jarDirectory url="file://$PROJECT_DIR$/../../../../../../JavaFX/javafx-sdk-15/lib" recursive="false" type="SOURCES" />
 =======
       <root url="file://D:/Programs/openjfx-11.0.2_windows-x64_bin-sdk/javafx-sdk-11.0.2/lib" />
+=======
+      <root url="file://$PATH_TO_FX$" />
+>>>>>>> 1a1c2d2c253ee392f1d9697925eb1529d522e25d
     </CLASSES>
     <JAVADOC />
     <SOURCES>
-      <root url="file://D:/Programs/openjfx-11.0.2_windows-x64_bin-sdk/javafx-sdk-11.0.2/lib" />
+      <root url="file://$PATH_TO_FX$" />
     </SOURCES>
+<<<<<<< HEAD
     <jarDirectory url="file://D:/Programs/openjfx-11.0.2_windows-x64_bin-sdk/javafx-sdk-11.0.2/lib" recursive="false" />
     <jarDirectory url="file://D:/Programs/openjfx-11.0.2_windows-x64_bin-sdk/javafx-sdk-11.0.2/lib" recursive="false" type="SOURCES" />
 >>>>>>> .merge_file_a16164
+=======
+    <jarDirectory url="file://$PATH_TO_FX$" recursive="false" />
+    <jarDirectory url="file://$PATH_TO_FX$" recursive="false" type="SOURCES" />
+>>>>>>> 1a1c2d2c253ee392f1d9697925eb1529d522e25d
   </library>
 </component>
