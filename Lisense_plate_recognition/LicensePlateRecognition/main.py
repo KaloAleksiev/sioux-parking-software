@@ -1,5 +1,6 @@
 import cv2
 import pytesseract
+import re
 
 #################################################################################
 pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files (x86)\Tesseract-OCR\tesseract.exe'
@@ -37,6 +38,8 @@ cv2.imshow("ff", imgLP)
 
 
 text = pytesseract.image_to_string(imgLP, config='--psm 11')
-print("The license plate number is:", text)
+
+licensePlate = re.findall("([A-Z]{1,3}-[A-Z]{1,3}-[A-Z]{1,3})", text)
+print("The license plate number is:", licensePlate)
 cv2.waitKey(0)
 
