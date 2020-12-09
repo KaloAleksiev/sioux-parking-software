@@ -17,9 +17,7 @@ import sample.models.*;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.Calendar;
-import java.util.Optional;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class ViewFormController implements Initializable {
     @FXML private TableView<ShowcaseAppointment> tvAppointments;
@@ -48,8 +46,12 @@ public class ViewFormController implements Initializable {
     }
 
     public ObservableList<ShowcaseAppointment> populateTableView() {
+        List<Appointment> allAppointments = ac.getAllAppointments();
+        Comparator<Appointment> compareByDate = Comparator.comparing(Appointment::getDate);
+        Collections.sort(allAppointments, compareByDate);
         ObservableList<ShowcaseAppointment> appointments = FXCollections.observableArrayList();
-        for (Appointment apt: ac.getAllAppointments()) {
+
+        for (Appointment apt: allAppointments) {
             appointments.add(apt.getShowcaseAppointment());
         }
         return appointments;

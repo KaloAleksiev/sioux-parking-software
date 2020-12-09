@@ -1,8 +1,4 @@
 package sample.models;
-
-import org.joda.time.DateTime;
-
-import java.util.Calendar;
 import java.util.List;
 
 public class ShowcaseAppointment {

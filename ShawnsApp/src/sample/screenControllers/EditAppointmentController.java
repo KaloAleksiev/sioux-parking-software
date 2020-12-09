@@ -1,10 +1,13 @@
 package sample.screenControllers;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Paint;
@@ -26,10 +29,17 @@ public class EditAppointmentController implements Initializable {
 
     @FXML private DatePicker dpAppointmentDate;
     @FXML private ChoiceBox<String> cbAppointmentTime;
-    @FXML private ListView<String> lvAllDrivers;
-    @FXML private ListView<String> lvAddedDrivers;
+
+
     @FXML private Label lblTime;
     @FXML private TextField tbTime;
+    @FXML private TextField tbSearch;
+
+    @FXML private TableView<Driver> tvAllDrivers;
+    @FXML private TableColumn<Driver, String> tcNameAll;
+    @FXML private TableView<Driver> tvAddedDrivers;
+    @FXML private TableColumn<Driver, String> tcNameAdded;
+
 
     private DriverController dc;
     private AppointmentController ac;
@@ -43,7 +53,8 @@ public class EditAppointmentController implements Initializable {
     public void initData(DriverController dc, AppointmentController ac, Appointment app) {
         this.dc = dc;
         this.ac = ac;
-        this.current = new Appointment(app.getId(), app.getDate(), app.getTime(), app.getDriverList());
+        //this.current = new Appointment(app.getId(), app.getDate(), app.getTime(), app.getDriverList());
+        this.current = app;
 
         addedDriversList = new ArrayList<>();
         availableDriversList = new ArrayList<>();
@@ -63,14 +74,16 @@ public class EditAppointmentController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         populateChoiceBox();
         this.helper = new Helper();
+        tcNameAll.setCellValueFactory(new PropertyValueFactory<Driver, String>("name"));
+        tcNameAdded.setCellValueFactory(new PropertyValueFactory<Driver, String>("name"));
     }
 
     public void btnAddDriver() {
         try{
-            int selectedIndex = lvAllDrivers.getSelectionModel().getSelectedIndex();
+            int selectedIndex = tvAllDrivers.getSelectionModel().getSelectedIndex();
             addedDriversList.add(availableDriversList.get(selectedIndex));
             availableDriversList.remove(selectedIndex);
-            updateDriversLists();
+            updateTables();
         }
         catch(IndexOutOfBoundsException ex){
             Alert alert = new Alert(Alert.AlertType.WARNING);
@@ -82,10 +95,10 @@ public class EditAppointmentController implements Initializable {
 
     public void btnRemoveDriver() {
         try{
-            int selectedIndex = lvAddedDrivers.getSelectionModel().getSelectedIndex();
+            int selectedIndex = tvAddedDrivers.getSelectionModel().getSelectedIndex();
             availableDriversList.add(addedDriversList.get(selectedIndex));
             addedDriversList.remove(selectedIndex);
-            updateDriversLists();
+            updateTables();
         }
         catch(IndexOutOfBoundsException ex){
             Alert alert = new Alert(Alert.AlertType.WARNING);
@@ -156,7 +169,7 @@ public class EditAppointmentController implements Initializable {
     public void editDriver(MouseEvent event) {
         Driver d = null;
         try{
-            d = availableDriversList.get(lvAllDrivers.getSelectionModel().getSelectedIndex());
+            d = availableDriversList.get(tvAllDrivers.getSelectionModel().getSelectedIndex());
             Scene scene = helper.createScene("editDriver");
             EditDriverFromController cfc = helper.getFxmlLoader().getController();
             cfc.initData(dc, ac, d, this.current);
@@ -173,7 +186,7 @@ public class EditAppointmentController implements Initializable {
     public void buttonDeleteDriverClick(MouseEvent event) {
         Driver d = null;
         try{
-            d = availableDriversList.get(lvAllDrivers.getSelectionModel().getSelectedIndex());
+            d = availableDriversList.get(tvAllDrivers.getSelectionModel().getSelectedIndex());
 
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Delete Driver");
@@ -185,7 +198,7 @@ public class EditAppointmentController implements Initializable {
             if(res.get() == ButtonType.OK){
                 dc.deleteDriver(d.getId());
                 availableDriversList.remove(d);
-                updateDriversLists();
+                updateTables();
             }
         }
         catch(IndexOutOfBoundsException ex){
@@ -206,7 +219,7 @@ public class EditAppointmentController implements Initializable {
     }
 
     public void fillInInfo(){
-        updateDriversLists();
+        updateTables();
         setDate();
         setTime();
     }
@@ -216,18 +229,24 @@ public class EditAppointmentController implements Initializable {
             cbAppointmentTime.getItems().add(+i+":00");
         }
     }
+    public void updateTables(){
+        tvAllDrivers.getItems().clear();
+        tvAddedDrivers.getItems().clear();
 
-    public void updateDriversLists() {
-        lvAllDrivers.getItems().clear();
-        lvAddedDrivers.getItems().clear();
+        ObservableList<Driver> availableDrivers = FXCollections.observableArrayList();
+        for (Driver d: availableDriversList) {
+            availableDrivers.add(d);
+        }
+        tvAllDrivers.setItems(availableDrivers);
 
-        for (Driver driver : availableDriversList) {
-            lvAllDrivers.getItems().add(driver.GetInfo());
+        tvAddedDrivers.getItems().clear();
+        ObservableList<Driver> chosenDrivers = FXCollections.observableArrayList();
+        for (Driver d: addedDriversList) {
+            chosenDrivers.add(d);
         }
-        for (Driver driver : addedDriversList) {
-            lvAddedDrivers.getItems().add(driver.GetInfo());
-        }
+        tvAddedDrivers.setItems(chosenDrivers);
     }
+
     public void setDate(){
         DateTimeFormatter formatter = null;
         String formatString = "";
@@ -265,4 +284,28 @@ public class EditAppointmentController implements Initializable {
     }
 
 
+    public void filterByName(KeyEvent keyEvent) {
+        tvAllDrivers.getItems().clear();
+        String str = tbSearch.getText().toLowerCase();
+        ObservableList<Driver> allDrivers = FXCollections.observableArrayList();
+        ObservableList<Driver> filteredDrivers = FXCollections.observableArrayList();
+
+        for (Driver d: availableDriversList) {
+            allDrivers.add(d);
+        }
+
+        //Filter
+        if(str==""){
+            tvAllDrivers.setItems(allDrivers);
+        }
+        else{
+            for (Driver d:allDrivers) {
+                if(d.getName().toLowerCase().contains(str)){
+                    filteredDrivers.add(d);
+                }
+            }
+            tvAllDrivers.setItems(filteredDrivers);
+        }
+
+    }
 }

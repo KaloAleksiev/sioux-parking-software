@@ -25,7 +25,7 @@
                 <Font name="Lucida Console" size="30.0" />
             </font>
         </Label>
-        <Label layoutX="130.0" layoutY="158.0" prefHeight="20.0" prefWidth="169.0" text="Driver details" textFill="#dd0303">
+        <Label layoutX="36.0" layoutY="159.0" prefHeight="21.0" prefWidth="100.0" text="Drivers " textFill="#dd0303">
             <font>
                 <Font name="Lucida Console" size="20.0" />
             </font>
@@ -52,29 +52,27 @@
                 <Image url="@../images/st.png" />
             </image>
         </ImageView>
-        <ListView fx:id="lvAllDrivers" layoutX="82.0" layoutY="201.0" prefHeight="120.0" prefWidth="434.0" />
-        <Button layoutX="381.0" layoutY="340.0" mnemonicParsing="false" onAction="#btnRemoveDriver" prefHeight="39.0" prefWidth="88.0" style="-fx-border-color: #bf0208; -fx-border-radius: 25; -fx-background-radius: 25;" text="remove">
+        <Button layoutX="379.0" layoutY="340.0" mnemonicParsing="false" onAction="#btnRemoveDriver" prefHeight="39.0" prefWidth="88.0" style="-fx-border-color: #bf0208; -fx-border-radius: 25; -fx-background-radius: 25;" text="remove">
             <font>
                 <Font name="Lucida Console" size="14.0" />
             </font>
         </Button>
-        <Button layoutX="130.0" layoutY="340.0" mnemonicParsing="false" onAction="#btnAddDriver" prefHeight="39.0" prefWidth="88.0" style="-fx-border-color: #bf0208; -fx-border-radius: 25; -fx-background-radius: 25;" text="add">
+        <Button layoutX="64.0" layoutY="340.0" mnemonicParsing="false" onAction="#btnAddDriver" prefHeight="39.0" prefWidth="88.0" style="-fx-border-color: #bf0208; -fx-border-radius: 25; -fx-background-radius: 25;" text="add">
             <font>
                 <Font name="Lucida Console" size="14.0" />
             </font>
         </Button>
-        <ListView fx:id="lvAddedDrivers" layoutX="83.0" layoutY="390.0" prefHeight="120.0" prefWidth="434.0" />
-        <ImageView styleClass="ble" fitHeight="48.0" fitWidth="42.0" layoutX="423.0" layoutY="148.0" onMouseClicked="#editDriver" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;">
+        <ImageView fitHeight="48.0" fitWidth="42.0" layoutX="423.0" layoutY="148.0" onMouseClicked="#editDriver" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;" styleClass="ble">
             <image>
                 <Image url="@../images/edit.png" />
             </image>
         </ImageView>
-        <ImageView styleClass="ble" fitHeight="48.0" fitWidth="42.0" layoutX="469.0" layoutY="148.0" onMouseClicked="#buttonCreateDriverClick" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;">
+        <ImageView fitHeight="48.0" fitWidth="42.0" layoutX="469.0" layoutY="148.0" onMouseClicked="#buttonCreateDriverClick" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;" styleClass="ble">
             <image>
                 <Image url="@../images/addDriver.png" />
             </image>
         </ImageView>
-        <ImageView styleClass="ble" fitHeight="48.0" fitWidth="42.0" layoutX="376.0" layoutY="148.0" onMouseClicked="#buttonDeleteDriverClick" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;">
+        <ImageView fitHeight="48.0" fitWidth="42.0" layoutX="376.0" layoutY="148.0" onMouseClicked="#buttonDeleteDriverClick" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;" styleClass="ble">
             <image>
                 <Image url="@../images/trash.png" />
             </image>
@@ -90,5 +88,17 @@
                 <Font name="Lucida Console" size="18.0" />
             </font>
         </Label>
+        <TableView fx:id="tvAllDrivers" layoutX="36.0" layoutY="201.0" prefHeight="120.0" prefWidth="462.0">
+            <columns>
+                <TableColumn fx:id="tcNameAll" prefWidth="461.0" style="-fx-alignment: CENTER;" text="Name" />
+            </columns>
+        </TableView>
+        <TableView fx:id="tvAddedDrivers" layoutX="36.0" layoutY="411.0" prefHeight="120.0" prefWidth="462.0">
+            <columns>
+                <TableColumn fx:id="tcNameAdded" prefWidth="461.0" text="Name" />
+
+            </columns>
+        </TableView>
+      <TextField fx:id="tbSearch" layoutX="152.0" layoutY="157.0" onKeyTyped="#filterByName" prefHeight="25.0" prefWidth="199.0" />
     </children>
 </Pane>

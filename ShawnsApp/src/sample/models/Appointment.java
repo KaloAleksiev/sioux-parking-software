@@ -12,6 +12,7 @@ public class Appointment {
     private LocalTime time;
     private List<Driver> driverList;
     private LocalDate date;
+    private String names;
 
     public LocalDate getDate() {
         return date;
@@ -40,6 +41,12 @@ public class Appointment {
         this.driverList = new ArrayList<>();
         for (Driver driver : driverList) {
             this.driverList.add(driver);
+            if(driverList.get(driverList.size()-1) == driver){
+                this.names += driver.getName();
+            }
+            else{
+                this.names += driver.getName() + ", ";
+            }
         }
     }
 

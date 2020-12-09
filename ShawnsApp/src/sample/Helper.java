@@ -8,14 +8,9 @@ import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import org.joda.time.LocalDate;
-import sample.models.Appointment;
-import sample.screenControllers.CreateFormController;
-import sample.screenControllers.EditAppointmentController;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.Calendar;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 

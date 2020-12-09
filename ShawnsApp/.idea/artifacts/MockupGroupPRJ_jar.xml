@@ -73,6 +73,7 @@
       <element id="library" level="project" name="mysql-connector-java-8.0" />
       <element id="module-source" name="MockupGroupPRJ" />
       <element id="dir-copy" path="$PROJECT_DIR$/src/sample" />
+      <element id="library" level="project" name="joda-time-2.10.8" />
     </root>
   </artifact>
 </component>
