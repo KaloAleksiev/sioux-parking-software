@@ -5,7 +5,7 @@ import re
 #################################################################################
 pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files (x86)\Tesseract-OCR\tesseract.exe'
 pathCascade = "Resources/Cascades/haarcascade_russian_plate_number.xml"
-pathTestImage = "Resources/test_images/license_plate12.jpg"
+pathTestImage = "Resources/test_images/license_plate8.jpg"
 testImageSetSize = (600, 400)
 cascadeScaleFactor = 1.1
 cascadeMinNeighbours = 3
@@ -39,7 +39,7 @@ cv2.imshow("ff", imgLP)
 
 text = pytesseract.image_to_string(imgLP, config='--psm 11')
 
-licensePlate = re.findall("([A-Z]{1,3}-[A-Z]{1,3}-[A-Z]{1,3})", text)
+licensePlate = re.findall("([0-Z]{1,3}-[0-Z]{1,3}-[0-Z]{1,3})", text)
 print("The license plate number is:", licensePlate)
 cv2.waitKey(0)
 
