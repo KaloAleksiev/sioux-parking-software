@@ -16,13 +16,13 @@ BuildShawnsApp:
     - cd ShawnsApp
     - echo build
 
-BuildShawnsApp:
+TestTwilio:
   stage: testTwilio
   script:
     - cd cd SMS_API/twilio
     - echo test Twilio
 
-BuildShawnsApp:
+TestShawnsApp:
   stage: testShawnsApp
   script:
     - cd ShawnsApp
