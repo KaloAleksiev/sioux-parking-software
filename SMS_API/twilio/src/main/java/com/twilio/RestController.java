@@ -1,10 +1,11 @@
 package com.twilio;
 
+import com.twilio.logic.DriverLogic;
+import com.twilio.models.Driver;
+import com.twilio.repository.IDriverAppointmentRepository;
+import com.twilio.repository.IDriverRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @org.springframework.web.bind.annotation.RestController
@@ -19,7 +20,15 @@ public class RestController {
     }
 
     @PostMapping()
-    public void sendSms(@RequestBody SmsRequest smsRequest){
-        service.sendSms(smsRequest);
+    public void sendSms(@RequestBody String licensePlate){//@RequestBody SmsRequest smsRequest){
+        service.sendSms(this.driverLogic.createSMS(licensePlate));
+    }
+
+    @Autowired
+    public DriverLogic driverLogic;
+
+    @GetMapping("/test")
+    public Driver GetDriverByLicensePlate(@RequestBody String licensePlate) {
+        return this.driverLogic.GetDriverByLicensePlate(licensePlate);
     }
 }
