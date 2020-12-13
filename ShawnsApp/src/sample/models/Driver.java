@@ -6,6 +6,9 @@ public class Driver {
     String phoneNumber;
     String name;
 
+    public Driver() {
+    }
+
     public int getId() { return this.id; }
     public String getLicencePlate() { return licencePlate; }
     public String getPhoneNumber() { return phoneNumber; }
