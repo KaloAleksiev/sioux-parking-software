@@ -6,6 +6,8 @@ import com.twilio.repository.IDriverRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.Random;
+
 @Component
 public class DriverLogic {
 
@@ -18,6 +20,8 @@ public class DriverLogic {
 
     public SmsRequest createSMS(String licensePlate) {
         Driver driver = this.GetDriverByLicensePlate(licensePlate);
-        return new SmsRequest(driver.getPhoneNumber(), "u suck");
+        Random rn = new Random();
+        int rndNumber = rn.nextInt(400 - 300 + 1) + 300;
+        return new SmsRequest(driver.getPhoneNumber(), "Hello, " + driver.getName() + "! Your parking spot is B" + rndNumber);
     }
 }
