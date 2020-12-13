@@ -1,6 +1,7 @@
 import cv2
 import pytesseract
 import re
+import urllib.request
 
 #################################################################################
 pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files (x86)\Tesseract-OCR\tesseract.exe'
@@ -40,6 +41,9 @@ cv2.imshow("ff", imgLP)
 text = pytesseract.image_to_string(imgLP, config='--psm 11')
 
 licensePlate = re.findall("([0-Z]{1,3}-[0-Z]{1,3}-[0-Z]{1,3})", text)
-print("The license plate number is:", licensePlate)
+url = 'localhost:8080/sms'
+f = urllib.request.urlopen(url)
+print(f.read().decode('utf-8'))
+print("The license plate number is:", licensePlate[0])
 cv2.waitKey(0)
 
