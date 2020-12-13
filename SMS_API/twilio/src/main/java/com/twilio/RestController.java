@@ -5,6 +5,7 @@ import com.twilio.models.Driver;
 import com.twilio.repository.IDriverAppointmentRepository;
 import com.twilio.repository.IDriverRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin(origins = "http://localhost:4200")
@@ -21,14 +22,17 @@ public class RestController {
 
     @PostMapping()
     public void sendSms(@RequestBody String licensePlate){//@RequestBody SmsRequest smsRequest){
+        licensePlate = licensePlate.substring(13);
         service.sendSms(this.driverLogic.createSMS(licensePlate));
     }
 
     @Autowired
     public DriverLogic driverLogic;
 
-    @GetMapping("/test")
-    public Driver GetDriverByLicensePlate(@RequestBody String licensePlate) {
-        return this.driverLogic.GetDriverByLicensePlate(licensePlate);
+    @PostMapping("/test")
+    public String GetDriverByLicensePlate(@RequestBody String licensePlate) {
+        licensePlate = licensePlate.substring(13);
+        return this.driverLogic.GetDriverByLicensePlate(licensePlate).getPhoneNumber();
+        //return ResponseEntity.ok(null);
     }
 }

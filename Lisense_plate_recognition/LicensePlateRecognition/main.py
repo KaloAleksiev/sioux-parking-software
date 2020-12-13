@@ -2,6 +2,7 @@ import cv2
 import pytesseract
 import re
 import urllib.request
+import urllib.parse
 
 #################################################################################
 pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files (x86)\Tesseract-OCR\tesseract.exe'
@@ -19,31 +20,58 @@ heightImg = 100
 
 # Prepare image and cascade
 plateCascade = cv2.CascadeClassifier(pathCascade)
-img = cv2.imread(pathTestImage)
-# img = cv2.resize(img, testImageSetSize)
-imgGray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 
-# Find all the plates on the test image
-plates = plateCascade.detectMultiScale(imgGray, cascadeScaleFactor, cascadeMinNeighbours)
-for (x, y, width, height) in plates:
-    imgLP = img[y:y + height, x:x + width]
-    # cv2.rectangle(img, (x, y), (x + width, y + height), lpRectangleColor, lpRectangleThickness)
+cap = cv2.VideoCapture(0)
+# Set height
+cap.set(3, 640)
+# Set width
+cap.set(4, 480)
+# Set brightness
+cap.set(10, 85)
+count = 0
 
-# Apply all methods
-imgCanny = cv2.Canny(imgLP, 200, 200)
-imgLP = cv2.resize(imgLP, foundPlateSetSize)
-# imgLP = cv2.resize(imgLP, (400, 200))
+while True:
+    success, img = cap.read()
+    # img = cv2.resize(img, testImageSetSize)
+    imgGray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 
-imgLP = cv2.cvtColor(imgLP, cv2.COLOR_BGR2GRAY)
-cv2.imshow("ff", imgLP)
+    # Find all the plates on the test image
+    plates = plateCascade.detectMultiScale(imgGray, cascadeScaleFactor, cascadeMinNeighbours)
+    imgLP = None
+    for (x, y, width, height) in plates:
+        imgLP = img[y:y + height, x:x + width]
 
+    if imgLP is not None:
+        # count = count + 1
+        imgCanny = cv2.Canny(imgLP, 200, 200)
+        imgLP = cv2.resize(imgLP, foundPlateSetSize)
 
-text = pytesseract.image_to_string(imgLP, config='--psm 11')
+        imgLP = cv2.cvtColor(imgLP, cv2.COLOR_BGR2GRAY)
 
-licensePlate = re.findall("([0-Z]{1,3}-[0-Z]{1,3}-[0-Z]{1,3})", text)
-url = 'localhost:8080/sms'
-f = urllib.request.urlopen(url)
-print(f.read().decode('utf-8'))
-print("The license plate number is:", licensePlate[0])
-cv2.waitKey(0)
+        text = pytesseract.image_to_string(imgLP, config='--psm 11')
+
+        licensePlate = re.findall("([0-Z]{1,3}-[0-Z]{1,3}-[0-Z]{1,3})", text)
+
+        url = 'http://localhost:8080/sms'
+        #v alues = {}
+        # values['licenseplate'] = licensePlate[0]
+
+        # data = urllib.parse.urlencode(values)
+        # data = data.encode('ascii')
+        # req = urllib.request.Request(url, data)
+
+        # with urllib.request.urlopen(req) as response:
+        #    print(response.read())
+        print(count)
+        if licensePlate and count is 0:
+            count = 3
+            print("The license plate number is:", licensePlate[0])
+        else:
+            if licensePlate:
+                count = count - 1
+
+    cv2.imshow("Video", img)
+    if cv2.waitKey(1) & 0xFF == ord('q'):
+        break
+
 
