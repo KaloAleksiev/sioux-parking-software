@@ -1,6 +1,7 @@
 package com.twilio;
 
 import com.twilio.logic.DriverLogic;
+//import com.twilio.logic.*;
 import com.twilio.models.Driver;
 import com.twilio.repository.IDriverAppointmentRepository;
 import com.twilio.repository.IDriverRepository;
@@ -16,6 +17,9 @@ public class RestController {
     private final Service service;
 
     @Autowired
+    public DriverLogic driverLogic;
+
+    @Autowired
     public RestController(Service service) {
         this.service = service;
     }
@@ -26,8 +30,6 @@ public class RestController {
         service.sendSms(this.driverLogic.createSMS(licensePlate));
     }
 
-    @Autowired
-    public DriverLogic driverLogic;
 
     @PostMapping("/test")
     public String GetDriverByLicensePlate(@RequestBody String licensePlate) {
