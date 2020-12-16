@@ -5,23 +5,29 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="900.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="900.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.screenControllers.ViewFormController">
     <children>
-        <Button layoutX="507.0" layoutY="541.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="320.0" style="-fx-border-color: #bf0208; -fx-background-color: white; -fx-border-radius: 25; -fx-background-radius: 25;" text="Cancel">
+        <Button layoutX="82.0" layoutY="546.0" mnemonicParsing="false" onAction="#buttonCancelClick" prefHeight="54.0" prefWidth="200.0" style="-fx-border-color: #bf0208; -fx-border-radius: 25; -fx-background-radius: 25;" text="Cancel">
             <font>
                 <Font name="Lucida Console" size="23.0" />
             </font></Button>
 
-        <Label layoutX="283.0" layoutY="42.0" prefHeight="39.0" prefWidth="111.0" text="View" textAlignment="CENTER" textFill="#da0606">
+        <Label layoutX="291.0" layoutY="42.0" prefHeight="39.0" prefWidth="111.0" text="View" textAlignment="CENTER" textFill="#da0606">
             <font>
                 <Font name="Lucida Console" size="36.0" />
             </font>
         </Label>
-        <Button layoutX="74.0" layoutY="541.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="320.0" style="-fx-border-color: #bf0208; -fx-background-color: white; -fx-border-radius: 25; -fx-background-radius: 25;" text="Edit">
+        <Button layoutX="608.0" layoutY="546.0" mnemonicParsing="false" onAction="#editAppointmentsClick" prefHeight="54.0" prefWidth="200.0" style="-fx-border-color: #bf0208; -fx-border-radius: 25; -fx-background-radius: 25;" text="Edit">
             <font>
                 <Font name="Lucida Console" size="23.0" />
-            </font></Button>
-        <Label layoutX="388.0" layoutY="45.0" text="appointments">
+            </font>
+        </Button>
+        <Button layoutX="346.0" layoutY="546.0" mnemonicParsing="false" onAction="#deleteAppointmentClick" prefHeight="54.0" prefWidth="200.0" style="-fx-border-color: #bf0208; -fx-border-radius: 25; -fx-background-radius: 25;" text="Delete">
+            <font>
+                <Font name="Lucida Console" size="23.0" />
+            </font>
+        </Button>
+        <Label layoutX="402.0" layoutY="45.0" text="appointments">
             <font>
                 <Font name="Lucida Console" size="30.0" />
             </font>
@@ -36,12 +42,13 @@
             <Font name="Lucida Console" size="18.0" />
          </font>
       </Label>
-      <DatePicker layoutX="212.0" layoutY="162.0" />
-      <TextField layoutX="659.0" layoutY="162.0" />
-      <TableView layoutX="75.0" layoutY="217.0" prefHeight="264.0" prefWidth="750.0">
+      <DatePicker fx:id="dpViewApp" layoutX="212.0" layoutY="162.0" onAction="#filterByDate" />
+      <TextField fx:id="tbSearchName" layoutX="659.0" layoutY="162.0" onKeyPressed="#SearchByName" />
+      <TableView fx:id="tvAppointments" layoutX="75.0" layoutY="217.0" prefHeight="264.0" prefWidth="750.0">
         <columns>
-          <TableColumn prefWidth="75.0" text="C1" />
-          <TableColumn prefWidth="75.0" text="C2" />
+            <TableColumn fx:id="tcDate" prefWidth="138.40001678466797" text="Date" />
+            <TableColumn fx:id="tcTime" prefWidth="109.60003662109375" text="Time" />
+            <TableColumn fx:id="tcDriverNames" prefWidth="499.6000061035156" text="Drivers" />
         </columns>
       </TableView>
       <ImageView fitHeight="80.0" fitWidth="177.0" layoutX="36.0" layoutY="30.0" pickOnBounds="true" preserveRatio="true">
@@ -49,5 +56,16 @@
             <Image url="@../images/st.png" />
          </image>
       </ImageView>
+      <ImageView fx:id="ivReset" fitHeight="48.0" fitWidth="42.0" layoutX="425.0" layoutY="153.0" onMouseClicked="#resetFilters" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;" styleClass="ble">
+         <image>
+            <Image url="@../images/loading.png" />
+         </image></ImageView>
+      <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fitHeight="48.0" fitWidth="42.0" layoutX="804.0" layoutY="41.0" onMouseClicked="#goBack" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;" styleClass="ble">
+         <image>
+            <Image url="@../images/back.png" />
+         </image>
+      </ImageView>
+
     </children>
 </Pane>
