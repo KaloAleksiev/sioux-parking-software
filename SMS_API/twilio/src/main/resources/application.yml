@@ -2,3 +2,21 @@ twilio:
   account_sid: AC6452df08543a88cf389a597217a56975
   auth_token: 1eebc93f7ccd6f4ff27698baa9a7057c
   trial_number: +14703751083
+
+spring:
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate.jdbc.batch_size: 20
+      hibernate.cache.use_query_cache: false
+      hibernate.cache.use_second_level_cache: false
+      hibernate.cache.use_structured_entries: false
+      hibernate.cache.use_minimal_puts: false
+  datasource:
+    #SPRING_DATASOURCE_URL environment variable will be something like -> jdbc:sqlserver://MySqlServer\MyInstance:1433;DatabaseName=MyDbName;
+    url: jdbc:mysql://studmysql01.fhict.local/dbi427262
+    username: dbi427262
+    password: password1234
+    driverClassName: com.mysql.cj.jdbc.Driver
