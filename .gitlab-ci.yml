@@ -1,0 +1,37 @@
+stages:
+- buildTwilio
+- buildShawnsApp
+- testTwilio
+- testShawnsApp
+
+buildTwilio:
+  stage: buildTwilio
+  script:
+    - cd SMS_API/twilio
+    - ./gradlew assemble
+
+BuildShawnsApp:
+  stage: buildShawnsApp
+  script:
+    - cd ShawnsApp
+    - echo build
+
+TestTwilio:
+  stage: testTwilio
+  script:
+    - cd SMS_API/twilio
+    - echo test Twilio
+
+TestShawnsApp:
+  stage: testShawnsApp
+  script:
+    - cd ShawnsApp
+    - echo test ShawnsApp
+
+
+
+
+
+
+
+
