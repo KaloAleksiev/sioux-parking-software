@@ -82,7 +82,6 @@ public class ViewFormController implements Initializable {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Delete Appointment");
             alert.setHeaderText("Are you sure you want to delete this appointment?");
-            alert.setContentText("All data would be lost!");
             Optional<ButtonType> res = alert.showAndWait();
 
             //get the result from the appointment

@@ -7,7 +7,7 @@
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="900.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.screenControllers.CreateFormController">
     <children>
-        <Button layoutX="499.0" layoutY="541.0" mnemonicParsing="false" onAction="#createAppointmentButtonClick" prefHeight="54.0" prefWidth="320.0" style="-fx-border-color: #bf0208; -fx-border-radius: 25; -fx-background-radius: 25;" styleClass="button" text="Done">
+        <Button layoutX="499.0" layoutY="553.0" mnemonicParsing="false" onAction="#createAppointmentButtonClick" prefHeight="54.0" prefWidth="320.0" style="-fx-border-color: #bf0208; -fx-border-radius: 25; -fx-background-radius: 25;" styleClass="button" text="Done">
             <font>
                 <Font name="Lucida Console" size="23.0" />
             </font></Button>
@@ -16,7 +16,7 @@
                 <Font name="Lucida Console" size="36.0" />
             </font>
         </Label>
-        <Button layoutX="74.0" layoutY="541.0" mnemonicParsing="false" onAction="#buttonCancelClick" prefHeight="54.0" prefWidth="320.0" style="-fx-border-color: #bf0208; -fx-border-radius: 25; -fx-background-radius: 25;" text="Cancel">
+        <Button layoutX="74.0" layoutY="553.0" mnemonicParsing="false" onAction="#buttonCancelClick" prefHeight="54.0" prefWidth="320.0" style="-fx-border-color: #bf0208; -fx-border-radius: 25; -fx-background-radius: 25;" text="Cancel">
             <font>
                 <Font name="Lucida Console" size="23.0" />
             </font></Button>
@@ -25,9 +25,9 @@
                 <Font name="Lucida Console" size="30.0" />
             </font>
         </Label>
-      <Label layoutX="36.0" layoutY="159.0" prefHeight="21.0" prefWidth="99.0" text="Drivers " textFill="#bf0208">
+      <Label layoutX="24.0" layoutY="193.0" prefHeight="21.0" prefWidth="168.0" text="Search drivers" textFill="#bf0208">
          <font>
-            <Font name="Lucida Console" size="20.0" />
+            <Font name="Lucida Console" size="18.0" />
          </font>
       </Label>
       <Label layoutX="617.0" layoutY="158.0" text="Appointment details" textFill="#bf0208">
@@ -36,8 +36,8 @@
          </font>
       </Label>
       <DatePicker fx:id="dpAppointmentDate" layoutX="616.0" layoutY="269.0" prefHeight="25.0" prefWidth="231.0" />
-      <ChoiceBox fx:id="cbAppointmentTime" layoutX="616.0" layoutY="358.0" onMouseClicked="#SelectTime" prefHeight="25.0" prefWidth="231.0" />
-      <Label layoutX="670.0" layoutY="319.0" text="Select time:">
+      <ChoiceBox fx:id="cbAppointmentTime" layoutX="615.0" layoutY="347.0" onMouseClicked="#SelectTime" prefHeight="25.0" prefWidth="231.0" />
+      <Label layoutX="645.0" layoutY="319.0" prefHeight="20.0" prefWidth="199.0" text="Select timeslot:">
          <font>
             <Font name="Lucida Console" size="18.0" />
          </font>
@@ -52,12 +52,12 @@
             <Image url="@../images/st.png" />
          </image>
       </ImageView>
-      <Button layoutX="379.0" layoutY="340.0" mnemonicParsing="false" onAction="#btnRemoveDriver" prefHeight="39.0" prefWidth="88.0" style="-fx-border-color: #bf0208; -fx-border-radius: 25; -fx-background-radius: 25;" text="remove">
+      <Button layoutX="379.0" layoutY="360.0" mnemonicParsing="false" onAction="#btnRemoveDriver" prefHeight="39.0" prefWidth="88.0" style="-fx-border-color: #bf0208; -fx-border-radius: 25; -fx-background-radius: 25;" text="remove">
          <font>
             <Font name="Lucida Console" size="14.0" />
          </font>
       </Button>
-      <Button layoutX="64.0" layoutY="340.0" mnemonicParsing="false" onAction="#btnAddDriver" prefHeight="39.0" prefWidth="88.0" style="-fx-border-color: #bf0208; -fx-border-radius: 25; -fx-background-radius: 25;" text="add">
+      <Button layoutX="64.0" layoutY="360.0" mnemonicParsing="false" onAction="#btnAddDriver" prefHeight="39.0" prefWidth="88.0" style="-fx-border-color: #bf0208; -fx-border-radius: 25; -fx-background-radius: 25;" text="add">
          <font>
             <Font name="Lucida Console" size="14.0" />
          </font>
@@ -67,33 +67,33 @@
                 <Image url="@../images/back.png" />
             </image>
         </ImageView>
-      <ImageView fitHeight="48.0" fitWidth="42.0" layoutX="423.0" layoutY="148.0" onMouseClicked="#EditDriver" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;" styleClass="ble">
+      <ImageView fitHeight="48.0" fitWidth="42.0" layoutX="412.0" layoutY="182.0" onMouseClicked="#EditDriver" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;" styleClass="ble">
          <image>
             <Image url="@../images/edit.png" />
          </image>
       </ImageView>
-        <ImageView fitHeight="48.0" fitWidth="42.0" layoutX="376.0" layoutY="148.0" onMouseClicked="#buttonDeleteDriverClick" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;" styleClass="ble">
+        <ImageView fitHeight="48.0" fitWidth="42.0" layoutX="366.0" layoutY="182.0" onMouseClicked="#buttonDeleteDriverClick" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;" styleClass="ble">
             <image>
                 <Image url="@../images/trash.png" />
             </image>
         </ImageView>
-      <ImageView fitHeight="48.0" fitWidth="42.0" layoutX="469.0" layoutY="148.0" onMouseClicked="#buttonCreateDriverClick" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;" styleClass="ble">
+      <ImageView fitHeight="48.0" fitWidth="42.0" layoutX="458.0" layoutY="182.0" onMouseClicked="#buttonCreateDriverClick" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;" styleClass="ble">
          <image>
             <Image url="@../images/addDriver.png" />
          </image>
       </ImageView>
-      <TextField fx:id="tbTime" layoutX="616.0" layoutY="431.0" onKeyTyped="#timeManual" prefHeight="25.0" prefWidth="231.0" />
-      <Label fx:id="lblTime" layoutX="673.0" layoutY="471.0" prefHeight="25.0" prefWidth="119.0" style="-fx-font-style: italic;" text="Format: &quot;23:56&quot;" visible="false">
+      <TextField fx:id="tbTime" layoutX="616.0" layoutY="459.0" onKeyTyped="#timeManual" prefHeight="25.0" prefWidth="231.0" />
+      <Label fx:id="lblTime" layoutX="672.0" layoutY="485.0" prefHeight="25.0" prefWidth="119.0" style="-fx-font-style: italic;" text="Format: &quot;23:56&quot;" visible="true">
          <font>
             <Font size="16.0" />
          </font>
       </Label>
-      <Label layoutX="673.0" layoutY="401.0" text="Input time:">
+      <Label layoutX="625.0" layoutY="439.0" prefHeight="20.0" prefWidth="221.0" text="Input time manually:">
          <font>
             <Font name="Lucida Console" size="18.0" />
          </font>
       </Label>
-      <TableView fx:id="tvAllDrivers" layoutX="36.0" layoutY="201.0" prefHeight="120.0" prefWidth="462.0">
+      <TableView fx:id="tvAllDrivers" layoutX="36.0" layoutY="229.0" prefHeight="120.0" prefWidth="462.0">
         <columns>
           <TableColumn fx:id="tcNameAll" prefWidth="461.0" style="-fx-alignment: CENTER;" text="Name" />
         </columns>
@@ -101,9 +101,18 @@
       <TableView fx:id="tvAddedDrivers" layoutX="36.0" layoutY="411.0" prefHeight="120.0" prefWidth="462.0">
          <columns>
             <TableColumn fx:id="tcNameAdded" prefWidth="461.0" text="Name" />
-
          </columns>
       </TableView>
-      <TextField fx:id="tbSearch" layoutX="152.0" layoutY="157.0" onKeyTyped="#filterByName" prefHeight="25.0" prefWidth="199.0" />
+      <TextField fx:id="tbSearch" layoutX="183.0" layoutY="191.0" onKeyTyped="#filterByName" prefHeight="25.0" prefWidth="168.0" />
+      <Label layoutX="708.0" layoutY="391.0" text="OR" textFill="#f50000">
+         <font>
+            <Font name="Lucida Console" size="33.0" />
+         </font>
+      </Label>
+      <Label layoutX="63.0" layoutY="122.0" prefHeight="25.0" prefWidth="409.0" text="Drivers for the appointment:" textFill="#bf0208">
+         <font>
+            <Font name="Lucida Console" size="24.0" />
+         </font>
+      </Label>
     </children>
 </Pane>

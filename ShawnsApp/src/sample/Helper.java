@@ -64,7 +64,7 @@ public class Helper {
     }
 
     public boolean REGEXTime(String s){
-        Pattern p = Pattern.compile("(?:^$)|(?:^([0-9]|0[1-9]|1[0-9]|2[0-4])(:|\\.)[0-5][0-9]$)|(?:^([1-9]|0[1-9]|1[0-2])(:|\\.)[0-5][0-9] (A|a|P|p)(M|m)$)");
+        Pattern p = Pattern.compile("([01]?[0-9]|2[0-3]):[0-5][0-9]");
         Matcher m = p.matcher(s);
         boolean b = m.matches();
         if(b == true){

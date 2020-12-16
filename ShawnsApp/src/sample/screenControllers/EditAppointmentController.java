@@ -80,9 +80,9 @@ public class EditAppointmentController implements Initializable {
 
     public void btnAddDriver() {
         try{
-            int selectedIndex = tvAllDrivers.getSelectionModel().getSelectedIndex();
-            addedDriversList.add(availableDriversList.get(selectedIndex));
-            availableDriversList.remove(selectedIndex);
+            Driver d = tvAllDrivers.getSelectionModel().getSelectedItem();
+            addedDriversList.add(d);
+            availableDriversList.remove(d);
             updateTables();
         }
         catch(IndexOutOfBoundsException ex){
@@ -95,9 +95,9 @@ public class EditAppointmentController implements Initializable {
 
     public void btnRemoveDriver() {
         try{
-            int selectedIndex = tvAddedDrivers.getSelectionModel().getSelectedIndex();
-            availableDriversList.add(addedDriversList.get(selectedIndex));
-            addedDriversList.remove(selectedIndex);
+            Driver d = tvAddedDrivers.getSelectionModel().getSelectedItem();
+            addedDriversList.remove(d);
+            availableDriversList.add(d);
             updateTables();
         }
         catch(IndexOutOfBoundsException ex){
@@ -169,7 +169,12 @@ public class EditAppointmentController implements Initializable {
     public void editDriver(MouseEvent event) {
         Driver d = null;
         try{
-            d = availableDriversList.get(tvAllDrivers.getSelectionModel().getSelectedIndex());
+            if(tvAddedDrivers.getSelectionModel() == null){
+                d = availableDriversList.get(tvAllDrivers.getSelectionModel().getSelectedIndex());
+            }
+            else{
+                d = addedDriversList.get(tvAddedDrivers.getSelectionModel().getSelectedIndex());
+            }
             Scene scene = helper.createScene("editDriver");
             EditDriverFromController cfc = helper.getFxmlLoader().getController();
             cfc.initData(dc, ac, d, this.current);
@@ -191,7 +196,6 @@ public class EditAppointmentController implements Initializable {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Delete Driver");
             alert.setHeaderText("Are you sure you want to delete this driver?");
-            alert.setContentText("All data would be lost!");
             Optional<ButtonType> res = alert.showAndWait();
 
             //get the result from the appointment

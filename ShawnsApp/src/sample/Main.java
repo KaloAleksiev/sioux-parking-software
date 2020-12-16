@@ -15,6 +15,7 @@ public class Main extends Application {
         scene.getStylesheets().add
                 (this.getClass().getResource("styles/styles.css").toExternalForm());
         primaryStage.setTitle("Sioux Parking");
+        primaryStage.setResizable(false);
         primaryStage.setScene(scene);
         primaryStage.show();
     }

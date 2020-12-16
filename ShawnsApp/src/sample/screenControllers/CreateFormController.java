@@ -15,16 +15,15 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Paint;
 import sample.controllers.AppointmentController;
-import sample.models.Appointment;
 import sample.models.Driver;
 import sample.controllers.DriverController;
 import sample.Helper;
-import sample.models.ShowcaseAppointment;
-
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.chrono.ChronoLocalDate;
 import java.util.*;
 
 public class CreateFormController implements Initializable {
@@ -106,9 +105,9 @@ public class CreateFormController implements Initializable {
 
     public void btnAddDriver() {
         try{
-            int selectedIndex = tvAllDrivers.getSelectionModel().getSelectedIndex();
-            addedDriversList.add(availableDriversList.get(selectedIndex));
-            availableDriversList.remove(selectedIndex);
+            Driver d = tvAllDrivers.getSelectionModel().getSelectedItem();
+            addedDriversList.add(d);
+            availableDriversList.remove(d);
             updateTables();
         }
         catch(IndexOutOfBoundsException ex){
@@ -121,9 +120,9 @@ public class CreateFormController implements Initializable {
 
     public void btnRemoveDriver() {
         try{
-            int selectedIndex = tvAddedDrivers.getSelectionModel().getSelectedIndex();
-            availableDriversList.add(addedDriversList.get(selectedIndex));
-            addedDriversList.remove(selectedIndex);
+            Driver d = tvAddedDrivers.getSelectionModel().getSelectedItem();
+            addedDriversList.remove(d);
+            availableDriversList.add(d);
             updateTables();
         }
         catch(IndexOutOfBoundsException ex){
@@ -135,7 +134,6 @@ public class CreateFormController implements Initializable {
     }
 
     public void createAppointmentButtonClick(ActionEvent event) throws SQLException, IOException {
-
         LocalTime time = null;
         if(cbAppointmentTime.getValue() == null){
             if(!tbTime.getText().isEmpty())
@@ -156,6 +154,11 @@ public class CreateFormController implements Initializable {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setHeaderText("Date is not selected!");
             alert.setContentText("Please select a date from the calendar!");
+            alert.showAndWait();
+        }
+        else if(!dpAppointmentDate.getValue().isAfter(LocalDate.now())){
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setHeaderText("Selected date should be after todays date!");
             alert.showAndWait();
         }
         else if(addedDriversList.size() == 0){
@@ -186,7 +189,6 @@ public class CreateFormController implements Initializable {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Delete Driver");
             alert.setHeaderText("Are you sure you want to delete this driver?");
-            alert.setContentText("All data would be lost!");
             Optional<ButtonType> res = alert.showAndWait();
 
             //get the result from the appointment
@@ -228,7 +230,13 @@ public class CreateFormController implements Initializable {
     public void EditDriver(MouseEvent event) throws IOException {
         Driver d = null;
         try{
-            d = availableDriversList.get(tvAllDrivers.getSelectionModel().getSelectedIndex());
+            if(tvAddedDrivers.getSelectionModel() == null){
+                d = availableDriversList.get(tvAllDrivers.getSelectionModel().getSelectedIndex());
+            }
+            else{
+                d = addedDriversList.get(tvAddedDrivers.getSelectionModel().getSelectedIndex());
+            }
+
             Scene scene = helper.createScene("editDriver");
             EditDriverFromController cfc = helper.getFxmlLoader().getController();
             cfc.initData(dc, ac, d, null);
@@ -283,6 +291,7 @@ public class CreateFormController implements Initializable {
         //Filter
         if(str==""){
             tvAllDrivers.setItems(allDrivers);
+            availableDriversList = dc.getAllDrivers();
         }
         else{
             for (Driver d:allDrivers) {
@@ -291,6 +300,7 @@ public class CreateFormController implements Initializable {
                 }
             }
             tvAllDrivers.setItems(filteredDrivers);
+
         }
     }
 }
