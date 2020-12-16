@@ -8,14 +8,8 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-<<<<<<< HEAD
-    <orderEntry type="library" name="lib" level="project" />
-    <orderEntry type="library" name="mysql-connector-java-8.0" level="project" />
-
-=======
     <orderEntry type="library" exported="" name="mysql-connector-java-8.0" level="project" />
-    <orderEntry type="library" name="joda-time-2.10.8" level="project" />
     <orderEntry type="library" name="jfxrt" level="project" />
->>>>>>> shawnapp
+    <orderEntry type="library" name="joda-time-2.10.8" level="project" />
   </component>
 </module>
