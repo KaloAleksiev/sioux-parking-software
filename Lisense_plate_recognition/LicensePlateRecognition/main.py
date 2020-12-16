@@ -3,6 +3,7 @@ import pytesseract
 import re
 import urllib.request
 import urllib.parse
+import time
 
 #################################################################################
 pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files (x86)\Tesseract-OCR\tesseract.exe'
@@ -28,7 +29,6 @@ cap.set(3, 640)
 cap.set(4, 480)
 # Set brightness
 cap.set(10, 85)
-count = 0
 
 while True:
     success, img = cap.read()
@@ -42,7 +42,6 @@ while True:
         imgLP = img[y:y + height, x:x + width]
 
     if imgLP is not None:
-        # count = count + 1
         imgCanny = cv2.Canny(imgLP, 200, 200)
         imgLP = cv2.resize(imgLP, foundPlateSetSize)
 
@@ -53,22 +52,20 @@ while True:
         licensePlate = re.findall("([0-Z]{1,3}-[0-Z]{1,3}-[0-Z]{1,3})", text)
 
         url = 'http://localhost:8080/sms'
-        #v alues = {}
-        # values['licenseplate'] = licensePlate[0]
 
-        # data = urllib.parse.urlencode(values)
-        # data = data.encode('ascii')
-        # req = urllib.request.Request(url, data)
-
-        # with urllib.request.urlopen(req) as response:
-        #    print(response.read())
-        print(count)
-        if licensePlate and count is 0:
-            count = 3
+        if licensePlate:
             print("The license plate number is:", licensePlate[0])
-        else:
-            if licensePlate:
-                count = count - 1
+            values = {}
+            values['licenseplate'] = licensePlate[0]
+
+            data = urllib.parse.urlencode(values)
+            data = data.encode('ascii')
+            req = urllib.request.Request(url, data)
+
+            with urllib.request.urlopen(req) as response:
+                print(response.read())
+
+            time.sleep(5)
 
     cv2.imshow("Video", img)
     if cv2.waitKey(1) & 0xFF == ord('q'):
