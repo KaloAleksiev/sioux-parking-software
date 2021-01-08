@@ -12,13 +12,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
+
 public class DataBase implements DataSource {
 
     // init database constants
     private static final String DATABASE_DRIVER = "com.mysql.cj.jdbc.Driver";
-    private static final String DATABASE_URL = "jdbc:mysql://studmysql01.fhict.local/dbi427262";
-    private static final String USERNAME = "dbi427262";
-    private static final String PASSWORD = "password1234";
+    private static final String DATABASE_URL = "jdbc:mysql://database-mysql.cbp7gz9tiss2.eu-central-1.rds.amazonaws.com/sioux";
+    private static final String USERNAME = "whyIBI";
+    private static final String PASSWORD = "IBIproject777";
     private static final String MAX_POOL = "250";
 
     private Connection connection;

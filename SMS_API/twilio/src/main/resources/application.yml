@@ -16,7 +16,12 @@ spring:
       hibernate.cache.use_minimal_puts: false
   datasource:
     #SPRING_DATASOURCE_URL environment variable will be something like -> jdbc:sqlserver://MySqlServer\MyInstance:1433;DatabaseName=MyDbName;
-    url: jdbc:mysql://studmysql01.fhict.local/dbi427262
-    username: dbi427262
-    password: password1234
+    #url: jdbc:mysql://studmysql01.fhict.local/dbi427262
+    #username: dbi427262
+    #password: password1234
+    #driverClassName: com.mysql.cj.jdbc.Driver
+
+    url: jdbc:mysql://database-mysql.cbp7gz9tiss2.eu-central-1.rds.amazonaws.com/sioux
+    username: whyIBI
+    password: IBIproject777
     driverClassName: com.mysql.cj.jdbc.Driver
