@@ -23,7 +23,6 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.time.chrono.ChronoLocalDate;
 import java.util.*;
 
 public class CreateFormController implements Initializable {
@@ -184,7 +183,7 @@ public class CreateFormController implements Initializable {
     public void buttonDeleteDriverClick(MouseEvent event) {
         Driver d;
         try{
-            d = availableDriversList.get(tvAllDrivers.getSelectionModel().getSelectedIndex());
+            d = tvAllDrivers.getSelectionModel().getSelectedItem();
 
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Delete Driver");
@@ -230,12 +229,7 @@ public class CreateFormController implements Initializable {
     public void EditDriver(MouseEvent event) throws IOException {
         Driver d = null;
         try{
-            if(tvAddedDrivers.getSelectionModel() == null){
-                d = availableDriversList.get(tvAllDrivers.getSelectionModel().getSelectedIndex());
-            }
-            else{
-                d = addedDriversList.get(tvAddedDrivers.getSelectionModel().getSelectedIndex());
-            }
+            d=tvAllDrivers.getSelectionModel().getSelectedItem();
 
             Scene scene = helper.createScene("editDriver");
             EditDriverFromController cfc = helper.getFxmlLoader().getController();
