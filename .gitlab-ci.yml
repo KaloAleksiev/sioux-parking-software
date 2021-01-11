@@ -14,7 +14,7 @@ BuildShawnsApp:
   stage: buildShawnsApp
   script:
     - cd ShawnsApp
-    - echo build
+    - echo buildApp
 
 TestTwilio:
   stage: testTwilio
