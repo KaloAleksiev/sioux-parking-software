@@ -51,7 +51,7 @@ while True:
 
         licensePlate = re.findall("([0-Z]{1,3}-[0-Z]{1,3}-[0-Z]{1,3})", text)
 
-        url = '18.198.37.93:8083/sms/test'
+        url = '18.198.37.93:8083/sms'
 
         if licensePlate:
             print("The license plate number is:", licensePlate[0])
