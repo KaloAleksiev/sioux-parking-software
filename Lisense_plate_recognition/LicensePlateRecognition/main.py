@@ -51,21 +51,22 @@ while True:
 
         licensePlate = re.findall("([0-Z]{1,3}-[0-Z]{1,3}-[0-Z]{1,3})", text)
 
-        url = '18.198.37.93:8083/sms'
+        url = 'http://18.198.37.93:8083/sms'
 
         if licensePlate:
-            print("The license plate number is:", licensePlate[0])
-            values = {}
-            values['licenseplate'] = licensePlate[0]
+            if len(licensePlate[0]) == 8:
+                print("The license plate number is:", licensePlate[0])
+                values = {}
+                values['licenseplate'] = licensePlate[0]
 
-            data = urllib.parse.urlencode(values)
-            data = data.encode('ascii')
-            req = urllib.request.Request(url, data)
+                data = urllib.parse.urlencode(values)
+                data = data.encode('ascii')
+                req = urllib.request.Request(url, data)
 
-            with urllib.request.urlopen(req) as response:
-                print(response.read())
+                with urllib.request.urlopen(req) as response:
+                    print(response.read())
 
-            time.sleep(5)
+                time.sleep(5)
 
     cv2.imshow("Video", img)
     if cv2.waitKey(1) & 0xFF == ord('q'):
