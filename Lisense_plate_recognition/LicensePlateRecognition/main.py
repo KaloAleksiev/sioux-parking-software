@@ -59,14 +59,17 @@ while True:
                 values = {}
                 values['licenseplate'] = licensePlate[0]
 
-                data = urllib.parse.urlencode(values)
-                data = data.encode('ascii')
-                req = urllib.request.Request(url, data)
+                try:
+                    data = urllib.parse.urlencode(values)
+                    data = data.encode('ascii')
+                    req = urllib.request.Request(url, data)
 
-                with urllib.request.urlopen(req) as response:
-                    print(response.read())
+                    with urllib.request.urlopen(req) as response:
+                        print(response.read())
 
-                time.sleep(5)
+                    time.sleep(5)
+                except:
+                    print("No such licence plate!")
 
     cv2.imshow("Video", img)
     if cv2.waitKey(1) & 0xFF == ord('q'):
