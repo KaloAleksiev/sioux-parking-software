@@ -1,0 +1,11 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="MockupGroupPRJ:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/MockupGroupPRJ_jar</output-path>
+    <root id="archive" name="MockupGroupPRJ.jar">
+      <element id="module-output" name="MockupGroupPRJ" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/src/sample/dependencies/jfxrt.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/src/sample/dependencies/mysql-connector-java-8.0.21.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/src/sample/dependencies/joda-time-2.10.8.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>

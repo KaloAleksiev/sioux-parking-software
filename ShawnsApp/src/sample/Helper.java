@@ -6,6 +6,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
 import org.joda.time.LocalDate;
 
@@ -63,13 +64,41 @@ public class Helper {
         window.show();
     }
 
-    public boolean REGEXTime(String s){
-        Pattern p = Pattern.compile("([01]?[0-9]|2[0-3]):[0-5][0-9]");
-        Matcher m = p.matcher(s);
-        boolean b = m.matches();
-        if(b == true){
-            return true;
+    public boolean REGEXTime(String timestr){
+        boolean corrFlag = true;
+        if (timestr.length() == 5 && timestr.toCharArray()[0] != '-') {
+            if (timestr.toCharArray()[2] != ':') {
+                corrFlag = false;
+            } else if (timestr.toCharArray().length != 5) {
+                corrFlag = false;
+            } else {
+                int hh = 0;
+                String s = "";
+                s = timestr.toCharArray()[0]+""+timestr.toCharArray()[1];
+                try {
+                    hh = Integer.parseInt(s);
+                } catch(Exception e) {
+                    corrFlag = false;
+                }
+                if (hh < 0 || hh > 23) {
+                    corrFlag = false;
+                } else {
+                    int mm = 0;
+                    String ss = "";
+                    ss = timestr.toCharArray()[3]+""+timestr.toCharArray()[4];
+                    try {
+                        mm = Integer.parseInt(ss);
+                    } catch(Exception e) {
+                        corrFlag = false;
+                    }
+                    if (mm < 0 || mm > 59) {
+                        corrFlag = false;
+                    }
+                }
+            }
+        } else {
+            corrFlag = false;
         }
-        return false;
+        return corrFlag;
     }
 }

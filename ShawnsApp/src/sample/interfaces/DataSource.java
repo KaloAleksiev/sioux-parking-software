@@ -10,9 +10,9 @@ import java.util.List;
 public interface DataSource {
     int GetMaxDriverID() throws SQLException;
     int GetMaxAppointmentID() throws SQLException;
-    void AddDriverToDB(String plate, String phone, String name);
+    void AddDriverToDB(String plate, String phone, String name) throws SQLException;
     void AddAppointmentToDB(int day, int month, int year, LocalTime time, List<Driver> driverList) throws SQLException;
-    void UpdateDB(Appointment appointment);
+    void UpdateDB(Appointment appointment) throws SQLException;
     List<Driver> GetDrivers() throws SQLException;
     List<Driver> GetDriversForAppointment(Appointment appointment) throws SQLException;
     List<Appointment> GetAppointments() throws SQLException;

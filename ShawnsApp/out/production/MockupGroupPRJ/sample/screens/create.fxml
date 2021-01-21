@@ -35,7 +35,7 @@
                 <Font name="Lucida Console" size="20.0" />
             </font>
         </Label>
-        <DatePicker fx:id="dpAppointmentDate" layoutX="616.0" layoutY="269.0" prefHeight="25.0" prefWidth="231.0" />
+        <DatePicker fx:id="dpAppointmentDate" layoutX="616.0" layoutY="269.0" onMouseClicked="#SelectTime" prefHeight="25.0" prefWidth="231.0" />
         <ChoiceBox fx:id="cbAppointmentTime" layoutX="615.0" layoutY="347.0" onMouseClicked="#SelectTime" prefHeight="25.0" prefWidth="231.0" />
         <Label layoutX="645.0" layoutY="319.0" prefHeight="20.0" prefWidth="199.0" text="Select timeslot:">
             <font>
@@ -82,7 +82,7 @@
                 <Image url="@../images/addDriver.png" />
             </image>
         </ImageView>
-        <TextField fx:id="tbTime" layoutX="616.0" layoutY="459.0" onKeyTyped="#timeManual" prefHeight="25.0" prefWidth="231.0" />
+        <TextField  fx:id="tbTime" layoutX="616.0" layoutY="459.0" onKeyTyped="#timeManual" prefHeight="25.0" prefWidth="231.0" />
         <Label fx:id="lblTime" layoutX="672.0" layoutY="485.0" prefHeight="25.0" prefWidth="119.0" style="-fx-font-style: italic;" text="Format: &quot;23:56&quot;" visible="true">
             <font>
                 <Font size="16.0" />

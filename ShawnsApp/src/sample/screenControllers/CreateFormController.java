@@ -103,13 +103,14 @@ public class CreateFormController implements Initializable {
     }
 
     public void btnAddDriver() {
-        try{
-            Driver d = tvAllDrivers.getSelectionModel().getSelectedItem();
+
+        Driver d = tvAllDrivers.getSelectionModel().getSelectedItem();
+        if(d != null){
             addedDriversList.add(d);
             availableDriversList.remove(d);
             updateTables();
         }
-        catch(IndexOutOfBoundsException ex){
+        else{
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setHeaderText("Driver not selected!");
             alert.setContentText("Please select a driver from the list on top!");
@@ -118,13 +119,14 @@ public class CreateFormController implements Initializable {
     }
 
     public void btnRemoveDriver() {
-        try{
-            Driver d = tvAddedDrivers.getSelectionModel().getSelectedItem();
+
+        Driver d = tvAddedDrivers.getSelectionModel().getSelectedItem();
+        if(d != null){
             addedDriversList.remove(d);
             availableDriversList.add(d);
             updateTables();
         }
-        catch(IndexOutOfBoundsException ex){
+        else{
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setHeaderText("Driver not selected!");
             alert.setContentText("Please select a driver from the list on the bottom!");
@@ -145,7 +147,7 @@ public class CreateFormController implements Initializable {
 
         if(time == null){
             Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setHeaderText("Time is not selected/incorrect!");
+            alert.setHeaderText("Time is not selected or is incorrectly inputted!");
             alert.setContentText("Please select a timeslot from the selection box or type in a correct time!");
             alert.showAndWait();
         }
@@ -181,23 +183,19 @@ public class CreateFormController implements Initializable {
     }
 
     public void buttonDeleteDriverClick(MouseEvent event) {
-        Driver d;
-        try{
-            d = tvAllDrivers.getSelectionModel().getSelectedItem();
-
+        Driver d = tvAllDrivers.getSelectionModel().getSelectedItem();
+        if(d != null){
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Delete Driver");
             alert.setHeaderText("Are you sure you want to delete this driver?");
             Optional<ButtonType> res = alert.showAndWait();
-
-            //get the result from the appointment
-            if(res.get() == ButtonType.OK){
-                dc.deleteDriver(d.getId());
-                availableDriversList.remove(d);
-                updateTables();
-            }
+                if(res.get() == ButtonType.OK){
+                    dc.deleteDriver(d.getId());
+                    availableDriversList.remove(d);
+                    updateTables();
+                }
         }
-        catch(IndexOutOfBoundsException ex){
+        else{
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setHeaderText("Driver not selected!");
             alert.setContentText("Please select a driver from the list on top!");
@@ -227,30 +225,17 @@ public class CreateFormController implements Initializable {
     }
 
     public void EditDriver(MouseEvent event) throws IOException {
-        Driver d = null;
-        try{
-            d=tvAllDrivers.getSelectionModel().getSelectedItem();
-
+        Driver d=tvAllDrivers.getSelectionModel().getSelectedItem();
+        if(d != null) {
             Scene scene = helper.createScene("editDriver");
             EditDriverFromController cfc = helper.getFxmlLoader().getController();
             cfc.initData(dc, ac, d, null);
             helper.showSceneMouse(scene, event);
         }
-        catch(IndexOutOfBoundsException ex){
+        else{
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setHeaderText("Please select a driver!");
             alert.showAndWait();
-        }
-    }
-
-    public void timeManual(KeyEvent keyEvent) {
-        cbAppointmentTime.getSelectionModel().clearSelection();
-        lblTime.visibleProperty().setValue(true);
-        if(helper.REGEXTime(tbTime.getText())){
-            lblTime.setTextFill(Paint.valueOf("#32CD32"));
-        }
-        else{
-            lblTime.setTextFill(Paint.valueOf("#FF0000"));
         }
     }
 
@@ -296,5 +281,9 @@ public class CreateFormController implements Initializable {
             tvAllDrivers.setItems(filteredDrivers);
 
         }
+    }
+
+    public void timeManual(KeyEvent keyEvent) {
+        cbAppointmentTime.getSelectionModel().clearSelection();
     }
 }

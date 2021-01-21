@@ -1,13 +1,11 @@
 package sample.controllers;
 
 import sample.datasources.DataBase;
-import sample.datasources.LocalDB;
 import sample.interfaces.DataSource;
 import sample.models.Appointment;
 import sample.models.Driver;
 
 import java.sql.SQLException;
-import java.text.DecimalFormat;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +25,7 @@ public class AppointmentController {
     }
 
     public List<Appointment> getAllAppointments() {
-        return appointmentList;
+        return this.appointmentList;
     }
 
     public void changeDate(int day, int month, int year, int id){
@@ -41,8 +39,9 @@ public class AppointmentController {
     }
 
     public void changeDrivers(List<Driver>newDrivers, Appointment app){
-        getAppointmentById(app.getId()).setDriverList(newDrivers);
         ds.ChangeDrivers(newDrivers, app);
+        getAppointmentById(app.getId()).setDriverList(newDrivers);
+
     }
 
     public Appointment getAppointmentById(int id) {

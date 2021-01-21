@@ -79,13 +79,14 @@ public class EditAppointmentController implements Initializable {
     }
 
     public void btnAddDriver() {
-        try{
-            Driver d = tvAllDrivers.getSelectionModel().getSelectedItem();
+
+        Driver d = tvAllDrivers.getSelectionModel().getSelectedItem();
+        if(d != null){
             addedDriversList.add(d);
             availableDriversList.remove(d);
             updateTables();
         }
-        catch(IndexOutOfBoundsException ex){
+        else{
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setHeaderText("Driver not selected!");
             alert.setContentText("Please select a driver from the list on top!");
@@ -94,13 +95,14 @@ public class EditAppointmentController implements Initializable {
     }
 
     public void btnRemoveDriver() {
-        try{
-            Driver d = tvAddedDrivers.getSelectionModel().getSelectedItem();
+
+        Driver d = tvAddedDrivers.getSelectionModel().getSelectedItem();
+        if(d != null){
             addedDriversList.remove(d);
             availableDriversList.add(d);
             updateTables();
         }
-        catch(IndexOutOfBoundsException ex){
+        else{
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setHeaderText("Driver not selected!");
             alert.setContentText("Please select a driver from the list on the bottom!");
@@ -108,12 +110,7 @@ public class EditAppointmentController implements Initializable {
         }
     }
 
-    public void editAppointmentButtonClick(ActionEvent event) throws SQLException, IOException {
-
-        if(!this.current.getDriverList().equals(this.addedDriversList)){
-            ac.changeDrivers(this.addedDriversList, this.current);
-        }
-
+    public void editAppointmentButtonClick(ActionEvent event) throws IOException {
         LocalTime time = null;
         if(cbAppointmentTime.getValue() == null){
             if(!tbTime.getText().isEmpty())
@@ -135,10 +132,21 @@ public class EditAppointmentController implements Initializable {
                     dpAppointmentDate.getValue().getMonthValue(),
                     dpAppointmentDate.getValue().getYear(), this.current.getId());
         }
-        Scene scene = helper.createScene("view");
-        ViewFormController cfc = helper.getFxmlLoader().getController();
-        cfc.initData(dc, ac);
-        helper.showScene(scene,event );
+
+        if(!this.current.getDriverList().equals(this.addedDriversList)){
+            if(addedDriversList.isEmpty()){
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setHeaderText("Appointment needs to have at least one driver!");
+                alert.setContentText("Driver list was not changed!");
+                alert.showAndWait();
+            }else {
+                ac.changeDrivers(this.addedDriversList, this.current);
+                Scene scene = helper.createScene("view");
+                ViewFormController cfc = helper.getFxmlLoader().getController();
+                cfc.initData(dc, ac);
+                helper.showScene(scene,event );
+            }
+        }
     }
 
     public void buttonCancelClick(ActionEvent event) throws IOException, SQLException {
@@ -148,17 +156,6 @@ public class EditAppointmentController implements Initializable {
         helper.showScene(scene, event);
     }
 
-    public void timeManual(KeyEvent keyEvent) {
-        cbAppointmentTime.getSelectionModel().clearSelection();
-        lblTime.visibleProperty().setValue(true);
-        if(helper.REGEXTime(tbTime.getText())){
-            lblTime.setTextFill(Paint.valueOf("#32CD32"));
-        }
-        else{
-            lblTime.setTextFill(Paint.valueOf("#FF0000"));
-        }
-    }
-
     public void buttonCreateDriverClick(MouseEvent event) throws IOException {
         Scene scene = helper.createScene("driver");
         AddDriverFormController cfc = helper.getFxmlLoader().getController();
@@ -166,46 +163,35 @@ public class EditAppointmentController implements Initializable {
         helper.showSceneMouse(scene, event);
     }
 
-    public void editDriver(MouseEvent event) {
-        Driver d = null;
-        try{
-            if(tvAddedDrivers.getSelectionModel() == null){
-                d = availableDriversList.get(tvAllDrivers.getSelectionModel().getSelectedIndex());
-            }
-            else{
-                d = addedDriversList.get(tvAddedDrivers.getSelectionModel().getSelectedIndex());
-            }
+    public void editDriver(MouseEvent event) throws IOException {
+        Driver d=tvAllDrivers.getSelectionModel().getSelectedItem();
+        if(d != null) {
             Scene scene = helper.createScene("editDriver");
             EditDriverFromController cfc = helper.getFxmlLoader().getController();
-            cfc.initData(dc, ac, d, this.current);
+            cfc.initData(dc, ac, d, null);
             helper.showSceneMouse(scene, event);
         }
-        catch(IndexOutOfBoundsException | IOException ex){
+        else{
             Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setHeaderText("Driver not selected!");
-            alert.setContentText("Please select a driver from the list on top!");
+            alert.setHeaderText("Please select a driver!");
             alert.showAndWait();
         }
     }
 
     public void buttonDeleteDriverClick(MouseEvent event) {
-        Driver d = null;
-        try{
-            d = availableDriversList.get(tvAllDrivers.getSelectionModel().getSelectedIndex());
-
+        Driver d = tvAllDrivers.getSelectionModel().getSelectedItem();
+        if(d != null){
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Delete Driver");
             alert.setHeaderText("Are you sure you want to delete this driver?");
             Optional<ButtonType> res = alert.showAndWait();
-
-            //get the result from the appointment
             if(res.get() == ButtonType.OK){
                 dc.deleteDriver(d.getId());
                 availableDriversList.remove(d);
                 updateTables();
             }
         }
-        catch(IndexOutOfBoundsException ex){
+        else{
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setHeaderText("Driver not selected!");
             alert.setContentText("Please select a driver from the list on top!");
@@ -311,5 +297,9 @@ public class EditAppointmentController implements Initializable {
             tvAllDrivers.setItems(filteredDrivers);
         }
 
+    }
+
+    public void timeManual(KeyEvent keyEvent) {
+        cbAppointmentTime.getSelectionModel().clearSelection();
     }
 }

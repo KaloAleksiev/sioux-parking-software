@@ -5,7 +5,6 @@ import sample.models.Driver;
 import sample.interfaces.DataSource;
 
 import java.sql.*;
-import java.text.DecimalFormat;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -22,7 +21,6 @@ public class DataBase implements DataSource {
     private static final String PASSWORD = "IBIproject777";
     private static final String MAX_POOL = "250";
 
-    private Connection connection;
     private Properties properties;
 
     // create properties
@@ -38,54 +36,49 @@ public class DataBase implements DataSource {
 
     // connect database
     public Connection connect() {
-        if (connection == null) {
-            try {
-                Class.forName(DATABASE_DRIVER);
-                connection = DriverManager.getConnection(DATABASE_URL, getProperties());
-            } catch (ClassNotFoundException | SQLException e) {
-                e.printStackTrace();
-            }
+        Connection conn = null;
+
+        try {
+            Class.forName(DATABASE_DRIVER);
+            conn = DriverManager.getConnection(DATABASE_URL, getProperties());
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
         }
-        return connection;
+
+        return conn;
     }
 
-    // disconnect database
-    public void disconnect() {
-        if (connection != null) {
-            try {
-                connection.close();
-                connection = null;
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    public int GetMaxDriverID() throws SQLException {
+    public int GetMaxDriverID(){
         int id = 0;
-        Connection conn = this.connect();
-        Statement stmt = conn.createStatement();
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
         String sql = "SELECT MAX(driver_id) AS 'max' FROM `driver`";
         try {
-            ResultSet rs = stmt.executeQuery(sql);
+            conn = this.connect();
+            stmt = conn.prepareStatement(sql);
+            rs = stmt.executeQuery(sql);
             while(rs.next()) {
                 id = rs.getInt("max");
             }
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            this.disconnect();
+            this.close(conn,stmt,rs);
             return id;
         }
     }
 
-    public int GetMaxAppointmentID() throws SQLException {
+    public int GetMaxAppointmentID(){
         int id = 1;
-        Connection conn = this.connect();
-        Statement stmt = conn.createStatement();
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
         String sql = "SELECT MAX(appointment_id) AS 'max' FROM `appointment`";
         try {
-            ResultSet rs = stmt.executeQuery(sql);
+            conn = this.connect();
+            stmt = conn.prepareStatement(sql);
+            rs = stmt.executeQuery(sql);
             while(rs.next()) {
                 id = rs.getInt("max");
             }
@@ -95,17 +88,17 @@ public class DataBase implements DataSource {
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            this.disconnect();
-            return id;
+            this.close(conn,stmt,rs);
         }
+        return id;
     }
 
-    public void AddDriverToDB(String plate, String phone, String name) {
+    public void AddDriverToDB(String plate, String phone, String name){
         String sql = "INSERT INTO `driver` (`license_plate`, `phone_number`, `name`) VALUES ('" + plate + "', '" + phone + "', '" + name + "');";
         executeStatement(sql);
     }
 
-    public void AddAppointmentToDB(int day, int month, int year, LocalTime time, List<sample.models.Driver> driverList) throws SQLException {
+    public void AddAppointmentToDB(int day, int month, int year, LocalTime time, List<sample.models.Driver> driverList){
         String month1 = Integer.toString(month);
         String day1 = Integer.toString(day);
         if(day < 10){
@@ -118,7 +111,7 @@ public class DataBase implements DataSource {
         executeStatement(sql);
     }
 
-    public void UpdateDB(Appointment appointment) {
+    public void UpdateDB(Appointment appointment){
         for (Driver driver : appointment.getDriverList()) {
             String sql = "INSERT INTO `driver_appointment` (`driver_id`, `appointment_id`) VALUES ('" + driver.getId() + "', '" + appointment.getId() + "');";
             executeStatement(sql);
@@ -127,11 +120,14 @@ public class DataBase implements DataSource {
 
     public List<Driver> GetDrivers() throws SQLException {
         List<sample.models.Driver> drivers = new ArrayList<>();
-        Connection conn = this.connect();
-        Statement stmt = conn.createStatement();
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
         String sql = "SELECT driver_id, license_plate, phone_number, name FROM `driver`";
         try {
-            ResultSet rs = stmt.executeQuery(sql);
+            conn = this.connect();
+            stmt = conn.prepareStatement(sql);
+            rs = stmt.executeQuery(sql);
             while(rs.next()) {
                 int id  = rs.getInt("driver_id");
                 String plate = rs.getString("license_plate");
@@ -143,22 +139,25 @@ public class DataBase implements DataSource {
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            this.disconnect();
+            this.close(conn,stmt,rs);
         }
         return drivers;
     }
 
-    public List<Driver> GetDriversForAppointment(Appointment appointment) throws SQLException {
+    public List<Driver> GetDriversForAppointment(Appointment appointment){
         List<Driver> drivers = new ArrayList<>();
-        Connection conn = this.connect();
-        Statement stmt = conn.createStatement();
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
         String sql = "" +
                 "SELECT d.driver_id,d.license_plate,d.phone_number, d.name " +
                 "FROM `driver` AS d INNER JOIN `driver_appointment` AS da " +
                 "ON d.driver_id = da.driver_id " +
                 "WHERE da.appointment_id =" + appointment.getId()+";";
         try {
-            ResultSet rs = stmt.executeQuery(sql);
+            conn = this.connect();
+            stmt = conn.prepareStatement(sql);
+            rs = stmt.executeQuery(sql);
             while(rs.next()) {
                 int id  = rs.getInt("d.driver_id");
                 String lp = rs.getString("d.license_plate");
@@ -171,18 +170,21 @@ public class DataBase implements DataSource {
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            this.disconnect();
+            this.close(conn,stmt,rs);
             return drivers;
         }
     }
 
-    public List<Appointment> GetAppointments() throws SQLException {
+    public List<Appointment> GetAppointments(){
         List<Appointment> appointments = new ArrayList<>();
-        Connection conn = this.connect();
-        Statement stmt = conn.createStatement();
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
         String sql = "SELECT `appointment_id`, `date`, `time` FROM `appointment`";
         try{
-            ResultSet rs = stmt.executeQuery(sql);
+            conn = this.connect();
+            stmt = conn.prepareStatement(sql);
+            rs = stmt.executeQuery(sql);
             while(rs.next()) {
                 String id  = rs.getString("appointment_id");
                 String date = rs.getString("date");
@@ -204,7 +206,7 @@ public class DataBase implements DataSource {
             e.printStackTrace();
         }
         finally {
-            this.disconnect();
+            this.close(conn,stmt,rs);
             return appointments;
         }
     }
@@ -227,13 +229,10 @@ public class DataBase implements DataSource {
             nd.add(d);
         }
         for (Driver d:ap.getDriverList()){
-            if(!nd.stream().anyMatch(o -> o.getId() == (d.getId()))){
-                String sql = "DELETE FROM driver_appointment WHERE driver_id="+ d.getId() +" AND appointment_id="+ap.getId();
-                executeStatement(sql);
-            }
-            else if(nd.stream().anyMatch(o -> o.getId() == (d.getId()))){
-                nd.removeIf(dr -> (dr.getId() == d.getId()));
-            }
+            this.SafeModeOff();
+            String sql = "DELETE FROM `driver_appointment` WHERE driver_id="+ d.getId() +" AND appointment_id="+ap.getId()+";";
+            executeStatement(sql);
+            this.SafeModeOn();
         }
         for (Driver dr:nd) {
             String sql = "INSERT INTO `driver_appointment` (`driver_id`, `appointment_id`) VALUES (" + dr.getId() + ", " + ap.getId() + ");";
@@ -261,19 +260,38 @@ public class DataBase implements DataSource {
         executeStatement(sql);
     }
 
-    public void DeleteDriver(int id) {
+    public void DeleteDriver(int id){
         String sql = "DELETE FROM driver WHERE  driver_id= '" + id + "';";
         executeStatement(sql);
     }
 
     private void executeStatement(String sql){
+        PreparedStatement statement = null;
+        Connection conn = null;
         try {
-            PreparedStatement statement = this.connect().prepareStatement(sql);
+            conn = this.connect();
+            statement = conn.prepareStatement(sql);
             statement.execute();
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            this.disconnect();
+            close(conn,statement, null);
         }
+    }
+
+    private void  close(Connection c, PreparedStatement p, ResultSet r){
+        try { if (r != null) r.close(); } catch (Exception e) {/*ignore*/}
+        try { if (p != null) p.close(); } catch (Exception e) {/*ignore*/}
+        try { if (c != null) c.close(); } catch (Exception e) {/*ignore*/}
+    }
+
+    private void SafeModeOn(){
+        String sql = "SET SQL_SAFE_UPDATES=1;";
+        executeStatement(sql);
+    }
+
+    private void SafeModeOff(){
+        String sql = "SET SQL_SAFE_UPDATES=0;";
+        executeStatement(sql);
     }
 }
