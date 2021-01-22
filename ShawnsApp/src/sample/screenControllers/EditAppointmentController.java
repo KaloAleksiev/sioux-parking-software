@@ -112,6 +112,9 @@ public class EditAppointmentController implements Initializable {
 
     public void editAppointmentButtonClick(ActionEvent event) throws IOException {
         LocalTime time = null;
+        LocalDate date = new LocalDate(dpAppointmentDate.getValue().getYear(), dpAppointmentDate.getValue().getMonthValue(), dpAppointmentDate.getValue().getDayOfMonth());
+
+
         if(cbAppointmentTime.getValue() == null){
             if(!tbTime.getText().isEmpty())
                 if(helper.REGEXTime(tbTime.getText()))
@@ -121,31 +124,36 @@ public class EditAppointmentController implements Initializable {
             time = LocalTime.parse(cbAppointmentTime.getValue()+":00");
         }
 
-        if(this.current.getTime() != time && time != null){
-            ac.changeTime(time, this.current.getId());
+        if(time == null){
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setHeaderText("Time is not selected or is incorrectly inputted!");
+            alert.setContentText("Please select a timeslot from the selection box or type in a correct time!");
+            alert.showAndWait();
         }
-
-        LocalDate date = new LocalDate(dpAppointmentDate.getValue().getYear(), dpAppointmentDate.getValue().getMonthValue(), dpAppointmentDate.getValue().getDayOfMonth());
-
-        if(this.current.getDate().compareTo(date) != 0) {
-            ac.changeDate(dpAppointmentDate.getValue().getDayOfMonth(),
-                    dpAppointmentDate.getValue().getMonthValue(),
-                    dpAppointmentDate.getValue().getYear(), this.current.getId());
+        else if(addedDriversList.isEmpty()){
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setHeaderText("Appointment needs to have at least one driver!");
+            alert.setContentText("Please add somebody from the list on top!");
+            alert.showAndWait();
         }
-
-        if(!this.current.getDriverList().equals(this.addedDriversList)){
-            if(addedDriversList.isEmpty()){
-                Alert alert = new Alert(Alert.AlertType.WARNING);
-                alert.setHeaderText("Appointment needs to have at least one driver!");
-                alert.setContentText("Driver list was not changed!");
-                alert.showAndWait();
-            }else {
-                ac.changeDrivers(this.addedDriversList, this.current);
-                Scene scene = helper.createScene("view");
-                ViewFormController cfc = helper.getFxmlLoader().getController();
-                cfc.initData(dc, ac);
-                helper.showScene(scene,event );
+        else{
+            if(this.current.getTime() != time && time != null){
+                ac.changeTime(time, this.current.getId());
             }
+
+            if(this.current.getDate().compareTo(date) != 0) {
+                ac.changeDate(dpAppointmentDate.getValue().getDayOfMonth(),
+                        dpAppointmentDate.getValue().getMonthValue(),
+                        dpAppointmentDate.getValue().getYear(), this.current.getId());
+            }
+
+            if(!this.current.getDriverList().equals(this.addedDriversList)){
+                ac.changeDrivers(this.addedDriversList, this.current);
+            }
+            Scene scene = helper.createScene("view");
+            ViewFormController cfc = helper.getFxmlLoader().getController();
+            cfc.initData(dc, ac);
+            helper.showScene(scene,event );
         }
     }
 
@@ -205,7 +213,6 @@ public class EditAppointmentController implements Initializable {
 
     public void SelectTime(MouseEvent mouseEvent) {
         tbTime.setText("");
-        lblTime.visibleProperty().setValue(false);
     }
 
     public void fillInInfo(){

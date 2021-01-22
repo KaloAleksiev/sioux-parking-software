@@ -241,7 +241,6 @@ public class CreateFormController implements Initializable {
 
     public void SelectTime(MouseEvent mouseEvent) {
         tbTime.setText("");
-        lblTime.visibleProperty().setValue(false);
     }
 
     public void resetForm() {
